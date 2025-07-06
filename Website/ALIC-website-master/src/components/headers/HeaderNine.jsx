@@ -217,8 +217,6 @@
 //   );
 // };
 
-
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMobilemenu } from "../../lib/hooks/useMobilemenu";
@@ -271,28 +269,27 @@ export const HeaderNine = () => {
     fetchSocialLinks();
   }, []);
 
-  // Get icon component
   const getIconComponent = (iconName) => {
-    if (!iconName) return <FaLink />;
+    if (!iconName) return <FaLink style={{ color: '#000000' }} />;
     
     const iconMap = {
-      facebook: <FaFacebook />,
-      twitter: <FaTwitter />,
-      instagram: <FaInstagram />,
-      linkedin: <FaLinkedin />,
-      youtube: <FaYoutube />,
-      pinterest: <FaPinterest />,
-      tiktok: <FaTiktok />,
-      whatsapp: <FaWhatsapp />,
-      telegram: <FaTelegram />,
-      github: <FaGithub />,
-      reddit: <FaReddit />,
-      discord: <FaDiscord />,
-      twitch: <FaTwitch />,
-      snapchat: <FaSnapchat />
+      facebook: <FaFacebook style={{ color: '#1877F2' }} />,
+      twitter: <FaTwitter style={{ color: '#1DA1F2' }} />,
+      instagram: <FaInstagram style={{ color: '#E1306C' }} />,
+      linkedin: <FaLinkedin style={{ color: '#0077B5' }} />,
+      youtube: <FaYoutube style={{ color: '#FF0000' }} />,
+      pinterest: <FaPinterest style={{ color: '#E60023' }} />,
+      tiktok: <FaTiktok style={{ color: '#000000' }} />,
+      whatsapp: <FaWhatsapp style={{ color: '#25D366' }} />,
+      telegram: <FaTelegram style={{ color: '#0088CC' }} />,
+      github: <FaGithub style={{ color: '#000000' }} />,
+      reddit: <FaReddit style={{ color: '#FF5700' }} />,
+      discord: <FaDiscord style={{ color: '#7289DA' }} />,
+      twitch: <FaTwitch style={{ color: '#9146FF' }} />,
+      snapchat: <FaSnapchat style={{ color: '#FFFC00' }} />
     };
 
-    return iconMap[iconName.toLowerCase()] || <FaLink />;
+    return iconMap[iconName.toLowerCase()] || <FaLink style={{ color: '#000000' }} />;
   };
 
   const handleCategoryChange = (e) => {
@@ -457,7 +454,7 @@ export const HeaderNine = () => {
               </nav>
 
               <div id="social" className="td_hero_icon_btns position-relative">
-                <div className="td_footer_social_btns td_fs_20">
+                <div className="td_footer_social_btns" style={{ display: 'flex', gap: '4px' }}>
                   {socialLinks.map((link, index) => (
                     <a
                       key={index}
@@ -466,9 +463,14 @@ export const HeaderNine = () => {
                       rel="noopener noreferrer"
                       className="td_center"
                       style={{ 
-                        color: "#1877F2",
-                        margin: "0 8px",
-                        fontSize: "20px"
+                        fontSize: "20px",
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '32px',
+                        height: '32px',
+                        transition: 'transform 0.2s',
+                        borderRadius: '50%'
                       }}
                       title={link.altText}
                     >
