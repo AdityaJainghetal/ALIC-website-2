@@ -61,7 +61,7 @@ useEffect(() => {
         return <MainsTestSeries selectedCategoryId={subCategoryShow} selectedSubCategoryId={selectedSubCategoryId} />;
       case 'foundation':
       default:
-        return <FoundationCourses selectedCategoryId={selectedCategoryId} selectedSubCategoryId={selectedSubCategoryId} />;
+        return <FoundationCourses selectedCategoryId={subCategoryShow} selectedSubCategoryId={selectedSubCategoryId} />;
     }
   };
 

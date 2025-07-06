@@ -185,6 +185,70 @@ const editDisplay = async (req, res) => {
 };
 
 // Edit course (POST)
+// const editDataSave = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const {
+//       Price,
+//       testmodule,
+//       Durations,
+//       category,
+//       altText,
+//       subCategory,
+//       subsubCategory,
+//       CourseDescription,
+//       LastDate,
+//     } = req.body;
+
+//     if (!id) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Course ID is required.",
+//       });
+//     }
+
+//     const updateData = {
+//       Price,
+//       testmodule,
+//       Durations,
+//       altText,
+//       CourseDescription,
+//       ...(LastDate && { LastDate: new Date(LastDate) }),
+//       ...(category && { category }),
+//       ...(subCategory && { subCategory }),
+//       ...(subsubCategory && { subsubCategory }),
+//     };
+
+//     const updatedCourse = await Course.findByIdAndUpdate(id, updateData, {
+//       new: true,
+//       runValidators: true,
+//     })
+//       .populate("category")
+//       .populate("subCategory")
+//       .populate("subsubCategory");
+
+//     if (!updatedCourse) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Course not found.",
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Course updated successfully",
+//       data: updatedCourse,
+//     });
+//   } catch (error) {
+//     console.error("Edit save error:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || "Internal server error",
+//       ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
+//     });
+//   }
+// };
+
 const editDataSave = async (req, res) => {
   try {
     const { id } = req.params;
@@ -194,8 +258,8 @@ const editDataSave = async (req, res) => {
       Durations,
       category,
       altText,
-      subCategory,
-      subsubCategory,
+      subCategory,  // Changed to match frontend
+      subsubCategory,  // Changed to match frontend
       CourseDescription,
       LastDate,
     } = req.body;
@@ -215,9 +279,19 @@ const editDataSave = async (req, res) => {
       CourseDescription,
       ...(LastDate && { LastDate: new Date(LastDate) }),
       ...(category && { category }),
-      ...(subCategory && { subCategory }),
-      ...(subsubCategory && { subsubCategory }),
+      ...(subCategory && { subCategory }),  // Ensure this matches schema
+      ...(subsubCategory && { subsubCategory }),  // Ensure this matches schema
     };
+
+    // Handle image upload if new image is provided
+    if (req.files?.images) {
+      const file = req.files.images;
+      const uploadResponse = await imagekit.upload({
+        file: file.data,
+        fileName: file.name,
+      });
+      updateData.images = [uploadResponse.url];
+    }
 
     const updatedCourse = await Course.findByIdAndUpdate(id, updateData, {
       new: true,
@@ -248,8 +322,6 @@ const editDataSave = async (req, res) => {
     });
   }
 };
-
-
 
 const getCourseWithTestModules = async (req, res) => {
   try {

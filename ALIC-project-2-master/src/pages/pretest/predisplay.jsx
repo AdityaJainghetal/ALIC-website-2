@@ -1552,18 +1552,17 @@ const PreDisplay = () => {
   console.log(setSubSubCategories,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
   // Filter subsubcategories based on selected subcategory
   useEffect(() => {
-    if (editForm.subCategory && subSubCategories.length > 0) {
-      const filtered = subSubCategories.filter(
-        (subsubCat) => subsubCat.subCategory === editForm.subCategory
-      );
-      
-      setFilteredSubSubCategories(filtered);
-      console.log(setFilteredSubSubCategories(filtered),"Aaaaaaaaaaaaaaaaaaaaaa")
-    } else {
-      setFilteredSubSubCategories([]);
-      setEditForm((prev) => ({ ...prev, subsubCategory: "" }));
-    }
-  }, [editForm.subCategory, subSubCategories]);
+  if (editForm.subCategory && subSubCategories.length > 0) {
+    const filtered = subSubCategories.filter(
+      (subsubCat) => subsubCat.subCategory === editForm.subCategory
+    );
+    setFilteredSubSubCategories(filtered);
+  } else {
+    setFilteredSubSubCategories([]);
+    setEditForm((prev) => ({ ...prev, subsubCategory: "" }));
+  }
+}, [editForm.subCategory, subSubCategories]);
+
 
   const delcourse = async (id) => {
     const confirmDelete = window.confirm(
@@ -1971,12 +1970,12 @@ const PreDisplay = () => {
                       disabled={!editForm.subCategory}
                     >
                       <option value="">Select Sub Sub Category</option>
-                      {filteredSubSubCategories.map((subSubCat) => (
-                          {id: console.log(filteredSubSubCategories,"aaaaaaaaaaaaaaaaaaaa")},
-                        <option key={subSubCat._id} value={subSubCat._id}>
-                          {subSubCat.name}
-                        </option>
-                      ))}
+                     {filteredSubSubCategories.map((subSubCat) => (
+  <option key={subSubCat._id} value={subSubCat._id}>
+    {subSubCat.name}
+  </option>
+))}
+
                     </select>
                   </div>
 

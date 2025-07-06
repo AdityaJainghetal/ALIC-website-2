@@ -4,6 +4,22 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEdit, FaTrash, FaLink, FaPlus } from 'react-icons/fa';
 import { FiExternalLink } from 'react-icons/fi';
+import { 
+  FaFacebook, 
+  FaTwitter, 
+  FaInstagram, 
+  FaLinkedin, 
+  FaYoutube, 
+  FaPinterest, 
+  FaTiktok, 
+  FaWhatsapp, 
+  FaTelegram, 
+  FaGithub,
+  FaReddit,
+  FaDiscord,
+  FaTwitch,
+  FaSnapchat
+} from 'react-icons/fa';
 
 const SocialMediaDisplay = () => {
   const api = "http://localhost:8000/social";
@@ -104,16 +120,24 @@ const SocialMediaDisplay = () => {
   const getIconComponent = (iconName) => {
     if (!iconName) return <FaLink />;
     
-    try {
-      const iconModule = require(`react-icons/fa`);
-      const iconKey = `Fa${iconName.charAt(0).toUpperCase() + iconName.slice(1)}`;
-      if (iconModule[iconKey]) {
-        return React.createElement(iconModule[iconKey]);
-      }
-      return <FaLink />;
-    } catch {
-      return <FaLink />;
-    }
+    const iconMap = {
+      facebook: <FaFacebook />,
+      twitter: <FaTwitter />,
+      instagram: <FaInstagram />,
+      linkedin: <FaLinkedin />,
+      youtube: <FaYoutube />,
+      pinterest: <FaPinterest />,
+      tiktok: <FaTiktok />,
+      whatsapp: <FaWhatsapp />,
+      telegram: <FaTelegram />,
+      github: <FaGithub />,
+      reddit: <FaReddit />,
+      discord: <FaDiscord />,
+      twitch: <FaTwitch />,
+      snapchat: <FaSnapchat />
+    };
+
+    return iconMap[iconName.toLowerCase()] || <FaLink />;
   };
 
   return (
@@ -141,7 +165,24 @@ const SocialMediaDisplay = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="facebook, twitter, instagram, etc."
               required
+              list="icon-suggestions"
             />
+            <datalist id="icon-suggestions">
+              <option value="facebook" />
+              <option value="twitter" />
+              <option value="instagram" />
+              <option value="linkedin" />
+              <option value="youtube" />
+              <option value="pinterest" />
+              <option value="tiktok" />
+              <option value="whatsapp" />
+              <option value="telegram" />
+              <option value="github" />
+              <option value="reddit" />
+              <option value="discord" />
+              <option value="twitch" />
+              <option value="snapchat" />
+            </datalist>
             <p className="text-sm text-gray-500 mt-1">
               Enter the name of the icon (e.g., "facebook" for Facebook icon)
             </p>
