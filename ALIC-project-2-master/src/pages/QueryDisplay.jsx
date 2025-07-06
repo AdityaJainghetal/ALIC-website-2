@@ -1,0 +1,435 @@
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import DataTable from 'react-data-table-component';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// const QueryDisplay = () => {
+//   const [courses, setCourses] = useState([]);
+//   const api = 'http://localhost:8000/query/display';
+
+//   useEffect(() => {
+//     const fetchCourses = async () => {
+//       try {
+//         const response = await axios.get(api);
+//         setCourses(response.data);
+//       } catch (error) {
+//         toast.error('Failed to fetch course data');
+//         console.error('Error fetching course data:', error);
+//       }
+//     };
+
+//     fetchCourses();
+//   }, []);
+
+//   const delcourse = async (id) => {
+//     const confirmDelete = window.confirm('Are you sure you want to delete this course?');
+//     if (!confirmDelete) return;
+
+//     const deleteApi = `http://localhost:8000/query/allquerydelete/${id}`;
+
+//     try {
+//       await axios.delete(deleteApi);
+//       toast.success('Course deleted successfully');
+//       setCourses(prev => prev.filter(course => course._id !== id));
+//     } catch (error) {
+//       toast.error('Error deleting course');
+//       console.log('Error deleting course:', error);
+//     }
+//   };
+
+//   const columns = [
+//     { name: 'Name', selector: row => row.Name, sortable: true },
+//     { name: 'Phone', selector: row => row.Phone },
+//     { name: 'State', selector: row => row.State },
+//     { name: 'Medium', selector: row => row.Medium },
+//     { name: 'Message', selector: row => row.message },
+//     {
+//       name: 'Actions',
+//       cell: row => (
+//         <button
+//           onClick={() => delcourse(row._id)}
+//           className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+//         >
+//           Delete
+//         </button>
+//       ),
+//       ignoreRowClick: true,
+//       allowOverflow: true,
+//       button: true,
+//     },
+//   ];
+
+//   return (
+//     <div className="p-4">
+//       <h2 className="text-xl font-bold mb-4">Home page Get a call back query?</h2>
+//       <DataTable
+//         columns={columns}
+//         data={courses}
+//         pagination
+//         highlightOnHover
+//         striped
+//       />
+//       <ToastContainer position="top-right" autoClose={3000} />
+//     </div>
+//   );
+// };
+
+// export default QueryDisplay;
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import DataTable from "react-data-table-component";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FiEdit, FiTrash2, FiX, FiSave } from "react-icons/fi";
+
+const QueryDisplay = () => {
+  const [queries, setQueries] = useState([]);
+  const [editingQuery, setEditingQuery] = useState(null);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const api = "http://localhost:8000/query/display";
+
+  // Load queries
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(api);
+      setQueries(response.data);
+    } catch (error) {
+      toast.error("Failed to load queries. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const deleteQuery = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this query?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:8000/query/allquerydelete/${id}`);
+      toast.success("Query deleted successfully");
+      loadData();
+    } catch (error) {
+      toast.error("Failed to delete query");
+    }
+  };
+
+  const handleEditClick = async (query) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/query/editdisplay?id=${query._id}`
+      );
+      setEditingQuery(response.data);
+      setIsEditFormOpen(true);
+    } catch (error) {
+      toast.error("Failed to load query details");
+    }
+  };
+
+  const handleSaveEdit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const endpoint = `http://localhost:8000/query/editsave/${editingQuery._id}`;
+      await axios.put(endpoint, editingQuery);
+
+      toast.success("Query updated successfully");
+      setIsEditFormOpen(false);
+      loadData();
+    } catch (error) {
+      toast.error("Failed to update query");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditingQuery((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Columns for table
+  const columns = [
+    {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+      width: "80px",
+      center: true,
+      cell: (row, index) => <span className="text-gray-600">{index + 1}</span>,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.Name,
+      sortable: true,
+      cell: (row) => <span className="font-medium">{row.Name}</span>,
+    },
+    {
+      name: "Phone",
+      selector: (row) => row.Phone,
+      cell: (row) => (
+        <a href={`tel:${row.Phone}`} className="text-blue-600 hover:underline">
+          {row.Phone}
+        </a>
+      ),
+    },
+    {
+      name: "State",
+      selector: (row) => row.State,
+      sortable: true,
+    },
+    {
+      name: "Medium",
+      selector: (row) => row.Medium,
+      sortable: true,
+    },
+    {
+      name: "Message",
+      selector: (row) => row.message,
+      cell: (row) => (
+        <div className="max-w-xs truncate hover:max-w-none hover:whitespace-normal">
+          {row.message || "No message"}
+        </div>
+      ),
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="flex gap-2">
+          <button
+            onClick={() => handleEditClick(row)}
+            className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+            title="Edit"
+          >
+            <FiEdit size={18} />
+          </button>
+          <button
+            onClick={() => deleteQuery(row._id)}
+            className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+            title="Delete"
+          >
+            <FiTrash2 size={18} />
+          </button>
+        </div>
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+  ];
+
+  return (
+    <div className="p-4 md:p-6 bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800">
+            Call Back Queries
+          </h1>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-8">
+          <DataTable
+            columns={columns}
+            data={queries}
+            progressPending={isLoading}
+            progressComponent={
+              <div className="p-8 flex justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            }
+            noDataComponent={
+              <div className="p-8 text-center text-gray-500">
+                No queries found.
+              </div>
+            }
+            pagination
+            paginationPerPage={10}
+            paginationRowsPerPageOptions={[5, 10, 20]}
+            highlightOnHover
+            responsive
+            striped
+            customStyles={{
+              headCells: {
+                style: {
+                  fontWeight: "600",
+                  fontSize: "0.875rem",
+                  backgroundColor: "#f9fafb",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                  color: "#374151",
+                },
+              },
+              cells: {
+                style: {
+                  paddingTop: "0.75rem",
+                  paddingBottom: "0.75rem",
+                },
+              },
+            }}
+          />
+        </div>
+
+        {/* Edit Form */}
+        {isEditFormOpen && (
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">
+                Edit Query
+              </h2>
+              <button
+                onClick={() => setIsEditFormOpen(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <FiX size={24} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="Name"
+                  value={editingQuery?.Name || ""}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  name="Phone"
+                  value={editingQuery?.Phone || ""}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  State
+                </label>
+                <input
+                  type="text"
+                  name="State"
+                  value={editingQuery?.State || ""}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Medium
+                </label>
+                <input
+                  type="text"
+                  name="Medium"
+                  value={editingQuery?.Medium || ""}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={editingQuery?.message || ""}
+                  onChange={handleInputChange}
+                  rows="3"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEditFormOpen(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-70"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <FiSave size={18} />
+                      Update Query
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default QueryDisplay;
