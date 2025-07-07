@@ -8,7 +8,7 @@ route.get("/allcourse", CourseController.getAllCourse);
 route.get("/alldisplay", CourseController.getAllCoursedisplay);
 
 route.get("/:id", CourseController.getProductById);
-route.get("/get/:id", CourseController.getsubcategory);
+route.get("/getdata/:id", CourseController.getsubcategory);
 
 route.delete("/coursedelte/:id", CourseController.CourseDelete);
 route.get("/courses/:id", CourseController.getCourseById);

@@ -69,7 +69,7 @@ const SubsubCategoryManagement = () => {
     const files = Array.from(e.target.files);
 
     if (files.length + imageFiles.length > 5) {
-      toast.error("You can upload a maximum of 5 images");
+      toast.error("You can upload a maximum of 1 images");
       return;
     }
 
@@ -121,7 +121,7 @@ const handleEditImageChange = (e) => {
   const files = Array.from(e.target.files);
 
   if (files.length > 5) {
-    toast.error("You can upload a maximum of 5 images");
+    toast.error("You can upload a maximum of 1 images");
     return;
   }
 
@@ -358,8 +358,8 @@ const handleEditImageChange = (e) => {
                 </span>
                 <span className="text-xs text-gray-500">
                   {imageFiles.length >= 5
-                    ? "Maximum 5 images reached"
-                    : `Upload up to 5 images (${imageFiles.length}/5)`}
+                    ? "Maximum 1 images reached"
+                    : `Upload up to 1 images (${imageFiles.length}/1)`}
                 </span>
               </div>
               <input

@@ -93,7 +93,7 @@ const CourseSave = async (req, res) => {
       category,
     } = req.body;
 
-    // if (!Coursename || !category) {
+    // if (!subCategory || !category) {
     //   return res.status(400).json({ error: "Course name and category are required" });
     // }
 
@@ -124,6 +124,9 @@ const CourseSave = async (req, res) => {
     if (isNaN(parsedLastDate)) {
       return res.status(400).json({ error: "Invalid LastDate format" });
     }
+
+
+    
 
     // NOTE: Adjust the following lines based on your actual category model if needed
     const course = await Course.create({
@@ -225,24 +228,28 @@ const getAllCourseHome = async (req, res) => {
   }
 };
 
-
-
 const getsubcategory = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const id = req.params.id;
+
+    // Validate MongoDB ObjectId
+    // if (!mongoose.Types.ObjectId.isValid(id)) {
+    //   return res.status(400).json({ message: "Invalid ID format" });
+    // }
+
     console.log("Fetching courses for subsubCategory ID:", id);
 
-    const courses = await Course.find({ subsubCategory: id })
-      .populate("category")
-      .populate("subCategory")
-      .populate("subsubCategory");
+    const courses = await Course.find({ subsubCategory: id });
 
-    console.log("Courses found:", courses);
-    // console.log("Courses subsubCategory:", subsubCategory);
+    if (!courses.length) {
+      return res
+        .status(404)
+        .json({ message: "No courses found for this subsubCategory." });
+    }
 
     res.status(200).json(courses);
   } catch (error) {
-    console.error("Error fetching courses by subCategory ID:", error);
+    console.error("Error fetching courses by subsubCategory ID:", error);
     res.status(500).json({ message: error.message });
   }
 };

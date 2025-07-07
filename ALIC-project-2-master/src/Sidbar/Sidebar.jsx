@@ -173,8 +173,8 @@ const Sidebar = () => {
 
       {
       name: 'socialmedia', icon: <FiBook />, subItems: [
-        { name: 'Add Socialmedia Icon', to: '/socialmedia' },
-        { name: 'view Socialmedia Icon', to: '/socialmediadisplay' },
+        // { name: 'Add Socialmedia Icon', to: '/socialmedia' },
+        { name: 'Add Socialmedia Icon', to: '/socialmediadisplay' },
 
 
 
@@ -182,6 +182,24 @@ const Sidebar = () => {
         // { name: 'View Discount', to: '/discountshow' },
       ]
     },
+
+
+    
+      {
+      name: 'playstore', icon: <FiBook />, subItems: [
+        // { name: 'Add Socialmedia Icon', to: '/socialmedia' },
+        { name: 'Add playstore Icon', to: '/playstore' },
+
+
+
+        
+        // { name: 'View Discount', to: '/discountshow' },
+      ]
+    },
+
+
+
+    
 
 
 

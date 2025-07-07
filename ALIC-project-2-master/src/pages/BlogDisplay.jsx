@@ -38,7 +38,7 @@ const BlogDisplay = () => {
     newImages: null,
     previewImages: [],
   });
-console.log(editingBlog,'aaaaaaaaa')
+  // console.log(editingBlog, "aaaaaaaaa");
   // Clean up blob URLs when component unmounts or form closes
   useEffect(() => {
     return () => {
@@ -120,24 +120,24 @@ console.log(editingBlog,'aaaaaaaaa')
       toast.error("Error deleting blog");
     }
   };
+const handleEditClick = (blog) => {
+  setEditFormData({
+    title: blog.title,
+    author: blog.author,
+    excerpt: blog.excerpt,
+    Description: blog.Description || "",
+    category: blog?.BlogCategory?._id || "", // ✅ Use _id here
+    URL: blog.URL || "",
+    Alttage: blog.Alttage,
+    LastDate: blog.LastDate?.split("T")[0] || "",
+    images: blog.images || [],
+    newImages: null,
+    previewImages: blog.images || [],
+  });
+  setEditingBlog(blog._id);
+  setIsEditFormOpen(true);
+};
 
-  const handleEditClick = (blog) => {
-    setEditFormData({
-      title: blog.title,
-      author: blog.author,
-      excerpt: blog.excerpt,
-      Description: blog.Description || "",
-      category: blog.category || "",
-      URL: blog.URL || "",
-      Alttage: blog.Alttage,
-      LastDate: blog.LastDate?.split("T")[0] || "",
-      images: blog.images || [],
-      newImages: null,
-      previewImages: blog.images || [],
-    });
-    setEditingBlog(blog._id);
-    setIsEditFormOpen(true);
-  };
 
   const handleAddNew = () => {
     setEditFormData({
@@ -157,208 +157,70 @@ console.log(editingBlog,'aaaaaaaaa')
     setIsEditFormOpen(true);
   };
 
-  // const handleSaveEdit = async (e) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
+  const handleSaveEdit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // console.log(handleSaveEdit, "aaaaaaaaaaaaaaaaaa");
+    try {
+      const formData = new FormData();
+      formData.append("title", editFormData.title);
+      formData.append("author", editFormData.author);
+      formData.append("excerpt", editFormData.excerpt);
+      formData.append("Description", editFormData.Description);
+      formData.append("category", editFormData.category);
+      formData.append("Alttage", editFormData.Alttage);
 
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("title", editFormData.title);
-  //     formData.append("author", editFormData.author);
-  //     formData.append("excerpt", editFormData.excerpt);
-  //     formData.append("description", editFormData.Description);
-  //     formData.append("category", editFormData.category);
-  //     formData.append("Alttage", editFormData.Alttage);
-  //     formData.append("URL", editFormData.URL);
-  //     formData.append("LastDate", editFormData.LastDate);
+      // Only append URL if it's not empty
+      if (editFormData.URL) {
+        formData.append("URL", editFormData.URL);
+      }
 
-  //     if (editingBlog) {
-  //       formData.append("id", editingBlog);
-  //     }
+      formData.append("LastDate", editFormData.LastDate);
 
-  //     if (editFormData.newImages && editFormData.newImages.length > 0) {
-  //       Array.from(editFormData.newImages).forEach((file) => {
-  //         formData.append("images", file);
-  //       });
-  //     }
+      if (editingBlog) {
+        formData.append("id", editingBlog);
+      }
 
-  //     if (
-  //       editingBlog &&
-  //       editFormData.images &&
-  //       editFormData.images.length > 0
-  //     ) {
-  //       editFormData.images.forEach((img) => {
-  //         if (!img.startsWith("blob:")) {
-  //           formData.append("existingImages", img);
-  //         }
-  //       });
-  //     }
+      if (editFormData.newImages && editFormData.newImages.length > 0) {
+        Array.from(editFormData.newImages).forEach((file) => {
+          formData.append("images", file);
+        });
+      }
 
-  //     const endpoint = editingBlog
-  //       ? `${API_BASE_URL}/editsave`
-  //       : `${API_BASE_URL}/create`;
+      if (
+        editingBlog &&
+        editFormData.images &&
+        editFormData.images.length > 0
+      ) {
+        editFormData.images.forEach((img) => {
+          if (!img.startsWith("blob:")) {
+            formData.append("images", img);
+          }
+        });
+      }
 
-  //     const response = await axios.post(endpoint, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
+      const endpoint = editingBlog
+        ? `${API_BASE_URL}/editsave`
+        : `${API_BASE_URL}/create`;
 
-  //     const updatedBlog = {
-  //       ...response.data,
-  //       images: response.data.images
-  //         ? Array.isArray(response.data.images)
-  //           ? response.data.images.map((img) =>
-  //               img.startsWith("http")
-  //                 ? img
-  //                 : `${API_BASE_URL.replace("/blog", "")}/${img}`
-  //             )
-  //           : [`${API_BASE_URL.replace("/blog", "")}/${response.data.images}`]
-  //         : [],
-  //       BlogCategory: categories.find(
-  //         (cat) => cat._id === response.data.category
-  //       ),
-  //     };
-
-  //     if (editingBlog) {
-  //       setBlogs((prev) =>
-  //         prev.map((blog) => (blog._id === editingBlog ? updatedBlog : blog))
-  //       );
-  //     } else {
-  //       setBlogs((prev) => [updatedBlog, ...prev]);
-  //     }
-
-  //     toast.success(`Blog ${editingBlog ? "updated" : "created"} successfully`);
-  //     setIsEditFormOpen(false);
-  //   } catch (err) {
-  //     console.error("Save error:", err);
-  //     toast.error(
-  //       `Error ${editingBlog ? "updating" : "creating"} blog: ${err.message}`
-  //     );
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-
-//   const handleSaveEdit = async (e) => {
-//   e.preventDefault();
-//   setIsSubmitting(true);
-
-//   try {
-//     const formData = new FormData();
-//     formData.append("title", editFormData.title);
-//     formData.append("author", editFormData.author);
-//     formData.append("excerpt", editFormData.excerpt);
-//     formData.append("Description", editFormData.Description); // Changed to uppercase D
-//     formData.append("category", editFormData.category);
-//     formData.append("Alttage", editFormData.Alttage);
-//     formData.append("URL", editFormData.URL);
-//     formData.append("LastDate", editFormData.LastDate);
-
-//     if (editingBlog) {
-//       formData.append("id", editingBlog);
-//     }
-
-//     if (editFormData.newImages && editFormData.newImages.length > 0) {
-//       Array.from(editFormData.newImages).forEach((file) => {
-//         formData.append("images", file);
-//       });
-//     }
-
-//     if (editingBlog && editFormData.images && editFormData.images.length > 0) {
-//       editFormData.images.forEach((img) => {
-//         if (!img.startsWith("blob:")) {
-//           formData.append("images", img); // Changed from existingImages to images
-//         }
-//       });
-//     }
-
-//     const endpoint = editingBlog
-//       ? `${API_BASE_URL}/editsave`
-//       : `${API_BASE_URL}/create`;
-
-//     const response = await axios.post(endpoint, formData, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     });
-
-//     // Refresh the blog list
-//     await fetchBlogs();
-
-//     toast.success(`Blog ${editingBlog ? "updated" : "created"} successfully`);
-//     setIsEditFormOpen(false);
-//   } catch (err) {
-//     console.error("Save error:", err);
-//     toast.error(
-//       `Error ${editingBlog ? "updating" : "creating"} blog: ${err.message}`
-//     );
-//   } finally {
-//     setIsSubmitting(false);
-//   }
-// };
-
-const handleSaveEdit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-console.log(handleSaveEdit,'aaaaaaaaaaaaaaaaaa')
-  try {
-    const formData = new FormData();
-    formData.append("title", editFormData.title);
-    formData.append("author", editFormData.author);
-    formData.append("excerpt", editFormData.excerpt);
-    formData.append("Description", editFormData.Description);
-    formData.append("category", editFormData.category);
-    formData.append("Alttage", editFormData.Alttage);
-    
-    // Only append URL if it's not empty
-    if (editFormData.URL) {
-      formData.append("URL", editFormData.URL);
-    }
-    
-    formData.append("LastDate", editFormData.LastDate);
-
-    if (editingBlog) {
-      formData.append("id", editingBlog);
-    }
-
-    if (editFormData.newImages && editFormData.newImages.length > 0) {
-      Array.from(editFormData.newImages).forEach((file) => {
-        formData.append("images", file);
+      const response = await axios.post(endpoint, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
+      await fetchBlogs();
+      toast.success(`Blog ${editingBlog ? "updated" : "created"} successfully`);
+      setIsEditFormOpen(false);
+    } catch (err) {
+      console.error("Save error:", err);
+      toast.error(
+        `Error ${editingBlog ? "updating" : "creating"} blog: ${err.message}`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (editingBlog && editFormData.images && editFormData.images.length > 0) {
-      editFormData.images.forEach((img) => {
-        if (!img.startsWith("blob:")) {
-          formData.append("images", img);
-        }
-      });
-    }
-
-    const endpoint = editingBlog
-      ? `${API_BASE_URL}/editsave`
-      : `${API_BASE_URL}/create`;
-
-    const response = await axios.post(endpoint, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    await fetchBlogs();
-    toast.success(`Blog ${editingBlog ? "updated" : "created"} successfully`);
-    setIsEditFormOpen(false);
-  } catch (err) {
-    console.error("Save error:", err);
-    toast.error(
-      `Error ${editingBlog ? "updating" : "creating"} blog: ${err.message}`
-    );
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditFormData((prev) => ({
@@ -699,12 +561,13 @@ console.log(handleSaveEdit,'aaaaaaaaaaaaaaaaaa')
                   >
                     <option value="">Select Category</option>
                     {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
+                      <option key={category._id} value={category._id}>
                         {category.name}
                       </option>
                     ))}
                   </select>
                 </div>
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Excerpt*
@@ -746,19 +609,19 @@ console.log(handleSaveEdit,'aaaaaaaaaaaaaaaaaa')
                     />
                   </div>
                 </div>
-      <div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    URL (Optional)
-  </label>
-  <input
-    type="url"
-    name="URL"
-    value={editFormData.URL}
-    onChange={handleInputChange}
-    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    placeholder="https://example.com"
-  />
-</div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    URL (Optional)
+                  </label>
+                  <input
+                    type="url"
+                    name="URL"
+                    value={editFormData.URL}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://example.com"
+                  />
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Last Updated

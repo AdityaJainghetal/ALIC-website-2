@@ -56,6 +56,7 @@ import OtherCoursediplay from "./OtherCourse/OtherCoursediplay";
 import SyllabusEnquiryDisplay from "./SyllabusEnquiry/SyllabusEnquiryDiplay";
 import SocialMedia from "./SocialMedia/SocialMedia";
 import SocialMediaDisplay from "./SocialMedia/SocialMediaDisplay";
+import PlayStore from "./Playstore/PlayStore";
 
 const App = () => {
   return (
@@ -127,6 +128,7 @@ const App = () => {
             <Route path="/syllabusstudent" element={<SyllabusEnquiryDisplay/>}/>
             <Route path="/socialmedia" element={<SocialMedia/>}/>
             <Route path="/socialmediadisplay" element={<SocialMediaDisplay/>}/>
+            <Route path="/playstore" element={<PlayStore/>}/>
 
 
           </Route>

@@ -4,14 +4,12 @@ const courseSchema = new mongoose.Schema({
   Seat: {
     type: String,
   },
-   images: [
-        {
-            type: String
-        }
-      
-    ],
+  images: [
+    {
+      type: String,
+    },
+  ],
 
-  
   Semester: {
     type: Number,
   },
@@ -27,14 +25,14 @@ const courseSchema = new mongoose.Schema({
   Instructor: {
     type: String,
   },
-     URL : {
-            type: String
-        },
+  URL: {
+    type: String,
+  },
   Durations: {
     type: String,
   },
-  Alttage:{
-    type:String
+  Alttage: {
+    type: String,
   },
   Lessons: {
     type: Number,
@@ -42,23 +40,24 @@ const courseSchema = new mongoose.Schema({
   TotalStudent: {
     type: Number,
   },
-   category: {
+  category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
+    ref: "Category",
   },
-   subCategory: {
+  subCategory: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Subcategory"
+    ref: "Subcategory",
   },
 
-     subsubCategory: {
+  subsubCategory: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Subsubcategory"
+    ref: "Subsubcategory",
   },
   language: {
     type: String,
   },
-  Certification: { // Corrected the typo here
+  Certification: {
+    // Corrected the typo here
     type: String,
   },
   CourseDescription: {
@@ -70,11 +69,12 @@ const courseSchema = new mongoose.Schema({
   Review: {
     type: String,
   },
-   homeVisibility: { type: Boolean, default: false },
+  homeVisibility: { type: Boolean, default: false },
   TrainerName: {
     type: String,
   },
-  LastDate: { // Changed to Date if it's a date field
+  LastDate: {
+    // Changed to Date if it's a date field
     type: Date,
   },
 });

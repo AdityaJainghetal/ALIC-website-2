@@ -69,11 +69,37 @@ export const HeroThree = () => {
     }));
   };
 
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+  //   if (!formData.captchaToken)
+  //     newErrors.captchaToken = "Please complete the CAPTCHA";
+    
+  // };
+
+
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (!formData.captchaToken)
-      newErrors.captchaToken = "Please complete the CAPTCHA";
-  };
+  const { name, value } = e.target;
+
+  // Digit-only validation for Phone field
+  if (name === "Phone") {
+    if (/^\d{0,10}$/.test(value)) {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  } else {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // CAPTCHA error handling
+  if (!formData.captchaToken) {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      captchaToken: "Please complete the CAPTCHA",
+    }));
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -179,6 +205,41 @@ export const HeroThree = () => {
           opacity: 1;
         }
 
+.form-floating select {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #aaa;
+  border-radius: 0;
+  outline: none;
+  width: 100%;
+  padding: 20px 0px 0px 5px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-floating select:focus + label,
+.form-floating select:not([value=""]) + label {
+  top: -15px;
+  font-size: 12px;
+  color: #000;
+}
+
+/* optional: add down arrow styling */
+.form-floating select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+  padding-right: 30px;
+}
+
+
+
+
+
+
         @media (max-width: 768px) {
           .neumorphic-form {
             padding: 20px;
@@ -247,6 +308,7 @@ export const HeroThree = () => {
                     value={formData.Phone}
                     onChange={handleChange}
                     inputMode="numeric"
+                    maxLength="10"
                     pattern="[0-9]{10}"
                     required
                     placeholder=" "
@@ -267,7 +329,7 @@ export const HeroThree = () => {
                 </div>
 
                 <div className="form-floating">
-                  <input
+                  {/* <input
                     type="text"
                     name="Medium"
                     value={formData.Medium}
@@ -275,8 +337,24 @@ export const HeroThree = () => {
                     required
                     placeholder=" "
                   />
-                  <label>Enter your Medium</label>
-                </div>
+                  <label>Enter your Medium</label> */}
+
+<div className="form-floating">
+  <select
+    name="Medium"
+    value={formData.Medium}
+    onChange={handleChange}
+    required
+    className="form-select"
+  >
+    <option value="">Select Medium</option>
+    <option value="English">English</option>
+    <option value="Hindi">Hindi</option>
+  </select>
+ 
+</div>
+</div>
+               
 
                 <div className="form-floating">
                   <textarea

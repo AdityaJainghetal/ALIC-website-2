@@ -59,9 +59,6 @@
 //   }
 // };
 
-
-
-
 // const BlogDisplayAll = async (req, res) => {
 //     try {
 //         const enquiries = await Banner.find().populate("BlogCategory");
@@ -79,8 +76,6 @@
 //     }
 // };
 
-
-
 // const BlogDelete = async(req, res)=>{
 
 //      const {id} = req.params;
@@ -88,7 +83,6 @@
 
 //     res.status(200).send("Task deleted")
 // }
-
 
 // const getProductById = async (req, res) => {
 //   try {
@@ -188,11 +182,6 @@
 //   }
 // };
 
-
-
-
-
-
 // module.exports = {
 //   BlogSave,
 //   BlogDisplayAll,
@@ -201,8 +190,6 @@
 //   editDataSave,
 //   editDisplay
 // };
-
-
 
 const Banner = require("../Module/BlogModule");
 const imagekit = require("../Utils/imageKit");
@@ -218,7 +205,7 @@ const BlogSave = async (req, res) => {
       LastDate,
       Alttage,
       category,
-      Description
+      Description,
     } = req.body;
 
     // Handle image uploads
@@ -243,7 +230,7 @@ const BlogSave = async (req, res) => {
     // Validate LastDate
     const parsedLastDate = new Date(LastDate);
     if (isNaN(parsedLastDate.getTime())) {
-      return res.status(400).json({ error: 'Invalid LastDate format' });
+      return res.status(400).json({ error: "Invalid LastDate format" });
     }
 
     // Save blog (banner)
@@ -262,8 +249,8 @@ const BlogSave = async (req, res) => {
 
     res.status(201).json(banner);
   } catch (error) {
-    console.error('BlogSave error:', error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+    console.error("BlogSave error:", error);
+    res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
 
@@ -272,14 +259,14 @@ const BlogDisplayAll = async (req, res) => {
     const enquiries = await Banner.find().populate("BlogCategory");
     res.status(200).json({
       success: true,
-      data: enquiries
+      data: enquiries,
     });
   } catch (error) {
     console.error("Error fetching enquiries:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch enquiries",
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -291,15 +278,17 @@ const BlogDelete = async (req, res) => {
     res.status(200).send("Blog deleted successfully");
   } catch (error) {
     console.error("Error deleting blog:", error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+    res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
 
 const getProductById = async (req, res) => {
   try {
-    const product = await Banner.findById(req.params.id).populate("BlogCategory");
+    const product = await Banner.findById(req.params.id).populate(
+      "BlogCategory"
+    );
     if (!product) {
-      return res.status(404).json({ message: 'Blog not found' });
+      return res.status(404).json({ message: "Blog not found" });
     }
     res.status(200).json(product);
   } catch (error) {
@@ -415,7 +404,7 @@ const editDisplay = async (req, res) => {
 //     }
 
 //     let images = [];
-    
+
 //     // Handle existing images
 //     if (req.body.images) {
 //       images = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
@@ -424,7 +413,7 @@ const editDisplay = async (req, res) => {
 //     // Handle new image uploads
 //     if (req.files?.images) {
 //       const files = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
-      
+
 //       for (const file of files) {
 //         const uploadResponse = await imagekit.upload({
 //           file: file.data,
@@ -459,9 +448,9 @@ const editDisplay = async (req, res) => {
 //       return res.status(404).json({ message: "Blog not found." });
 //     }
 
-//     res.status(200).json({ 
-//       message: "Blog updated successfully", 
-//       data: updated 
+//     res.status(200).json({
+//       message: "Blog updated successfully",
+//       data: updated
 //     });
 //   } catch (error) {
 //     console.error("Error updating blog:", error);
@@ -472,65 +461,92 @@ const editDisplay = async (req, res) => {
 const editDataSave = async (req, res) => {
   try {
     const {
-      id,
-      title: Blog,
+      title,
       author,
-      URL, // This might be empty
       excerpt,
-      Alttage,
       Description,
-      LastDate,
       category,
+      Alttage,
+      URL,
+      LastDate,
+      id,
+      images,
     } = req.body;
 
-    if (!id) {
-      return res.status(400).json({ message: "ID is required." });
+    // ✅ Validate required fields
+    if (!id) return res.status(400).json({ message: "ID is required." });
+    if (!title || !author || !excerpt || !Description || !category) {
+      return res.status(400).json({
+        message:
+          "Missing required fields: title, author, excerpt, description, or category",
+      });
     }
 
-    let images = [];
-    
-    // Handle existing images
-    if (req.body.images) {
-      images = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
+    let finalImages = [];
+
+    // ✅ Handle existing image URLs from req.body
+    if (images) {
+      finalImages = Array.isArray(images) ? images : [images];
     }
 
-    // Handle new image uploads
+    // ✅ Handle new image uploads if files are present
     if (req.files?.images) {
-      const files = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
-      
+      const files = Array.isArray(req.files.images)
+        ? req.files.images
+        : [req.files.images];
+
       for (const file of files) {
-        const uploadResponse = await imagekit.upload({
-          file: file.data,
-          fileName: file.name,
-        });
-        images.push(uploadResponse.url);
+        try {
+          const uploadResponse = await imagekit.upload({
+            file: file.data,
+            fileName: file.name,
+          });
+          finalImages.push(uploadResponse.url);
+        } catch (uploadError) {
+          console.error("Image upload failed:", uploadError.message);
+          return res.status(500).json({ message: "Image upload failed" });
+        }
       }
     }
 
-    const parsedLastDate = LastDate ? new Date(LastDate) : undefined;
+    // ✅ Convert LastDate to Date object (if valid)
+    let parsedLastDate = undefined;
+    if (LastDate) {
+      const tempDate = new Date(LastDate);
+      if (!isNaN(tempDate.getTime())) {
+        parsedLastDate = tempDate;
+      }
+    }
 
+    // ✅ Prepare the fields to update
     const updatedFields = {
-      Blog,
+      title,
       author,
-      URL: URL || undefined, // Set to undefined if empty
       excerpt,
+      Description,
       Alttage,
-      Description: Description || Blog,
-      images,
+      URL,
+      images: finalImages,
       BlogCategory: category,
     };
 
-    if (parsedLastDate && !isNaN(parsedLastDate.getTime())) {
+    // Add LastDate only if it's valid
+    if (parsedLastDate) {
       updatedFields.LastDate = parsedLastDate;
     }
 
-    // Remove undefined fields
-    Object.keys(updatedFields).forEach(key => {
-      if (updatedFields[key] === undefined) {
+    // ✅ Remove undefined/null fields before updating
+    Object.keys(updatedFields).forEach((key) => {
+      if (
+        updatedFields[key] === undefined ||
+        updatedFields[key] === null ||
+        updatedFields[key] === ""
+      ) {
         delete updatedFields[key];
       }
     });
 
+    // ✅ Update blog by ID
     const updated = await Banner.findByIdAndUpdate(id, updatedFields, {
       new: true,
     }).populate("BlogCategory");
@@ -539,13 +555,16 @@ const editDataSave = async (req, res) => {
       return res.status(404).json({ message: "Blog not found." });
     }
 
-    res.status(200).json({ 
-      message: "Blog updated successfully", 
-      data: updated 
+    // ✅ Success
+    res.status(200).json({
+      message: "Blog updated successfully",
+      data: updated,
     });
   } catch (error) {
     console.error("Error updating blog:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message || "Server error occurred during update.",
+    });
   }
 };
 
@@ -555,5 +574,5 @@ module.exports = {
   BlogDelete,
   getProductById,
   editDataSave,
-  editDisplay
+  editDisplay,
 };

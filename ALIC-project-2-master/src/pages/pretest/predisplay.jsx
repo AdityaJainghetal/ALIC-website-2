@@ -642,9 +642,6 @@
 
 // export default PreDisplay;
 
-
-
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { toast } from "react-toastify";
@@ -667,7 +664,6 @@
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import { fetchcategory, fetchSubcategory, fetchSubsubcategory } from "../../api";
 
-
 // const PreDisplay = () => {
 //   const [courses, setCourses] = useState([]);
 //   const [categories, setCategories] = useState([]);
@@ -689,7 +685,6 @@
 //     subCategory: "",
 //     subsubCategory: "",
 //   });
-  
 
 //   // Initialize DOMPurify
 //   const sanitize = DOMPurify.sanitize;
@@ -739,7 +734,7 @@
 //       };
 //       fetchCategories();
 //     }, []);
-  
+
 //     // Fetch all subcategories
 //     useEffect(() => {
 //       const fetchAllSubcategories = async () => {
@@ -755,7 +750,7 @@
 //       };
 //       fetchAllSubcategories();
 //     }, []);
-  
+
 //     // Fetch all subsubcategories
 //     useEffect(() => {
 //       const fetchAllSubsubcategories = async () => {
@@ -772,7 +767,7 @@
 //       };
 //       fetchAllSubsubcategories();
 //     }, []);
-  
+
 //     // Filter subcategories based on selected category
 //     useEffect(() => {
 //       if (editForm.category && subCategories.length > 0) {
@@ -785,7 +780,7 @@
 //         setEditForm((prev) => ({ ...prev, subCategory: "", subsubCategory: "" }));
 //       }
 //     }, [editForm.category, subCategories]);
-  
+
 //     // Filter subsubcategories based on selected subcategory
 //     useEffect(() => {
 //       if (editForm.subCategory && subsubCategories.length > 0) {
@@ -867,7 +862,7 @@
 //     if (course.category?._id || course.category) {
 //       fetchSubCategories(course.category?._id || course.category);
 //     }
-    
+
 //     // Load subsubcategories if subcategory exists
 //     if (course.subCategory?._id || course.subCategory) {
 //       fetchSubSubCategories(course.subCategory?._id || course.subCategory);
@@ -1436,6 +1431,7 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -1456,7 +1452,11 @@ import {
 import { FaRupeeSign } from "react-icons/fa";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { fetchcategory, fetchSubcategory, fetchSubsubcategory } from "../../api";
+import {
+  fetchcategory,
+  fetchSubcategory,
+  fetchSubsubcategory,
+} from "../../api";
 
 const PreDisplay = () => {
   const [courses, setCourses] = useState([]);
@@ -1482,8 +1482,6 @@ const PreDisplay = () => {
     subsubCategory: "",
   });
 
-
-  console.log( subSubCategories,"subcaetgory")
   // Initialize DOMPurify
   const sanitize = DOMPurify.sanitize;
 
@@ -1515,19 +1513,21 @@ const PreDisplay = () => {
     }
   };
 
+  console.log(courses);
+
   const fetchAllCategories = async () => {
     setLoading(true);
     try {
       const [catRes, subCatRes, subSubCatRes] = await Promise.all([
         fetchcategory(),
         fetchSubcategory(),
-        fetchSubsubcategory()
+        fetchSubsubcategory(),
       ]);
-      
+
       if (catRes.data) setCategories(catRes.data);
       if (subCatRes.data) setSubCategories(subCatRes.data);
       if (subSubCatRes.data) setSubSubCategories(subSubCatRes.data);
-      console.log(fetchSubsubcategory,"caetgoyr")
+      console.log(fetchSubsubcategory, "caetgoyr");
     } catch (error) {
       console.error("Error fetching categories:", error);
       toast.error("Failed to load categories. Please try again.");
@@ -1548,21 +1548,25 @@ const PreDisplay = () => {
       setEditForm((prev) => ({ ...prev, subCategory: "", subsubCategory: "" }));
     }
   }, [editForm.category, subCategories]);
-  
-  console.log(setSubSubCategories,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
   // Filter subsubcategories based on selected subcategory
   useEffect(() => {
-  if (editForm.subCategory && subSubCategories.length > 0) {
-    const filtered = subSubCategories.filter(
-      (subsubCat) => subsubCat.subCategory === editForm.subCategory
-    );
-    setFilteredSubSubCategories(filtered);
-  } else {
-    setFilteredSubSubCategories([]);
-    setEditForm((prev) => ({ ...prev, subsubCategory: "" }));
-  }
-}, [editForm.subCategory, subSubCategories]);
+    const loadFilteredSubSubCategories = async () => {
+      if (editForm.subCategory) {
+        try {
+          const response = await fetchSubsubcategory(editForm.subCategory);
+          setFilteredSubSubCategories(response.data);
+        } catch (error) {
+          console.error("Error loading sub-sub-categories:", error);
+          setFilteredSubSubCategories([]);
+        }
+      } else {
+        setFilteredSubSubCategories([]);
+      }
+    };
 
+    loadFilteredSubSubCategories();
+  }, [editForm.subCategory]);
 
   const delcourse = async (id) => {
     const confirmDelete = window.confirm(
@@ -1646,8 +1650,10 @@ const PreDisplay = () => {
       formData.append("LastDate", editForm.LastDate);
       formData.append("altText", editForm.altText);
       formData.append("category", editForm.category);
-      if (editForm.subCategory) formData.append("subCategory", editForm.subCategory);
-      if (editForm.subsubCategory) formData.append("subsubCategory", editForm.subsubCategory);
+      if (editForm.subCategory)
+        formData.append("subCategory", editForm.subCategory);
+      if (editForm.subsubCategory)
+        formData.append("subsubCategory", editForm.subsubCategory);
       if (editForm.images) {
         formData.append("images", editForm.images);
       }
@@ -1970,12 +1976,11 @@ const PreDisplay = () => {
                       disabled={!editForm.subCategory}
                     >
                       <option value="">Select Sub Sub Category</option>
-                     {filteredSubSubCategories.map((subSubCat) => (
-  <option key={subSubCat._id} value={subSubCat._id}>
-    {subSubCat.name}
-  </option>
-))}
-
+                      {filteredSubSubCategories.map((subSubCat) => (
+                        <option key={subSubCat._id} value={subSubCat._id}>
+                          {subSubCat.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 

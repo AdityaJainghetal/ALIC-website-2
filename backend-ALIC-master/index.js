@@ -58,7 +58,8 @@ const syllabusRoute = require("./Routes/SyllabusCategory/SyallbusCategoryRoute")
 const RefundRoute = require("./Routes/Refundpolicy/RefundRoute");
 const dynamicRoute = require("./Routes/DynamicRoute/DynamicRoute")
 const OtherCourse = require("./Routes/OtherRoute/OtherRoute");
-const SocialRoute = require("./Routes/SocialMedia/SocailRoute")
+const SocialRoute = require("./Routes/SocialMedia/SocailRoute");
+const PlayStoreRoute = require("./Routes/PlayStoreRoute/PlayStoreRoute")
 // app.use("/uploads", express.static("uploads"));
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -106,7 +107,8 @@ app.use(bodyparser.json())
  app.use("/refund", RefundRoute);
  app.use("/dynamics", dynamicRoute);
  app.use("/othercourse", OtherCourse);
- app.use("/social",SocialRoute)
+ app.use("/social",SocialRoute);
+ app.use("/playstore", PlayStoreRoute)
 
 
 
