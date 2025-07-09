@@ -25,7 +25,7 @@ const CourseDisplay = () => {
   const [filterText, setFilterText] = useState("");
   const [editId, setEditId] = useState(null);
   const [newImages, setNewImages] = useState([]);
-const [imagesToDelete, setImagesToDelete] = useState([]);
+  const [imagesToDelete, setImagesToDelete] = useState([]);
   const [editForm, setEditForm] = useState({
     Price: "",
     Durations: "",
@@ -47,7 +47,7 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const api = "http://localhost:8000/api/alldisplay";
+  const api = "https://alic-website-2-1.onrender.com/api/alldisplay";
 
   // Fetch all courses
   const fetchCourses = async () => {
@@ -148,7 +148,9 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/api/coursedelte/${id}`);
+      await axios.delete(
+        `https://alic-website-2-1.onrender.com/api/coursedelte/${id}`
+      );
       toast.success("Course deleted successfully");
       setCourses((prev) => prev.filter((course) => course._id !== id));
     } catch (error) {
@@ -157,10 +159,11 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
     }
   };
 
-  
   const startEdit = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
+      const res = await axios.get(
+        `https://alic-website-2-1.onrender.com/api/courses/${id}`
+      );
       console.log(res, "DATA");
 
       const course = res.data;
@@ -233,9 +236,12 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
   const handleToggle = async (id, checked) => {
     const newStatus = !checked;
     try {
-      await axios.put(`http://localhost:8000/api/${id}/home-visibility`, {
-        homeVisibility: newStatus,
-      });
+      await axios.put(
+        `https://alic-website-2-1.onrender.com/api/${id}/home-visibility`,
+        {
+          homeVisibility: newStatus,
+        }
+      );
       fetchCourses();
       toast.success("Visibility updated successfully");
     } catch (error) {
@@ -260,7 +266,7 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
 
   // const saveEdit = async () => {
   //   try {
-  //     await axios.put(`http://localhost:8000/api/editsave/${editId}`, editForm);
+  //     await axios.put(`https://alic-website-2-1.onrender.com/api/editsave/${editId}`, editForm);
   //     toast.success("Course updated successfully");
   //     setEditId(null);
   //     setEditForm({
@@ -283,75 +289,74 @@ const [imagesToDelete, setImagesToDelete] = useState([]);
   //   }
   // };
 
+  const saveEdit = async () => {
+    try {
+      const formData = new FormData();
 
- const saveEdit = async () => {
-  try {
-    const formData = new FormData();
-    
-    // Append all form fields
-    Object.keys(editForm).forEach(key => {
-      if (key !== 'images') {
-        formData.append(key, editForm[key]);
-      }
-    });
-    
-    // Append existing images (to know which ones to keep)
-    editForm.images.forEach(image => {
-      formData.append('existingImages', image);
-    });
-    
-    // Append new images
-    newImages.forEach(image => {
-      formData.append('images', image);
-    });
-    
-    // Append images to delete
-    imagesToDelete.forEach(image => {
-      formData.append('imagesToDelete', image);
-    });
-    
-    const response = await axios.put(
-      `http://localhost:8000/api/editsave/${editId}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      // Append all form fields
+      Object.keys(editForm).forEach((key) => {
+        if (key !== "images") {
+          formData.append(key, editForm[key]);
         }
-      }
-    );
-    
-    toast.success("Course updated successfully");
-    setEditId(null);
-    setNewImages([]);
-    setImagesToDelete([]);
-    fetchCourses();
-  } catch (error) {
-    toast.error("Error saving course");
-    console.error("Error saving course:", error);
-    if (error.response) {
-      console.error("Response data:", error.response.data);
-      console.error("Response status:", error.response.status);
-    }
-  }
-};
-const handleImageUpload = (e) => {
-  const files = Array.from(e.target.files);
-  setNewImages([...newImages, ...files]);
-};
+      });
 
-const handleRemoveImage = (index, isNewImage) => {
-  if (isNewImage) {
-    // Remove from new images
-    setNewImages(newImages.filter((_, i) => i !== index));
-  } else {
-    // Mark existing image for deletion and remove from display
-    setImagesToDelete([...imagesToDelete, editForm.images[index]]);
-    setEditForm(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }));
-  }
-};
+      // Append existing images (to know which ones to keep)
+      editForm.images.forEach((image) => {
+        formData.append("existingImages", image);
+      });
+
+      // Append new images
+      newImages.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      // Append images to delete
+      imagesToDelete.forEach((image) => {
+        formData.append("imagesToDelete", image);
+      });
+
+      const response = await axios.put(
+        `https://alic-website-2-1.onrender.com/api/editsave/${editId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      toast.success("Course updated successfully");
+      setEditId(null);
+      setNewImages([]);
+      setImagesToDelete([]);
+      fetchCourses();
+    } catch (error) {
+      toast.error("Error saving course");
+      console.error("Error saving course:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+      }
+    }
+  };
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    setNewImages([...newImages, ...files]);
+  };
+
+  const handleRemoveImage = (index, isNewImage) => {
+    if (isNewImage) {
+      // Remove from new images
+      setNewImages(newImages.filter((_, i) => i !== index));
+    } else {
+      // Mark existing image for deletion and remove from display
+      setImagesToDelete([...imagesToDelete, editForm.images[index]]);
+      setEditForm((prev) => ({
+        ...prev,
+        images: prev.images.filter((_, i) => i !== index),
+      }));
+    }
+  };
   const columns = [
     {
       name: "Sr. No",
@@ -786,62 +791,62 @@ const handleRemoveImage = (index, isNewImage) => {
                       }}
                     />
                   </div>
-     <div className="md:col-span-2">
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Images
-  </label>
-  <div className="flex flex-wrap gap-2 mb-4">
-    {/* Existing images */}
-    {editForm.images.map((image, index) => (
-      <div key={`existing-${index}`} className="relative">
-        <img
-          src={image}
-          alt={`Course ${index}`}
-          className="h-16 w-16 object-cover rounded"
-        />
-        <button
-          onClick={() => handleRemoveImage(index, false)}
-          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
-          title="Remove image"
-        >
-          <FiX size={12} />
-        </button>
-      </div>
-    ))}
-    
-    {/* Newly uploaded images (previews) */}
-    {newImages.map((image, index) => (
-      <div key={`new-${index}`} className="relative">
-        <img
-          src={URL.createObjectURL(image)}
-          alt={`New image ${index}`}
-          className="h-16 w-16 object-cover rounded"
-        />
-        <button
-          onClick={() => handleRemoveImage(index, true)}
-          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
-          title="Remove image"
-        >
-          <FiX size={12} />
-        </button>
-      </div>
-    ))}
-  </div>
-  
-  {/* File input for new images */}
-  <input
-    type="file"
-    multiple
-    onChange={handleImageUpload}
-    className="block w-full text-sm text-gray-500
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Images
+                    </label>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {/* Existing images */}
+                      {editForm.images.map((image, index) => (
+                        <div key={`existing-${index}`} className="relative">
+                          <img
+                            src={image}
+                            alt={`Course ${index}`}
+                            className="h-16 w-16 object-cover rounded"
+                          />
+                          <button
+                            onClick={() => handleRemoveImage(index, false)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                            title="Remove image"
+                          >
+                            <FiX size={12} />
+                          </button>
+                        </div>
+                      ))}
+
+                      {/* Newly uploaded images (previews) */}
+                      {newImages.map((image, index) => (
+                        <div key={`new-${index}`} className="relative">
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt={`New image ${index}`}
+                            className="h-16 w-16 object-cover rounded"
+                          />
+                          <button
+                            onClick={() => handleRemoveImage(index, true)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                            title="Remove image"
+                          >
+                            <FiX size={12} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* File input for new images */}
+                    <input
+                      type="file"
+                      multiple
+                      onChange={handleImageUpload}
+                      className="block w-full text-sm text-gray-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-md file:border-0
       file:text-sm file:font-semibold
       file:bg-blue-50 file:text-blue-700
       hover:file:bg-blue-100"
-    accept="image/*"
-  />
-</div>
+                      accept="image/*"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex justify-end gap-3">

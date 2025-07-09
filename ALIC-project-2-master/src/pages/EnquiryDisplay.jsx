@@ -20,7 +20,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch("http://localhost:8000/enquiry/allcourse");
+//       const response = await fetch("https://alic-website-2-1.onrender.com/enquiry/allcourse");
 //       if (!response.ok) {
 //         throw new Error("Failed to fetch enquiries");
 //       }
@@ -44,7 +44,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `http://localhost:8000/enquiry/coursedelte/${id}`,
+//         `https://alic-website-2-1.onrender.com/enquiry/coursedelte/${id}`,
 //         {
 //           method: "DELETE",
 //         }
@@ -74,7 +74,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `http://localhost:8000/enquiry/editsave/${editingEnquiry._id}`,
+//         `https://alic-website-2-1.onrender.com/enquiry/editsave/${editingEnquiry._id}`,
 //         {
 //           method: "PUT",
 //           headers: {
@@ -384,8 +384,6 @@
 
 // export default EnquiryDisplay;
 
-
-
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { FaTrash, FaEdit, FaFileExcel, FaFilePdf } from "react-icons/fa";
@@ -412,7 +410,9 @@ const EnquiryDisplay = () => {
 
   const fetchEnquiries = async () => {
     try {
-      const response = await fetch("http://localhost:8000/enquiry/allcourse");
+      const response = await fetch(
+        "https://alic-website-2-1.onrender.com/enquiry/allcourse"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch enquiries");
       }
@@ -569,7 +569,7 @@ const EnquiryDisplay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/enquiry/coursedelte/${id}`,
+        `https://alic-website-2-1.onrender.com/enquiry/coursedelte/${id}`,
         {
           method: "DELETE",
         }
@@ -599,7 +599,7 @@ const EnquiryDisplay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/enquiry/editsave/${editingEnquiry._id}`,
+        `https://alic-website-2-1.onrender.com/enquiry/editsave/${editingEnquiry._id}`,
         {
           method: "PUT",
           headers: {

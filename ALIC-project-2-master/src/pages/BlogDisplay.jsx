@@ -67,7 +67,7 @@ const BlogDisplay = () => {
     fetchCategories();
   }, []);
 
-  const API_BASE_URL = "http://localhost:8000/blog";
+  const API_BASE_URL = "https://alic-website-2-1.onrender.com/blog";
 
   const fetchBlogs = useCallback(async () => {
     setLoading(true);
@@ -120,24 +120,23 @@ const BlogDisplay = () => {
       toast.error("Error deleting blog");
     }
   };
-const handleEditClick = (blog) => {
-  setEditFormData({
-    title: blog.title,
-    author: blog.author,
-    excerpt: blog.excerpt,
-    Description: blog.Description || "",
-    category: blog?.BlogCategory?._id || "", // ✅ Use _id here
-    URL: blog.URL || "",
-    Alttage: blog.Alttage,
-    LastDate: blog.LastDate?.split("T")[0] || "",
-    images: blog.images || [],
-    newImages: null,
-    previewImages: blog.images || [],
-  });
-  setEditingBlog(blog._id);
-  setIsEditFormOpen(true);
-};
-
+  const handleEditClick = (blog) => {
+    setEditFormData({
+      title: blog.title,
+      author: blog.author,
+      excerpt: blog.excerpt,
+      Description: blog.Description || "",
+      category: blog?.BlogCategory?._id || "", // ✅ Use _id here
+      URL: blog.URL || "",
+      Alttage: blog.Alttage,
+      LastDate: blog.LastDate?.split("T")[0] || "",
+      images: blog.images || [],
+      newImages: null,
+      previewImages: blog.images || [],
+    });
+    setEditingBlog(blog._id);
+    setIsEditFormOpen(true);
+  };
 
   const handleAddNew = () => {
     setEditFormData({

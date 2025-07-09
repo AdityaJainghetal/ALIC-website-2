@@ -33,7 +33,7 @@
 
 //   const fetchWhatsNew = async () => {
 //     try {
-//       const response = await fetch('http://localhost:8000/whatsnew/alldisplay');
+//       const response = await fetch('https://alic-website-2-1.onrender.com/whatsnew/alldisplay');
 //       if (!response.ok) throw new Error('Failed to fetch entries');
 
 //       const data = await response.json();
@@ -68,7 +68,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`http://localhost:8000/whatsnew/delete/${id}`, {
+//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -107,7 +107,7 @@
 //         formData.append('PDFbrochure', editingItem.newPDF);
 //       }
 
-//       const response = await fetch(`http://localhost:8000/whatsnew/editsave/${editingItem._id}`, {
+//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`, {
 //         method: 'PUT',
 //         body: formData,
 //       });
@@ -352,7 +352,6 @@
 //   }
 // `}</style>
 
-
 //               <div>
 //                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
 //                 <select
@@ -466,7 +465,6 @@
 
 // export default WhatsNewDisplay;
 
-
 // import React, { useState, useEffect, useRef } from 'react';
 // import DataTable from 'react-data-table-component';
 // import { FaTrash, FaEdit } from 'react-icons/fa';
@@ -502,7 +500,7 @@
 
 //   const fetchWhatsNew = async () => {
 //     try {
-//       const response = await fetch('http://localhost:8000/whatsnew/alldisplay');
+//       const response = await fetch('https://alic-website-2-1.onrender.com/whatsnew/alldisplay');
 //       if (!response.ok) throw new Error('Failed to fetch entries');
 
 //       const data = await response.json();
@@ -537,7 +535,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`http://localhost:8000/whatsnew/delete/${id}`, {
+//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -580,7 +578,7 @@
 //         formData.append('PDFbrochure', editingItem.newPDF);
 //       }
 
-//       const response = await fetch(`http://localhost:8000/whatsnew/editsave/${editingItem._id}`, {
+//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`, {
 //         method: 'PUT',
 //         body: formData,
 //       });
@@ -941,25 +939,23 @@
 
 // export default WhatsNewDisplay;
 
-
-
-import React, { useState, useEffect, useRef } from 'react';
-import DataTable from 'react-data-table-component';
-import { FaTrash, FaEdit } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FiX, FiSave } from 'react-icons/fi';
-import { fetchcategory } from '../../api';
-import DOMPurify from 'dompurify';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import React, { useState, useEffect, useRef } from "react";
+import DataTable from "react-data-table-component";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FiX, FiSave } from "react-icons/fi";
+import { fetchcategory } from "../../api";
+import DOMPurify from "dompurify";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const WhatsNewDisplay = () => {
   const [whatsNew, setWhatsNew] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -972,14 +968,19 @@ const WhatsNewDisplay = () => {
 
   useEffect(() => {
     if (isEditFormOpen && editFormRef.current) {
-      editFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      editFormRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
   }, [isEditFormOpen]);
 
   const fetchWhatsNew = async () => {
     try {
-      const response = await fetch('http://localhost:8000/whatsnew/alldisplay');
-      if (!response.ok) throw new Error('Failed to fetch entries');
+      const response = await fetch(
+        "https://alic-website-2-1.onrender.com/whatsnew/alldisplay"
+      );
+      if (!response.ok) throw new Error("Failed to fetch entries");
 
       const data = await response.json();
       const whatsNewArray = Array.isArray(data.data) ? data.data : [];
@@ -987,7 +988,7 @@ const WhatsNewDisplay = () => {
     } catch (err) {
       console.error(err);
       setError(err.message);
-      toast.error('Error fetching entries: ' + err.message);
+      toast.error("Error fetching entries: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -1001,38 +1002,43 @@ const WhatsNewDisplay = () => {
         setCategories(response.data);
       }
     } catch (error) {
-      console.error('Error fetching categories:', error);
-      toast.error('Failed to load categories. Please try again.');
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to load categories. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm('Are you sure you want to delete this entry?');
+    const confirm = window.confirm(
+      "Are you sure you want to delete this entry?"
+    );
     if (!confirm) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/whatsnew/delete/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-      if (!response.ok) throw new Error('Failed to delete entry');
+      if (!response.ok) throw new Error("Failed to delete entry");
 
-      setWhatsNew(prev => prev.filter(item => item._id !== id));
-      toast.success('Entry deleted successfully');
+      setWhatsNew((prev) => prev.filter((item) => item._id !== id));
+      toast.success("Entry deleted successfully");
     } catch (err) {
-      toast.error('Error deleting entry: ' + err.message);
+      toast.error("Error deleting entry: " + err.message);
     }
   };
 
   const handleEditClick = (item) => {
     setEditingItem({
       ...item,
-      category: item.category?._id || '',
-      altText: item.altText || '',
+      category: item.category?._id || "",
+      altText: item.altText || "",
       newImages: null,
-      newPDF: null
+      newPDF: null,
     });
     setIsEditFormOpen(true);
   };
@@ -1043,43 +1049,48 @@ const WhatsNewDisplay = () => {
 
     try {
       const formData = new FormData();
-      formData.append('title', editingItem.Coursename);
-      formData.append('description', editingItem.CourseDescription);
-      formData.append('category', editingItem.category);
-      formData.append('altText', editingItem.altText);
+      formData.append("title", editingItem.Coursename);
+      formData.append("description", editingItem.CourseDescription);
+      formData.append("category", editingItem.category);
+      formData.append("altText", editingItem.altText);
 
       // Handle image updates
       if (editingItem.newImages && editingItem.newImages.length > 0) {
         // Remove old images if new ones are being uploaded
-        formData.append('removeOldImages', 'true');
-        
+        formData.append("removeOldImages", "true");
+
         // Append each new image file
         Array.from(editingItem.newImages).forEach((file) => {
-          formData.append('images', file);
+          formData.append("images", file);
         });
       }
 
       // Handle PDF update
       if (editingItem.newPDF && editingItem.newPDF.length > 0) {
-        formData.append('PDFbrochure', editingItem.newPDF[0]);
+        formData.append("PDFbrochure", editingItem.newPDF[0]);
       }
 
-      const response = await fetch(`http://localhost:8000/whatsnew/editsave/${editingItem._id}`, {
-        method: 'PUT',
-        body: formData,
-      });
+      const response = await fetch(
+        `https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update entry');
+        throw new Error(errorData.message || "Failed to update entry");
       }
 
-      toast.success('Entry updated successfully');
+      toast.success("Entry updated successfully");
       setIsEditFormOpen(false);
       fetchWhatsNew();
     } catch (err) {
-      console.error('Update error:', err);
-      toast.error('Error updating entry: ' + (err.message || 'Please try again'));
+      console.error("Update error:", err);
+      toast.error(
+        "Error updating entry: " + (err.message || "Please try again")
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -1087,25 +1098,25 @@ const WhatsNewDisplay = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditingItem(prev => ({
+    setEditingItem((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
-    setEditingItem(prev => ({
+    setEditingItem((prev) => ({
       ...prev,
-      CourseDescription: data
+      CourseDescription: data,
     }));
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setEditingItem(prev => ({
+    setEditingItem((prev) => ({
       ...prev,
-      [name]: files
+      [name]: files,
     }));
   };
 
@@ -1113,57 +1124,60 @@ const WhatsNewDisplay = () => {
     if (Array.isArray(editingItem.images)) {
       const updatedImages = [...editingItem.images];
       updatedImages.splice(index, 1);
-      setEditingItem(prev => ({
+      setEditingItem((prev) => ({
         ...prev,
-        images: updatedImages.length > 0 ? updatedImages : null
+        images: updatedImages.length > 0 ? updatedImages : null,
       }));
     } else {
-      setEditingItem(prev => ({
+      setEditingItem((prev) => ({
         ...prev,
-        images: null
+        images: null,
       }));
     }
   };
 
   const stripHtmlTags = (html) => {
-    if (!html) return '';
-    return html.replace(/<[^>]*>?/gm, '').substring(0, 100) + (html.length > 100 ? '...' : '');
+    if (!html) return "";
+    return (
+      html.replace(/<[^>]*>?/gm, "").substring(0, 100) +
+      (html.length > 100 ? "..." : "")
+    );
   };
 
   const columns = [
     {
-      name: 'S.No',
+      name: "S.No",
       cell: (row, index) => index + 1,
-      width: '80px'
+      width: "80px",
     },
     {
-      name: 'Title',
-      selector: row => row.Coursename,
+      name: "Title",
+      selector: (row) => row.Coursename,
       sortable: true,
-      cell: row => <span className="font-medium">{row.Coursename}</span>
+      cell: (row) => <span className="font-medium">{row.Coursename}</span>,
     },
     {
-      name: 'Description',
-      selector: row => row.CourseDescription,
-      cell: row => (
+      name: "Description",
+      selector: (row) => row.CourseDescription,
+      cell: (row) => (
         <div className="max-w-xs truncate hover:max-w-none hover:whitespace-normal">
           {stripHtmlTags(row.CourseDescription)}
         </div>
-      )
+      ),
     },
     {
-      name: 'Category',
-      selector: row => row.category?.name || 'N/A',
-      sortable: true
+      name: "Category",
+      selector: (row) => row.category?.name || "N/A",
+      sortable: true,
     },
     {
-      name: 'Alt Text',
-      selector: row => row.altText || 'N/A',
-      sortable: true
+      name: "Alt Text",
+      selector: (row) => row.altText || "N/A",
+      sortable: true,
     },
     {
-      name: 'Image',
-      cell: row => (
+      name: "Image",
+      cell: (row) =>
         row.images && row.images.length > 0 ? (
           <div className="flex items-center">
             <img
@@ -1172,35 +1186,44 @@ const WhatsNewDisplay = () => {
               className="w-16 h-16 object-cover rounded-md"
             />
             {Array.isArray(row.images) && row.images.length > 1 && (
-              <span className="ml-1 text-xs text-gray-500">+{row.images.length - 1}</span>
+              <span className="ml-1 text-xs text-gray-500">
+                +{row.images.length - 1}
+              </span>
             )}
           </div>
-        ) : 'None'
-      ),
-      width: '120px'
+        ) : (
+          "None"
+        ),
+      width: "120px",
     },
     {
-      name: 'PDF Brochure',
-      cell: row => (
+      name: "PDF Brochure",
+      cell: (row) =>
         row.PDFbrochure ? (
-          <a href={row.PDFbrochure} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+          <a
+            href={row.PDFbrochure}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
             View PDF
           </a>
-        ) : 'None'
-      ),
-      width: '120px'
+        ) : (
+          "None"
+        ),
+      width: "120px",
     },
     {
-      name: 'Created At',
-      selector: row => row.createdAt,
+      name: "Created At",
+      selector: (row) => row.createdAt,
       sortable: true,
-      cell: row => {
+      cell: (row) => {
         const date = new Date(row.createdAt);
-        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-      }
+        return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+      },
     },
     {
-      name: 'Actions',
+      name: "Actions",
       cell: (row) => (
         <div className="flex space-x-2">
           <button
@@ -1222,13 +1245,17 @@ const WhatsNewDisplay = () => {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
-      width: '100px'
+      width: "100px",
     },
   ];
 
-  const filteredWhatsNew = whatsNew.filter(item =>
-    [item.Coursename, item.CourseDescription, item.category?.name, item.altText]
-      .some(field => field?.toLowerCase().includes(filterText.toLowerCase()))
+  const filteredWhatsNew = whatsNew.filter((item) =>
+    [
+      item.Coursename,
+      item.CourseDescription,
+      item.category?.name,
+      item.altText,
+    ].some((field) => field?.toLowerCase().includes(filterText.toLowerCase()))
   );
 
   if (loading) {
@@ -1251,7 +1278,9 @@ const WhatsNewDisplay = () => {
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">WhatsNew Entries</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          WhatsNew Entries
+        </h1>
 
         <div className="mb-4">
           <input
@@ -1259,7 +1288,7 @@ const WhatsNewDisplay = () => {
             placeholder="Search by title, description, alt text or category..."
             className="w-full p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200"
             value={filterText}
-            onChange={e => setFilterText(e.target.value)}
+            onChange={(e) => setFilterText(e.target.value)}
           />
         </div>
 
@@ -1274,7 +1303,10 @@ const WhatsNewDisplay = () => {
         />
 
         {isEditFormOpen && (
-          <div ref={editFormRef} className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mt-6">
+          <div
+            ref={editFormRef}
+            className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mt-6"
+          >
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-800">
                 Edit WhatsNew Entry
@@ -1289,11 +1321,13 @@ const WhatsNewDisplay = () => {
 
             <form onSubmit={handleSaveEdit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Title
+                </label>
                 <input
                   type="text"
                   name="Coursename"
-                  value={editingItem?.Coursename || ''}
+                  value={editingItem?.Coursename || ""}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
@@ -1301,40 +1335,55 @@ const WhatsNewDisplay = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
                 <div className="hide-editor-images">
                   <CKEditor
                     editor={ClassicEditor}
-                    data={editingItem?.CourseDescription || ''}
+                    data={editingItem?.CourseDescription || ""}
                     onChange={handleEditorChange}
                     config={{
-                      toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+                      toolbar: [
+                        "heading",
+                        "|",
+                        "bold",
+                        "italic",
+                        "link",
+                        "bulletedList",
+                        "numberedList",
+                        "blockQuote",
+                      ],
                     }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Alt Text</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Alt Text
+                </label>
                 <input
                   type="text"
                   name="altText"
-                  value={editingItem?.altText || ''}
+                  value={editingItem?.altText || ""}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Category
+                </label>
                 <select
                   name="category"
-                  value={editingItem?.category || ''}
+                  value={editingItem?.category || ""}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Select a category</option>
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <option key={category._id} value={category._id}>
                       {category.name}
                     </option>
@@ -1357,7 +1406,9 @@ const WhatsNewDisplay = () => {
                   />
                   {editingItem?.images && (
                     <div className="mt-2">
-                      <p className="text-xs text-gray-500 mb-1">Current Images:</p>
+                      <p className="text-xs text-gray-500 mb-1">
+                        Current Images:
+                      </p>
                       <div className="flex flex-wrap gap-2">
                         {Array.isArray(editingItem.images) ? (
                           editingItem.images.map((img, index) => (
@@ -1410,7 +1461,9 @@ const WhatsNewDisplay = () => {
                   />
                   {editingItem?.PDFbrochure && (
                     <div className="mt-2">
-                      <p className="text-xs text-gray-500">Current PDF: {editingItem.PDFbrochure.split('/').pop()}</p>
+                      <p className="text-xs text-gray-500">
+                        Current PDF: {editingItem.PDFbrochure.split("/").pop()}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -1432,9 +1485,25 @@ const WhatsNewDisplay = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Saving...
                     </>

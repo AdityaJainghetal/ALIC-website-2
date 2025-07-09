@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import DataTable from 'react-data-table-component';
-import axios from 'axios';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import DataTable from "react-data-table-component";
+import axios from "axios";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const PlayStore = () => {
   const [banners, setBanners] = useState([]);
@@ -16,11 +16,13 @@ const PlayStore = () => {
   const fetchBanners = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8000/playstore/alldisplay');
+      const response = await axios.get(
+        "https://alic-website-2-1.onrender.com/playstore/alldisplay"
+      );
       setBanners(response.data);
       setLoading(false);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to fetch banners');
+      toast.error(error.response?.data?.message || "Failed to fetch banners");
       setLoading(false);
     }
   };
@@ -31,35 +33,40 @@ const PlayStore = () => {
 
   const columns = [
     {
-      name: 'Images',
-      selector: row => row.images[0],
-      cell: row => (
-        <img 
-          src={row.images[0]} 
-          alt={row.altText} 
+      name: "Images",
+      selector: (row) => row.images[0],
+      cell: (row) => (
+        <img
+          src={row.images[0]}
+          alt={row.altText}
           className="w-16 h-16 object-cover rounded"
         />
       ),
       sortable: false,
     },
     {
-      name: 'Alt Text',
-      selector: row => row.altText,
+      name: "Alt Text",
+      selector: (row) => row.altText,
       sortable: true,
     },
     {
-      name: 'URL',
-      selector: row => row.URL,
-      cell: row => (
-        <a href={row.URL} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+      name: "URL",
+      selector: (row) => row.URL,
+      cell: (row) => (
+        <a
+          href={row.URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
+        >
           {row.URL}
         </a>
       ),
       sortable: true,
     },
     {
-      name: 'Actions',
-      cell: row => (
+      name: "Actions",
+      cell: (row) => (
         <div className="flex space-x-2">
           <button
             onClick={() => handleEdit(row._id)}
@@ -84,39 +91,45 @@ const PlayStore = () => {
   const handleEdit = async (id) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:8000/playstore/editdisplay?id=${id}`);
+      const response = await axios.get(
+        `https://alic-website-2-1.onrender.com/playstore/editdisplay?id=${id}`
+      );
       setCurrentBanner(response.data.data);
       setIsEditing(true);
       setShowForm(true);
       setLoading(false);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to fetch banner');
+      toast.error(error.response?.data?.message || "Failed to fetch banner");
       setLoading(false);
     }
   };
 
   const handleDelete = (id) => {
     confirmAlert({
-      title: 'Confirm to delete',
-      message: 'Are you sure you want to delete this banner?',
+      title: "Confirm to delete",
+      message: "Are you sure you want to delete this banner?",
       buttons: [
         {
-          label: 'Yes',
+          label: "Yes",
           onClick: async () => {
             try {
-              await axios.delete(`http://localhost:8000/playstore/deleted/${id}`);
-              toast.success('Banner deleted successfully');
+              await axios.delete(
+                `https://alic-website-2-1.onrender.com/playstore/deleted/${id}`
+              );
+              toast.success("Banner deleted successfully");
               fetchBanners();
             } catch (error) {
-              toast.error(error.response?.data?.message || 'Failed to delete banner');
+              toast.error(
+                error.response?.data?.message || "Failed to delete banner"
+              );
             }
-          }
+          },
         },
         {
-          label: 'No',
-          onClick: () => {}
-        }
-      ]
+          label: "No",
+          onClick: () => {},
+        },
+      ],
     });
   };
 
@@ -130,8 +143,8 @@ const PlayStore = () => {
   const PlayStoreForm = ({ isEditing, currentBanner, onSuccess, onCancel }) => {
     const [formData, setFormData] = useState({
       images: [],
-      altText: '',
-      URL: ''
+      altText: "",
+      URL: "",
     });
     const [imagePreviews, setImagePreviews] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -141,7 +154,7 @@ const PlayStore = () => {
         setFormData({
           images: currentBanner.images,
           altText: currentBanner.altText,
-          URL: currentBanner.URL
+          URL: currentBanner.URL,
         });
         setImagePreviews(currentBanner.images);
       } else {
@@ -152,31 +165,31 @@ const PlayStore = () => {
     const resetForm = () => {
       setFormData({
         images: [],
-        altText: '',
-        URL: ''
+        altText: "",
+        URL: "",
       });
       setImagePreviews([]);
     };
 
     const handleChange = (e) => {
       const { name, value } = e.target;
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     };
 
     const handleImageChange = (e) => {
       const files = Array.from(e.target.files);
-      
+
       // Create previews
-      const previews = files.map(file => URL.createObjectURL(file));
+      const previews = files.map((file) => URL.createObjectURL(file));
       setImagePreviews(previews);
-      
+
       // Update form data
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        images: files
+        images: files,
       }));
     };
 
@@ -186,36 +199,40 @@ const PlayStore = () => {
 
       try {
         const formDataToSend = new FormData();
-        formDataToSend.append('altText', formData.altText);
-        formDataToSend.append('URL', formData.URL);
-        
+        formDataToSend.append("altText", formData.altText);
+        formDataToSend.append("URL", formData.URL);
+
         // Append all images
-        if (!isEditing || typeof formData.images[0] !== 'string') {
-          formData.images.forEach(image => {
-            formDataToSend.append('images', image);
+        if (!isEditing || typeof formData.images[0] !== "string") {
+          formData.images.forEach((image) => {
+            formDataToSend.append("images", image);
           });
         }
 
         let response;
         if (isEditing) {
-          formDataToSend.append('id', currentBanner._id);
-          response = await axios.post('/playstore/editsave', formDataToSend, {
+          formDataToSend.append("id", currentBanner._id);
+          response = await axios.post("/playstore/editsave", formDataToSend, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              "Content-Type": "multipart/form-data",
+            },
           });
         } else {
-          response = await axios.post('http://localhost:8000/playstore/create', formDataToSend, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
+          response = await axios.post(
+            "https://alic-website-2-1.onrender.com/playstore/create",
+            formDataToSend,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
             }
-          });
+          );
         }
 
         toast.success(response.data.message);
         onSuccess();
       } catch (error) {
-        toast.error(error.response?.data?.message || 'Something went wrong');
+        toast.error(error.response?.data?.message || "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -224,9 +241,9 @@ const PlayStore = () => {
     return (
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-xl font-semibold mb-4">
-          {isEditing ? 'Edit Banner' : 'Add New Banner'}
+          {isEditing ? "Edit Banner" : "Add New Banner"}
         </h2>
-        
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Images</label>
@@ -239,16 +256,16 @@ const PlayStore = () => {
             />
             <div className="flex flex-wrap mt-2 gap-2">
               {imagePreviews.map((preview, index) => (
-                <img 
-                  key={index} 
-                  src={preview} 
-                  alt={`Preview ${index}`} 
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Preview ${index}`}
                   className="w-16 h-16 object-cover rounded"
                 />
               ))}
             </div>
           </div>
-          
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Alt Text</label>
             <input
@@ -260,7 +277,7 @@ const PlayStore = () => {
               required
             />
           </div>
-          
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">URL</label>
             <input
@@ -272,7 +289,7 @@ const PlayStore = () => {
               required
             />
           </div>
-          
+
           <div className="flex justify-end space-x-3">
             <button
               type="button"
@@ -287,7 +304,7 @@ const PlayStore = () => {
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               disabled={loading}
             >
-              {loading ? 'Processing...' : isEditing ? 'Update' : 'Save'}
+              {loading ? "Processing..." : isEditing ? "Update" : "Save"}
             </button>
           </div>
         </form>
@@ -298,9 +315,11 @@ const PlayStore = () => {
   return (
     <div className="container mx-auto p-4">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">PlayStore Banner Management</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          PlayStore Banner Management
+        </h1>
         <button
           onClick={() => {
             setShowForm(true);
@@ -314,9 +333,9 @@ const PlayStore = () => {
       </div>
 
       {showForm && (
-        <PlayStoreForm 
-          isEditing={isEditing} 
-          currentBanner={currentBanner} 
+        <PlayStoreForm
+          isEditing={isEditing}
+          currentBanner={currentBanner}
           onSuccess={handleSubmitSuccess}
           onCancel={() => {
             setShowForm(false);
@@ -336,7 +355,9 @@ const PlayStore = () => {
           paginationRowsPerPageOptions={[10, 20, 30]}
           highlightOnHover
           responsive
-          noDataComponent={<div className="py-8 text-gray-500">No banners found</div>}
+          noDataComponent={
+            <div className="py-8 text-gray-500">No banners found</div>
+          }
         />
       </div>
     </div>

@@ -170,7 +170,7 @@
 
 //     try {
 //       setLoading(true);
-//       const response = await axios.post('http://localhost:8000/whatsnew/create', formData, {
+//       const response = await axios.post('https://alic-website-2-1.onrender.com/whatsnew/create', formData, {
 //         headers: {
 //           Accept: 'application/json',
 //         },
@@ -573,7 +573,7 @@ const WhatsNewForm = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8000/whatsnew/create",
+        "https://alic-website-2-1.onrender.com/whatsnew/create",
         formData,
         {
           headers: {

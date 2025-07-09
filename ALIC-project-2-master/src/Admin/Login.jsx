@@ -28,7 +28,7 @@
 //     setError("");
 
 //     try {
-//       const response = await axios.post("http://localhost:8000/admin/login", {
+//       const response = await axios.post("https://alic-website-2-1.onrender.com/admin/login", {
 //         [loginMethod]: loginMethod === "email" ? email : name,
 //         password,
 //       });
@@ -89,7 +89,7 @@
 
 //   try {
 //     setIsLoading(true);
-//     const response = await axios.post("http://localhost:8000/admin//resetpassword", {
+//     const response = await axios.post("https://alic-website-2-1.onrender.com/admin//resetpassword", {
 //       oldPassword: resetData.oldPassword,
 //       newPassword: resetData.newPassword,
 //       id: localStorage.getItem("id")
@@ -374,10 +374,13 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8000/admin/login", {
-        [loginMethod]: loginMethod === "email" ? email : name,
-        password,
-      });
+      const response = await axios.post(
+        "https://alic-website-2-1.onrender.com/admin/login",
+        {
+          [loginMethod]: loginMethod === "email" ? email : name,
+          password,
+        }
+      );
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -436,7 +439,7 @@ const Login = () => {
       setIsLoading(true);
 
       const response = await axios.post(
-        "http://localhost:8000/admin/resetpassword",
+        "https://alic-website-2-1.onrender.com/admin/resetpassword",
         {
           email: resetData.email,
           oldPassword: resetData.oldPassword,

@@ -22,7 +22,7 @@ const Discount = () => {
     const fetchDiscounts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/discount/display"
+          "https://alic-website-2-1.onrender.com/discount/display"
         );
         setDiscounts(response.data.data || []);
         setLoading(false);
@@ -50,7 +50,7 @@ const Discount = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/discount/add",
+        "https://alic-website-2-1.onrender.com/discount/add",
         formData
       );
       console.log("Discount created:", response.data);
@@ -58,7 +58,7 @@ const Discount = () => {
       setFormData({ title: "" });
       // Refresh the list
       const updatedResponse = await axios.get(
-        "http://localhost:8000/discount/display"
+        "https://alic-website-2-1.onrender.com/discount/display"
       );
       setDiscounts(updatedResponse.data.data || []);
     } catch (err) {
@@ -71,7 +71,9 @@ const Discount = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this discount?")) {
       try {
-        await axios.delete(`http://localhost:8000/discount/deleted/${id}`);
+        await axios.delete(
+          `https://alic-website-2-1.onrender.com/discount/deleted/${id}`
+        );
         setDiscounts(discounts.filter((discount) => discount._id !== id));
         toast.success("Discount deleted successfully!");
       } catch (err) {
@@ -100,7 +102,7 @@ const Discount = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:8000/discount/display/${editId}`,
+        `https://alic-website-2-1.onrender.com/discount/display/${editId}`,
         editData
       );
       setDiscounts(

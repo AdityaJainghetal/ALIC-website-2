@@ -28,7 +28,9 @@ const SyllabusDisplay = () => {
 
   const fetchSyllabus = async () => {
     try {
-      const response = await fetch("http://localhost:8000/syllabus/alldisplay");
+      const response = await fetch(
+        "https://alic-website-2-1.onrender.com/syllabus/alldisplay"
+      );
       if (!response.ok) throw new Error("Failed to fetch syllabus data");
       const data = await response.json();
       setSyllabusData(Array.isArray(data.data) ? data.data : []);
@@ -42,7 +44,7 @@ const SyllabusDisplay = () => {
 
   // const fetchCategories = async () => {
   //   try {
-  //     const response = await fetch('http://localhost:8000/syllabuscategory');
+  //     const response = await fetch('https://alic-website-2-1.onrender.com/syllabuscategory');
   //     const data = await response.json();
   //     setCategories(data.data || []);
   //   } catch (err) {
@@ -71,7 +73,7 @@ const SyllabusDisplay = () => {
   const handleEdit = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/syllabus/editdisplay?id=${id}`
+        `https://alic-website-2-1.onrender.com/syllabus/editdisplay?id=${id}`
       );
       if (!response.ok) throw new Error("Failed to fetch syllabus details");
 
@@ -122,7 +124,7 @@ const SyllabusDisplay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/syllabus/delete/${id}`,
+        `https://alic-website-2-1.onrender.com/syllabus/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -159,7 +161,7 @@ const SyllabusDisplay = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8000/syllabus/editsave/${editingId}`,
+        `https://alic-website-2-1.onrender.com/syllabus/editsave/${editingId}`,
         {
           method: "PUT",
           body: formData,

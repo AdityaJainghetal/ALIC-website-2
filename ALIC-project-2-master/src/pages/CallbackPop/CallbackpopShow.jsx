@@ -12,7 +12,7 @@
 //   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   const api = "http://localhost:8000/Callback/allcallback";
+//   const api = "https://alic-website-2-1.onrender.com/Callback/allcallback";
 
 //   useEffect(() => {
 //     fetchCallbackData();
@@ -40,7 +40,7 @@
 //       window.confirm("Are you sure you want to delete this callback entry?")
 //     ) {
 //       axios
-//         .delete(`http://localhost:8000/Callback/allcallback/${id}`)
+//         .delete(`https://alic-website-2-1.onrender.com/Callback/allcallback/${id}`)
 //         .then(() => {
 //           setCallbackData(callbackData.filter((item) => item._id !== id));
 //           toast.success("Deleted successfully!");
@@ -63,7 +63,7 @@
 
 //     try {
 //       await axios.put(
-//         `http://localhost:8000/Callback/editsave/${editingCallback._id}`,
+//         `https://alic-website-2-1.onrender.com/Callback/editsave/${editingCallback._id}`,
 //         editingCallback
 //       );
 //       toast.success("Callback updated successfully");
@@ -255,8 +255,6 @@
 
 // export default CallbackpopShow;
 
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
@@ -274,7 +272,7 @@ const CallbackpopShow = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const api = "http://localhost:8000/Callback/allcallback";
+  const api = "https://alic-website-2-1.onrender.com/Callback/allcallback";
 
   useEffect(() => {
     fetchCallbackData();
@@ -302,7 +300,9 @@ const CallbackpopShow = () => {
       window.confirm("Are you sure you want to delete this callback entry?")
     ) {
       axios
-        .delete(`http://localhost:8000/Callback/allcallback/${id}`)
+        .delete(
+          `https://alic-website-2-1.onrender.com/Callback/allcallback/${id}`
+        )
         .then(() => {
           setCallbackData(callbackData.filter((item) => item._id !== id));
           toast.success("Deleted successfully!");
@@ -325,7 +325,7 @@ const CallbackpopShow = () => {
 
     try {
       await axios.put(
-        `http://localhost:8000/Callback/editsave/${editingCallback._id}`,
+        `https://alic-website-2-1.onrender.com/Callback/editsave/${editingCallback._id}`,
         editingCallback
       );
       toast.success("Callback updated successfully");
@@ -364,21 +364,21 @@ const CallbackpopShow = () => {
   // Export to PDF function
   const exportToPDF = () => {
     const doc = new jsPDF();
-    
+
     // Title
     doc.setFontSize(18);
     doc.text("Callback Requests", 14, 15);
-    
+
     // Table data
     const tableData = callbackData.map((item, index) => [
       index + 1,
       item.name || "N/A",
       item.phone || "N/A",
     ]);
-    
+
     // Table headers
     const headers = [["S.No", "Full Name", "Phone Number"]];
-    
+
     // Generate table
     doc.autoTable({
       head: headers,
@@ -391,10 +391,10 @@ const CallbackpopShow = () => {
       headStyles: {
         fillColor: [41, 128, 185],
         textColor: 255,
-        fontStyle: 'bold'
+        fontStyle: "bold",
       },
     });
-    
+
     doc.save("Callback_Requests.pdf");
   };
 
@@ -472,7 +472,7 @@ const CallbackpopShow = () => {
             </button>
           </div>
         </div>
-        
+
         <DataTable
           columns={columns}
           data={callbackData}

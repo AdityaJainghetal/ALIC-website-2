@@ -47,7 +47,7 @@
 //   const fetchCourses = async () => {
 //     try {
 //       setLoading(true);
-//       const response = await axios.get("http://localhost:8000/test/display");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/test/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -69,7 +69,7 @@
 
 //   const fetchCategories = async () => {
 //     try {
-//       const response = await axios.get("http://localhost:8000/category");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/category");
 //       setCategories(Array.isArray(response.data) ? response.data : []);
 //     } catch (error) {
 //       console.error("Error fetching categories:", error);
@@ -84,7 +84,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/test/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/test/${id}`);
 //       toast.success("Course deleted successfully");
 //       fetchCourses(); // Refresh the list after deletion
 //     } catch (error) {
@@ -160,7 +160,7 @@
 //   //     }
 
 //   //     const response = await axios.put(
-//   //       `http://localhost:8000/test/editsave/${editId}`,
+//   //       `https://alic-website-2-1.onrender.com/test/editsave/${editId}`,
 //   //       formData,
 //   //       {
 //   //         headers: {
@@ -210,7 +210,7 @@
 //     }
 
 //     const response = await axios.put(
-//       `http://localhost:8000/test/editsave/${editId}`,
+//       `https://alic-website-2-1.onrender.com/test/editsave/${editId}`,
 //       formData,
 //       {
 //         headers: {
@@ -697,7 +697,7 @@
 //   const fetchCourses = async () => {
 //     try {
 //       setLoading(true);
-//       const response = await axios.get("http://localhost:8000/test/display");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/test/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -797,7 +797,7 @@
 
 //   // const fetchCategories = async () => {
 //   //   try {
-//   //     const response = await axios.get("http://localhost:8000/category");
+//   //     const response = await axios.get("https://alic-website-2-1.onrender.com/category");
 //   //     setCategories(Array.isArray(response.data) ? response.data : []);
 //   //   } catch (error) {
 //   //     console.error("Error fetching categories:", error);
@@ -807,7 +807,7 @@
 
 //   // const fetchSubCategories = async (categoryId) => {
 //   //   try {
-//   //     const response = await axios.get(`http://localhost:8000/subcategory/${categoryId}`);
+//   //     const response = await axios.get(`https://alic-website-2-1.onrender.com/subcategory/${categoryId}`);
 //   //     console.log(response, "aaaaaaaaaaaaaaaaa")
 //   //     setSubCategories(response.data || []);
 //   //   } catch (error) {
@@ -818,7 +818,7 @@
 
 //   // const fetchSubSubCategories = async (subCategoryId) => {
 //   //   try {
-//   //     const response = await axios.get(`http://localhost:8000/subsubcategory/${subCategoryId}`);
+//   //     const response = await axios.get(`https://alic-website-2-1.onrender.com/subsubcategory/${subCategoryId}`);
 //   //     setSubSubCategories(response.data || []);
 //   //   } catch (error) {
 //   //     console.error("Error fetching subsubcategories:", error);
@@ -833,7 +833,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/test/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/test/${id}`);
 //       toast.success("Course deleted successfully");
 //       fetchCourses();
 //     } catch (error) {
@@ -937,7 +937,7 @@
 //       }
 
 //       const response = await axios.put(
-//         `http://localhost:8000/test/editsave/${editId}`,
+//         `https://alic-website-2-1.onrender.com/test/editsave/${editId}`,
 //         formData,
 //         {
 //           headers: {
@@ -1429,9 +1429,6 @@
 
 // export default PreDisplay;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -1493,7 +1490,9 @@ const PreDisplay = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8000/test/display");
+      const response = await axios.get(
+        "https://alic-website-2-1.onrender.com/test/display"
+      );
       if (response.data && Array.isArray(response.data.data)) {
         setCourses(response.data.data);
       } else {
@@ -1575,7 +1574,7 @@ const PreDisplay = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8000/test/${id}`);
+      await axios.delete(`https://alic-website-2-1.onrender.com/test/${id}`);
       toast.success("Course deleted successfully");
       fetchCourses();
     } catch (error) {
@@ -1659,7 +1658,7 @@ const PreDisplay = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/test/editsave/${editId}`,
+        `https://alic-website-2-1.onrender.com/test/editsave/${editId}`,
         formData,
         {
           headers: {

@@ -16,14 +16,13 @@
 // import axios from "axios";
 
 // const SubsubCategoryManagement = () => {
- 
+
 //   const [editName, setEditName] = useState("");
 //   const [imageFiles, setImageFiles] = useState([]);
 //   const [imagePreviews, setImagePreviews] = useState([]);
 //   const [editImageFiles, setEditImageFiles] = useState([]);
 //   const [editImagePreviews, setEditImagePreviews] = useState([]);
 
- 
 // const handleEditImageChange = (e) => {
 //   const files = Array.from(e.target.files);
 
@@ -50,7 +49,6 @@
 //   });
 // };
 
-
 //   const removeImage = (index) => {
 //     setImageFiles((prev) => prev.filter((_, i) => i !== index));
 //     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
@@ -74,7 +72,7 @@
 //       imageFiles.forEach((file) => formData.append("images", file));
 
 //       const response = await axios.post(
-//         "http://localhost:8000/subsubcategory",
+//         "https://alic-website-2-1.onrender.com/subsubcategory",
 //         formData,
 //         {
 //           headers: {
@@ -115,7 +113,7 @@
 //       editImageFiles.forEach((file) => formData.append("images", file));
 
 //       const response = await axios.put(
-//         `http://localhost:8000/subsubcategory/${id}`,
+//         `https://alic-website-2-1.onrender.com/subsubcategory/${id}`,
 //         formData,
 //         {
 //           headers: {
@@ -489,19 +487,9 @@
 
 // export default SubsubCategoryManagement;
 
-
-
 "use client";
 import React, { useState } from "react";
-import {
-  Plus,
-  Edit,
-  Trash2,
-  Save,
-  X,
-  Tag,
-  Upload,
-} from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Tag, Upload } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -581,7 +569,7 @@ const SubsubCategoryManagement = () => {
       imageFiles.forEach((file) => formData.append("images", file));
 
       const response = await axios.post(
-        "http://localhost:8000/subsubcategory",
+        "https://alic-website-2-1.onrender.com/subsubcategory",
         formData,
         {
           headers: {
@@ -622,7 +610,7 @@ const SubsubCategoryManagement = () => {
       editImageFiles.forEach((file) => formData.append("images", file));
 
       const response = await axios.put(
-        `http://localhost:8000/subsubcategory/${id}`,
+        `https://alic-website-2-1.onrender.com/subsubcategory/${id}`,
         formData,
         {
           headers: {
@@ -651,7 +639,9 @@ const SubsubCategoryManagement = () => {
 
   const handledeleteSubsubCategory = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/subsubcategory/${id}`);
+      await axios.delete(
+        `https://alic-website-2-1.onrender.com/subsubcategory/${id}`
+      );
       setSubCategories(subCategories.filter((subCat) => subCat._id !== id));
       toast.success("Sub-sub-category deleted successfully!");
     } catch (error) {
@@ -773,7 +763,9 @@ const SubsubCategoryManagement = () => {
           <h3 className="text-lg font-medium mb-3">Sub-Sub-Categories</h3>
 
           {loading ? (
-            <div className="text-center py-4">Loading sub-sub-categories...</div>
+            <div className="text-center py-4">
+              Loading sub-sub-categories...
+            </div>
           ) : subCategories.length === 0 ? (
             <div className="text-center py-4 text-gray-500">
               No sub-sub-categories found.

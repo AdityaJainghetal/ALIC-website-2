@@ -194,7 +194,7 @@
 //     try {
 //       setLoading(true);
 //       const response = await axios.post(
-//         "http://localhost:8000/test/create",
+//         "https://alic-website-2-1.onrender.com/test/create",
 //         data,
 //         {
 //           headers: {
@@ -566,8 +566,6 @@
 
 // export default CourseForm;
 
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -737,7 +735,7 @@ const CourseForm = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8000/test/create",
+        "https://alic-website-2-1.onrender.com/test/create",
         data,
         {
           headers: {

@@ -193,7 +193,7 @@
 //     try {
 //       setLoading(true);
 //       const response = await axios.post(
-//         "http://localhost:8000/main/create",
+//         "https://alic-website-2-1.onrender.com/main/create",
 //         data,
 //         {
 //           headers: {
@@ -564,7 +564,6 @@
 
 // export default MainForm;
 
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -734,7 +733,7 @@ const MainForm = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:8000/main/create",
+        "https://alic-website-2-1.onrender.com/main/create",
         data,
         {
           headers: {

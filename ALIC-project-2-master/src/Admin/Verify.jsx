@@ -12,10 +12,13 @@ const VerifyOTP = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/admin/verify-otp", {
-        email,
-        otp,
-      });
+      const res = await axios.post(
+        "https://alic-website-2-1.onrender.com/admin/verify-otp",
+        {
+          email,
+          otp,
+        }
+      );
       localStorage.setItem("resetToken", res.data.resetToken);
       localStorage.setItem("resetEmail", email);
       toast.success("OTP verified. Proceed to reset password.");

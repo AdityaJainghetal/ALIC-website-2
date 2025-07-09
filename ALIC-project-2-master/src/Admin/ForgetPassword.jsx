@@ -10,7 +10,9 @@ const ForgotPassword = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/admin/send-otp", { email });
+      await axios.post("https://alic-website-2-1.onrender.com/admin/send-otp", {
+        email,
+      });
       toast.success("OTP sent to your email");
       setOtpSent(true);
     } catch (error) {

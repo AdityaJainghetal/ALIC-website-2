@@ -76,7 +76,7 @@
 //         formDataToSend.append('images', file);
 //       });
 
-//       const response = await axios.post('http://localhost:8000/event/', formDataToSend, {
+//       const response = await axios.post('https://alic-website-2-1.onrender.com/event/', formDataToSend, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data'
 //         }
@@ -362,7 +362,7 @@ const Event = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/event/",
+        "https://alic-website-2-1.onrender.com/event/",
         formDataToSend,
         {
           headers: {

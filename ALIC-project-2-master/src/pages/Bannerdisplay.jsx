@@ -12,7 +12,7 @@
 //   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 //   const [isLoading, setIsLoading] = useState(true);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const api = 'http://localhost:8000/banner/alldisplay';
+//   const api = 'https://alic-website-2-1.onrender.com/banner/alldisplay';
 
 //   // Load banners
 //   const loadData = async () => {
@@ -36,7 +36,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/banner/deleted/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/banner/deleted/${id}`);
 //       toast.success('Banner deleted successfully');
 //       loadData();
 //     } catch (error) {
@@ -46,7 +46,7 @@
 
 //   const handleEditClick = async (id) => {
 //     try {
-//       const response = await axios.get(`http://localhost:8000/banner/editdisplay?id=${id}`);
+//       const response = await axios.get(`https://alic-website-2-1.onrender.com/banner/editdisplay?id=${id}`);
 //       setEditingBanner(response.data);
 //       setIsEditFormOpen(true);
 //     } catch (error) {
@@ -75,8 +75,8 @@
 //       }
 
 //       const endpoint = editingBanner._id
-//         ? 'http://localhost:8000/banner/editsave'
-//         : 'http://localhost:8000/banner/create';
+//         ? 'https://alic-website-2-1.onrender.com/banner/editsave'
+//         : 'https://alic-website-2-1.onrender.com/banner/create';
 
 //       await axios.post(endpoint, formData, {
 //         headers: {
@@ -402,9 +402,9 @@ const Bannerdisplay = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const api = "http://localhost:8000/banner/alldisplay";
+  const api = "https://alic-website-2-1.onrender.com/banner/alldisplay";
 
-  console.log(editingBanner,"aaaaaaaaaaaaaaaaaaaaaaaa")
+  console.log(editingBanner, "aaaaaaaaaaaaaaaaaaaaaaaa");
   // Load banners
   const loadData = async () => {
     setIsLoading(true);
@@ -429,7 +429,9 @@ const Bannerdisplay = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8000/banner/deleted/${id}`);
+      await axios.delete(
+        `https://alic-website-2-1.onrender.com/banner/deleted/${id}`
+      );
       toast.success("Banner deleted successfully");
       loadData();
     } catch (error) {
@@ -440,7 +442,7 @@ const Bannerdisplay = () => {
   const handleEditClick = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/banner/editdisplay?id=${id}`
+        `https://alic-website-2-1.onrender.com/banner/editdisplay?id=${id}`
       );
       setEditingBanner(response.data);
       setIsEditFormOpen(true);
@@ -485,8 +487,8 @@ const Bannerdisplay = () => {
       }
 
       const endpoint = editingBanner._id
-        ? "http://localhost:8000/banner/editsave"
-        : "http://localhost:8000/banner/create";
+        ? "https://alic-website-2-1.onrender.com/banner/editsave"
+        : "https://alic-website-2-1.onrender.com/banner/create";
 
       await axios.post(endpoint, formData, {
         headers: {

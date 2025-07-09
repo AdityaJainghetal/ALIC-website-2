@@ -94,7 +94,7 @@
 //     imageFiles.forEach((file) => formData.append('images', file));
 
 //     try {
-//       const api = 'http://localhost:8000/choose/create';
+//       const api = 'https://alic-website-2-1.onrender.com/choose/create';
 //       await axios.post(api, formData, {
 //         headers: { 'Content-Type': 'multipart/form-data' },
 //       });

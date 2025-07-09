@@ -17,7 +17,7 @@
 //   useEffect(() => {
 //     const fetchFAQs = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:8000/faq/');
+//         const response = await axios.get('https://alic-website-2-1.onrender.com/faq/');
 //         setFaqs(response.data.data);
 //       } catch (err) {
 //         setError(err.response?.data?.message || 'Failed to fetch FAQs');
@@ -30,7 +30,7 @@
 
 //   const handleDelete = async (id) => {
 //     try {
-//       await axios.delete(`http://localhost:8000/faq/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/faq/${id}`);
 //       setFaqs(faqs.filter(faq => faq._id !== id));
 //     } catch (err) {
 //       setError(err.response?.data?.message || 'Failed to delete FAQ');
@@ -52,7 +52,7 @@
 
 //   const handleEditSubmit = async (id) => {
 //     try {
-//       const response = await axios.put(`http://localhost:8000/faq/${id}`, editFormData);
+//       const response = await axios.put(`https://alic-website-2-1.onrender.com/faq/${id}`, editFormData);
 //       setFaqs(faqs.map(faq => faq._id === id ? response.data.data : faq));
 //       setEditingId(null);
 //     } catch (err) {
@@ -242,7 +242,9 @@ const FAQDisplay = () => {
   useEffect(() => {
     const fetchFAQs = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/faq/");
+        const response = await axios.get(
+          "https://alic-website-2-1.onrender.com/faq/"
+        );
         setFaqs(response.data.data);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch FAQs");
@@ -256,7 +258,7 @@ const FAQDisplay = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/faq/${id}`);
+      await axios.delete(`https://alic-website-2-1.onrender.com/faq/${id}`);
       setFaqs(faqs.filter((faq) => faq._id !== id));
       toast.success("FAQ deleted successfully!");
     } catch (err) {
@@ -282,7 +284,7 @@ const FAQDisplay = () => {
   const handleEditSubmit = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/faq/${id}`,
+        `https://alic-website-2-1.onrender.com/faq/${id}`,
         editFormData
       );
       setFaqs(faqs.map((faq) => (faq._id === id ? response.data.data : faq)));

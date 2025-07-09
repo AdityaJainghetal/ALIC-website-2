@@ -64,7 +64,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         'http://localhost:8000/banner/create',
+//         'https://alic-website-2-1.onrender.com/banner/create',
 //         formData,
 //         {
 //           headers: {
@@ -286,7 +286,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         'http://localhost:8000/banner/create',
+//         'https://alic-website-2-1.onrender.com/banner/create',
 //         formData,
 //         {
 //           headers: {
@@ -535,7 +535,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         'http://localhost:8000/banner/create',
+//         'https://alic-website-2-1.onrender.com/banner/create',
 //         formData,
 //         {
 //           headers: {
@@ -748,7 +748,7 @@ const Banner = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/banner/create",
+        "https://alic-website-2-1.onrender.com/banner/create",
         formData,
         {
           headers: {

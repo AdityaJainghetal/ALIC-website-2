@@ -124,7 +124,7 @@
 // //   }, [startDate, endDate, enquiries]);
 
 // //   const fetchEnquiries = async () => {
-// //     const response = await fetch('http://localhost:8000/enroll/alldisplay');
+// //     const response = await fetch('https://alic-website-2-1.onrender.com/enroll/alldisplay');
 // //     if (!response.ok) {
 // //       throw new Error('Failed to fetch enquiries');
 // //     }
@@ -133,7 +133,7 @@
 // //   };
 
 // //   const fetchContacts = async () => {
-// //     const response = await fetch('http://localhost:8000/contact/allcontact');
+// //     const response = await fetch('https://alic-website-2-1.onrender.com/contact/allcontact');
 // //     if (!response.ok) throw new Error('Failed to fetch contacts');
 // //     const data = await response.json();
 // //     return Array.isArray(data) ? data : data.data || [];
@@ -603,7 +603,7 @@
 //   }, [startDate, endDate, enquiries]);
 
 //   const fetchEnquiries = async () => {
-//     const response = await fetch("http://localhost:8000/enroll/alldisplay");
+//     const response = await fetch("https://alic-website-2-1.onrender.com/enroll/alldisplay");
 //     if (!response.ok) {
 //       throw new Error("Failed to fetch enquiries");
 //     }
@@ -612,22 +612,19 @@
 //   };
 
 //   const fetchContacts = async () => {
-//     const response = await fetch("http://localhost:8000/contact/allcontact");
+//     const response = await fetch("https://alic-website-2-1.onrender.com/contact/allcontact");
 //     if (!response.ok) throw new Error("Failed to fetch contacts");
 //     const data = await response.json();
 //     return Array.isArray(data) ? data : data.data || [];
 //   };
-
 
 //     const fetchContactsSyllabus = async () => {
-//     const response = await fetch("http://localhost:8000/register/allcontact");
+//     const response = await fetch("https://alic-website-2-1.onrender.com/register/allcontact");
 //     if (!response.ok) throw new Error("Failed to fetch contacts");
 //     const data = await response.json();
 //     return Array.isArray(data) ? data : data.data || [];
 //   };
 
-  
-  
 //   const enquiryColumns = [
 //     {
 //       name: "Name",
@@ -1083,7 +1080,6 @@
 
 // export default Dashboard;
 
-
 import {
   FaGraduationCap,
   FaEnvelope,
@@ -1144,7 +1140,7 @@ const Dashboard = () => {
         const [enquiriesData, contactsData, syllabusData] = await Promise.all([
           fetchEnquiries(),
           fetchContacts(),
-          fetchContactsSyllabus()
+          fetchContactsSyllabus(),
         ]);
 
         const today = new Date().toISOString().split("T")[0];
@@ -1222,7 +1218,9 @@ const Dashboard = () => {
   }, [startDate, endDate, enquiries]);
 
   const fetchEnquiries = async () => {
-    const response = await fetch("http://localhost:8000/enroll/alldisplay");
+    const response = await fetch(
+      "https://alic-website-2-1.onrender.com/enroll/alldisplay"
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch enquiries");
     }
@@ -1231,14 +1229,18 @@ const Dashboard = () => {
   };
 
   const fetchContacts = async () => {
-    const response = await fetch("http://localhost:8000/contact/allcontact");
+    const response = await fetch(
+      "https://alic-website-2-1.onrender.com/contact/allcontact"
+    );
     if (!response.ok) throw new Error("Failed to fetch contacts");
     const data = await response.json();
     return Array.isArray(data) ? data : data.data || [];
   };
 
   const fetchContactsSyllabus = async () => {
-    const response = await fetch("http://localhost:8000/register/allcontact");
+    const response = await fetch(
+      "https://alic-website-2-1.onrender.com/register/allcontact"
+    );
     if (!response.ok) throw new Error("Failed to fetch contacts");
     const data = await response.json();
     return Array.isArray(data) ? data : data.data || [];

@@ -6,7 +6,7 @@
 
 // const QueryDisplay = () => {
 //   const [courses, setCourses] = useState([]);
-//   const api = 'http://localhost:8000/query/display';
+//   const api = 'https://alic-website-2-1.onrender.com/query/display';
 
 //   useEffect(() => {
 //     const fetchCourses = async () => {
@@ -26,7 +26,7 @@
 //     const confirmDelete = window.confirm('Are you sure you want to delete this course?');
 //     if (!confirmDelete) return;
 
-//     const deleteApi = `http://localhost:8000/query/allquerydelete/${id}`;
+//     const deleteApi = `https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`;
 
 //     try {
 //       await axios.delete(deleteApi);
@@ -90,7 +90,7 @@
 //   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 //   const [isLoading, setIsLoading] = useState(true);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const api = "http://localhost:8000/query/display";
+//   const api = "https://alic-website-2-1.onrender.com/query/display";
 
 //   // Load queries
 //   const loadData = async () => {
@@ -116,7 +116,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/query/allquerydelete/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`);
 //       toast.success("Query deleted successfully");
 //       loadData();
 //     } catch (error) {
@@ -127,7 +127,7 @@
 //   const handleEditClick = async (query) => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:8000/query/editdisplay?id=${query._id}`
+//         `https://alic-website-2-1.onrender.com/query/editdisplay?id=${query._id}`
 //       );
 //       setEditingQuery(response.data);
 //       setIsEditFormOpen(true);
@@ -141,7 +141,7 @@
 //     setIsSubmitting(true);
 
 //     try {
-//       const endpoint = `http://localhost:8000/query/editsave/${editingQuery._id}`;
+//       const endpoint = `https://alic-website-2-1.onrender.com/query/editsave/${editingQuery._id}`;
 //       await axios.put(endpoint, editingQuery);
 
 //       toast.success("Query updated successfully");
@@ -434,8 +434,6 @@
 
 // export default QueryDisplay;
 
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
@@ -452,7 +450,7 @@ const QueryDisplay = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const api = "http://localhost:8000/query/display";
+  const api = "https://alic-website-2-1.onrender.com/query/display";
 
   // Load queries
   const loadData = async () => {
@@ -478,7 +476,9 @@ const QueryDisplay = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8000/query/allquerydelete/${id}`);
+      await axios.delete(
+        `https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`
+      );
       toast.success("Query deleted successfully");
       loadData();
     } catch (error) {
@@ -489,7 +489,7 @@ const QueryDisplay = () => {
   const handleEditClick = async (query) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/query/editdisplay?id=${query._id}`
+        `https://alic-website-2-1.onrender.com/query/editdisplay?id=${query._id}`
       );
       setEditingQuery(response.data);
       setIsEditFormOpen(true);
@@ -503,7 +503,7 @@ const QueryDisplay = () => {
     setIsSubmitting(true);
 
     try {
-      const endpoint = `http://localhost:8000/query/editsave/${editingQuery._id}`;
+      const endpoint = `https://alic-website-2-1.onrender.com/query/editsave/${editingQuery._id}`;
       await axios.put(endpoint, editingQuery);
 
       toast.success("Query updated successfully");
@@ -544,11 +544,11 @@ const QueryDisplay = () => {
   // Export to PDF
   const exportToPDF = () => {
     const doc = new jsPDF();
-    
+
     // Title
     doc.setFontSize(18);
     doc.text("Call Back Queries", 14, 15);
-    
+
     // Table data
     const tableData = queries.map((query, index) => [
       index + 1,
@@ -558,17 +558,10 @@ const QueryDisplay = () => {
       query.Medium,
       query.message || "No message",
     ]);
-    
+
     // Table headers
-    const headers = [
-      "S.No",
-      "Name",
-      "Phone",
-      "State",
-      "Medium",
-      "Message",
-    ];
-    
+    const headers = ["S.No", "Name", "Phone", "State", "Medium", "Message"];
+
     // Add table
     doc.autoTable({
       head: [headers],
@@ -581,13 +574,13 @@ const QueryDisplay = () => {
       headStyles: {
         fillColor: [41, 128, 185],
         textColor: 255,
-        fontStyle: 'bold'
+        fontStyle: "bold",
       },
       alternateRowStyles: {
-        fillColor: [245, 245, 245]
-      }
+        fillColor: [245, 245, 245],
+      },
     });
-    
+
     doc.save("CallBackQueries.pdf");
   };
 

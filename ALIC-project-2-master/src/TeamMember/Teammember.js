@@ -7,7 +7,7 @@ export const addMember = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/member/create",
+        "https://alic-website-2-1.onrender.com/member/create",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -25,7 +25,9 @@ export const fetchMembers = createAsyncThunk(
   "member/fetchMembers",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:8000/member/display");
+      const response = await axios.get(
+        "https://alic-website-2-1.onrender.com/member/display"
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -38,7 +40,7 @@ export const deleteMember = createAsyncThunk(
   "member/deleteMember",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8000/member/${id}`);
+      await axios.delete(`https://alic-website-2-1.onrender.com/member/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -52,7 +54,7 @@ export const updateMember = createAsyncThunk(
   async ({ id, formData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/member/${id}`,
+        `https://alic-website-2-1.onrender.com/member/${id}`,
         formData,
         {
           headers: {

@@ -44,7 +44,9 @@ const OtherCourseDisplay = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/othercourse");
+        const response = await axios.get(
+          "https://alic-website-2-1.onrender.com/othercourse"
+        );
         setCourses(response.data);
         setLoading(false);
       } catch (err) {
@@ -60,7 +62,9 @@ const OtherCourseDisplay = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       try {
-        await axios.delete(`http://localhost:8000/othercourse/${id}`);
+        await axios.delete(
+          `https://alic-website-2-1.onrender.com/othercourse/${id}`
+        );
         setCourses(courses.filter((course) => course._id !== id));
       } catch (err) {
         setError(err.message);
@@ -138,7 +142,7 @@ const OtherCourseDisplay = () => {
     setIsSubmitting(true);
     try {
       await axios.put(
-        `http://localhost:8000/othercourse/${currentCourse._id}`,
+        `https://alic-website-2-1.onrender.com/othercourse/${currentCourse._id}`,
         currentCourse
       );
       setCourses(
@@ -160,7 +164,7 @@ const OtherCourseDisplay = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/othercourse",
+        "https://alic-website-2-1.onrender.com/othercourse",
         currentCourse
       );
       setCourses([...courses, response.data]);

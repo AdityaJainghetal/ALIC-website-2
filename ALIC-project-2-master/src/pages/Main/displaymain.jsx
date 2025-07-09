@@ -46,7 +46,7 @@
 
 //   const fetchCourses = async () => {
 //     try {
-//       const response = await axios.get("http://localhost:8000/main/display");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/main/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -68,7 +68,7 @@
 
 //   const fetchCategories = async () => {
 //     try {
-//       const response = await axios.get("http://localhost:8000/category");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/category");
 //       setCategories(Array.isArray(response.data) ? response.data : []);
 //     } catch (error) {
 //       console.error("Error fetching categories:", error);
@@ -83,7 +83,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/main/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
 //       toast.success("Course deleted successfully");
 //       setCourses((prev) =>
 //         Array.isArray(prev) ? prev.filter((course) => course._id !== id) : []
@@ -148,7 +148,7 @@
 //       }
 
 //       const response = await axios.put(
-//         `http://localhost:8000/main/editsave/${editId}`,
+//         `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
 //         formData,
 //         {
 //           headers: {
@@ -596,7 +596,6 @@
 
 // export default MainDisplay;
 
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { toast } from "react-toastify";
@@ -652,7 +651,7 @@
 
 //   const fetchCourses = async () => {
 //     try {
-//       const response = await axios.get("http://localhost:8000/main/display");
+//       const response = await axios.get("https://alic-website-2-1.onrender.com/main/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -676,9 +675,9 @@
 //     try {
 //       const [categoriesRes, subCategoriesRes, subSubCategoriesRes] =
 //         await Promise.all([
-//           axios.get("http://localhost:8000/category"),
-//           axios.get("http://localhost:8000/subcategory"),
-//           axios.get("http://localhost:8000/subsubcategory"),
+//           axios.get("https://alic-website-2-1.onrender.com/category"),
+//           axios.get("https://alic-website-2-1.onrender.com/subcategory"),
+//           axios.get("https://alic-website-2-1.onrender.com/subsubcategory"),
 //         ]);
 
 //       setCategories(categoriesRes.data || []);
@@ -723,7 +722,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`http://localhost:8000/main/${id}`);
+//       await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
 //       toast.success("Course deleted successfully");
 //       setCourses((prev) =>
 //         Array.isArray(prev) ? prev.filter((course) => course._id !== id) : []
@@ -795,7 +794,7 @@
 //       }
 
 //       const response = await axios.put(
-//         `http://localhost:8000/main/editsave/${editId}`,
+//         `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
 //         formData,
 //         {
 //           headers: {
@@ -1296,10 +1295,6 @@
 
 // export default MainDisplay;
 
-
-
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -1361,7 +1356,9 @@ const MainDisplay = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8000/main/display");
+      const response = await axios.get(
+        "https://alic-website-2-1.onrender.com/main/display"
+      );
       if (response.data && Array.isArray(response.data.data)) {
         setCourses(response.data.data);
       } else {
@@ -1443,7 +1440,7 @@ const MainDisplay = () => {
     if (!confirmDelete) return;
 
     try {
-await axios.delete(`http://localhost:8000/main/${id}`);
+      await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
       toast.success("Course deleted successfully");
       fetchCourses();
     } catch (error) {
@@ -1527,7 +1524,7 @@ await axios.delete(`http://localhost:8000/main/${id}`);
       }
 
       const response = await axios.put(
-      `http://localhost:8000/main/editsave/${editId}`,
+        `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
         formData,
         {
           headers: {

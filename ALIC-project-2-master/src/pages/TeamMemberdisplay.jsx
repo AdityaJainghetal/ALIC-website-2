@@ -41,7 +41,9 @@ const TeamMemberDisplay = () => {
   const fetchMembers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8000/member/display");
+      const response = await axios.get(
+        "https://alic-website-2-1.onrender.com/member/display"
+      );
       setMembers(response.data);
       setError(null);
     } catch (err) {
@@ -85,7 +87,9 @@ const TeamMemberDisplay = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this team member?")) {
       try {
-        await axios.delete(`http://localhost:8000/member/${id}`);
+        await axios.delete(
+          `https://alic-website-2-1.onrender.com/member/${id}`
+        );
         setMembers((prev) => prev.filter((member) => member._id !== id));
         toast.success("Team member deleted successfully");
       } catch (err) {
@@ -109,7 +113,7 @@ const TeamMemberDisplay = () => {
       setLoading(true);
       // Fetch the specific member data using the getMemberById endpoint
       const response = await axios.get(
-        `http://localhost:8000/member/${member._id}`
+        `https://alic-website-2-1.onrender.com/member/${member._id}`
       );
       setCurrentMember(response.data);
       setIsEditing(true);
@@ -211,7 +215,7 @@ const TeamMemberDisplay = () => {
     try {
       setLoading(true);
       const response = await axios.put(
-        `http://localhost:8000/member/editsave/${currentMember._id}`,
+        `https://alic-website-2-1.onrender.com/member/editsave/${currentMember._id}`,
         formData,
         {
           headers: {

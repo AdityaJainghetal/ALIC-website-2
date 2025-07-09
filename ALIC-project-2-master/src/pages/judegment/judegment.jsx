@@ -105,7 +105,7 @@ const Judgement = () => {
 
     try {
       await axios.post(
-        "http://localhost:8000/judement/create",
+        "https://alic-website-2-1.onrender.com/judement/create",
         formDataToSend,
         {
           headers: { "Content-Type": "multipart/form-data" },

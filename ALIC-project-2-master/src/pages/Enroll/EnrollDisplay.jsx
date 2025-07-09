@@ -16,7 +16,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch('http://localhost:8000/enroll/alldisplay');
+//       const response = await fetch('https://alic-website-2-1.onrender.com/enroll/alldisplay');
 //       if (!response.ok) {
 //         throw new Error('Failed to fetch enquiries');
 //       }
@@ -41,7 +41,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`http://localhost:8000/enroll/alldelete/${id}`, {
+//       const response = await fetch(`https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -206,7 +206,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch("http://localhost:8000/enroll/alldisplay");
+//       const response = await fetch("https://alic-website-2-1.onrender.com/enroll/alldisplay");
 //       if (!response.ok) {
 //         throw new Error("Failed to fetch enquiries");
 //       }
@@ -233,7 +233,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `http://localhost:8000/enroll/alldelete/${id}`,
+//         `https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`,
 //         {
 //           method: "DELETE",
 //         }
@@ -276,7 +276,7 @@
 //     e.preventDefault();
 //     try {
 //       const response = await fetch(
-//         `http://localhost:8000/enroll/editsave/${editingEnquiry}`,
+//         `https://alic-website-2-1.onrender.com/enroll/editsave/${editingEnquiry}`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -546,8 +546,6 @@
 
 // export default EnrollDisplay;
 
-
-
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { FaTrash, FaEdit, FaFileExcel, FaFilePdf } from "react-icons/fa";
@@ -577,7 +575,9 @@ const EnrollDisplay = () => {
 
   const fetchEnquiries = async () => {
     try {
-      const response = await fetch("http://localhost:8000/enroll/alldisplay");
+      const response = await fetch(
+        "https://alic-website-2-1.onrender.com/enroll/alldisplay"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch enquiries");
       }
@@ -604,7 +604,7 @@ const EnrollDisplay = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/enroll/alldelete/${id}`,
+        `https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`,
         {
           method: "DELETE",
         }
@@ -647,7 +647,7 @@ const EnrollDisplay = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8000/enroll/editsave/${editingEnquiry}`,
+        `https://alic-website-2-1.onrender.com/enroll/editsave/${editingEnquiry}`,
         {
           method: "POST",
           headers: {
@@ -692,13 +692,13 @@ const EnrollDisplay = () => {
     const worksheet = XLSX.utils.json_to_sheet(
       filteredEnquiries.map((item, index) => ({
         "S.No": index + 1,
-        "Name": item.name || "N/A",
-        "Email": item.email || "N/A",
-        "Phone": item.phone || "N/A",
-        "City": item.city || "N/A",
+        Name: item.name || "N/A",
+        Email: item.email || "N/A",
+        Phone: item.phone || "N/A",
+        City: item.city || "N/A",
         "Product Name": item?.productId?.Coursename || "N/A",
         "Created At": formatDate(item.createdAt),
-        "Status": item.status ? item.status.replace("_", " ") : "N/A"
+        Status: item.status ? item.status.replace("_", " ") : "N/A",
       }))
     );
     const workbook = XLSX.utils.book_new();
@@ -709,11 +709,11 @@ const EnrollDisplay = () => {
   // Export to PDF function
   const exportToPDF = () => {
     const doc = new jsPDF();
-    
+
     // Title
     doc.setFontSize(18);
     doc.text("Enquiries List", 14, 15);
-    
+
     // Table data
     const tableData = filteredEnquiries.map((item, index) => [
       index + 1,
@@ -723,14 +723,23 @@ const EnrollDisplay = () => {
       item.city || "N/A",
       item?.productId?.Coursename || "N/A",
       formatDate(item.createdAt),
-      item.status ? item.status.replace("_", " ") : "N/A"
+      item.status ? item.status.replace("_", " ") : "N/A",
     ]);
-    
+
     // Table headers
     const headers = [
-      ["S.No", "Name", "Email", "Phone", "City", "Product Name", "Created At", "Status"]
+      [
+        "S.No",
+        "Name",
+        "Email",
+        "Phone",
+        "City",
+        "Product Name",
+        "Created At",
+        "Status",
+      ],
     ];
-    
+
     // Generate table
     doc.autoTable({
       head: headers,
@@ -743,10 +752,10 @@ const EnrollDisplay = () => {
       headStyles: {
         fillColor: [41, 128, 185],
         textColor: 255,
-        fontStyle: 'bold'
+        fontStyle: "bold",
       },
     });
-    
+
     doc.save("Enquiries.pdf");
   };
 
@@ -806,7 +815,6 @@ const EnrollDisplay = () => {
       name: "Actions",
       cell: (row) => (
         <div className="flex space-x-2">
-  
           <button
             onClick={() => handleDelete(row.id || row._id)}
             className="text-red-500 hover:text-red-700"

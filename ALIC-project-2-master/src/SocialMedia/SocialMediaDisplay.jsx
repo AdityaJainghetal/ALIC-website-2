@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FaEdit, FaTrash, FaLink, FaPlus } from 'react-icons/fa';
-import { FiExternalLink } from 'react-icons/fi';
-import { 
-  FaFacebook, 
-  FaTwitter, 
-  FaInstagram, 
-  FaLinkedin, 
-  FaYoutube, 
-  FaPinterest, 
-  FaTiktok, 
-  FaWhatsapp, 
-  FaTelegram, 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaEdit, FaTrash, FaLink, FaPlus } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaPinterest,
+  FaTiktok,
+  FaWhatsapp,
+  FaTelegram,
   FaGithub,
   FaReddit,
   FaDiscord,
   FaTwitch,
-  FaSnapchat
-} from 'react-icons/fa';
+  FaSnapchat,
+} from "react-icons/fa";
 
 const SocialMediaDisplay = () => {
-  const api = "http://localhost:8000/social";
+  const api = "https://alic-website-2-1.onrender.com/social";
   const [socialLinks, setSocialLinks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formData, setFormData] = useState({
-    icon: '',
-    url: '',
-    altText: ''
+    icon: "",
+    url: "",
+    altText: "",
   });
 
   // Fetch data
@@ -38,9 +38,9 @@ const SocialMediaDisplay = () => {
     try {
       const response = await axios.get(api);
       setSocialLinks(response.data.data);
-      toast.success('Data loaded successfully');
+      toast.success("Data loaded successfully");
     } catch (error) {
-      toast.error('Failed to load data');
+      toast.error("Failed to load data");
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
@@ -56,7 +56,7 @@ const SocialMediaDisplay = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -67,16 +67,16 @@ const SocialMediaDisplay = () => {
       if (editId) {
         // Update existing record
         await axios.put(`${api}/${editId}`, formData);
-        toast.success('Link updated successfully');
+        toast.success("Link updated successfully");
       } else {
         // Create new record
         await axios.post(api, formData);
-        toast.success('Link created successfully');
+        toast.success("Link created successfully");
       }
       fetchSocialLinks();
       resetForm();
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Operation failed');
+      toast.error(error.response?.data?.error || "Operation failed");
       console.error("Error saving data:", error);
     }
   };
@@ -87,20 +87,20 @@ const SocialMediaDisplay = () => {
     setFormData({
       icon: link.icon,
       url: link.url,
-      altText: link.altText
+      altText: link.altText,
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Delete record
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this link?')) {
+    if (window.confirm("Are you sure you want to delete this link?")) {
       try {
         await axios.delete(`${api}/${id}`);
-        toast.success('Link deleted successfully');
+        toast.success("Link deleted successfully");
         fetchSocialLinks();
       } catch (error) {
-        toast.error('Failed to delete link');
+        toast.error("Failed to delete link");
         console.error("Error deleting data:", error);
       }
     }
@@ -109,9 +109,9 @@ const SocialMediaDisplay = () => {
   // Reset form
   const resetForm = () => {
     setFormData({
-      icon: '',
-      url: '',
-      altText: ''
+      icon: "",
+      url: "",
+      altText: "",
     });
     setEditId(null);
   };
@@ -119,7 +119,7 @@ const SocialMediaDisplay = () => {
   // Get icon component
   const getIconComponent = (iconName) => {
     if (!iconName) return <FaLink />;
-    
+
     const iconMap = {
       facebook: <FaFacebook />,
       twitter: <FaTwitter />,
@@ -134,7 +134,7 @@ const SocialMediaDisplay = () => {
       reddit: <FaReddit />,
       discord: <FaDiscord />,
       twitch: <FaTwitch />,
-      snapchat: <FaSnapchat />
+      snapchat: <FaSnapchat />,
     };
 
     return iconMap[iconName.toLowerCase()] || <FaLink />;
@@ -143,7 +143,7 @@ const SocialMediaDisplay = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
       <h1 className="text-3xl font-bold mb-6 flex items-center">
         <FaLink className="mr-2" /> Social Media Links
       </h1>
@@ -151,9 +151,9 @@ const SocialMediaDisplay = () => {
       {/* Form Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-semibold mb-4">
-          {editId ? 'Edit Social Link' : 'Add New Social Link'}
+          {editId ? "Edit Social Link" : "Add New Social Link"}
         </h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-2">Icon Name</label>
@@ -187,7 +187,7 @@ const SocialMediaDisplay = () => {
               Enter the name of the icon (e.g., "facebook" for Facebook icon)
             </p>
           </div>
-          
+
           <div>
             <label className="block text-gray-700 mb-2">URL</label>
             <input
@@ -200,7 +200,7 @@ const SocialMediaDisplay = () => {
               required
             />
           </div>
-          
+
           <div>
             <label className="block text-gray-700 mb-2">Alt Text</label>
             <input
@@ -213,7 +213,7 @@ const SocialMediaDisplay = () => {
               required
             />
           </div>
-          
+
           <div className="flex space-x-4 pt-2">
             <button
               type="submit"
@@ -229,7 +229,7 @@ const SocialMediaDisplay = () => {
                 </>
               )}
             </button>
-            
+
             {editId && (
               <button
                 type="button"
@@ -248,20 +248,30 @@ const SocialMediaDisplay = () => {
         <div className="p-4 border-b">
           <h2 className="text-xl font-semibold">Manage Links</h2>
         </div>
-        
+
         {loading ? (
           <div className="p-8 text-center text-gray-500">Loading...</div>
         ) : socialLinks.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">No social links found</div>
+          <div className="p-8 text-center text-gray-500">
+            No social links found
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Icon</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Icon
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    URL
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -273,9 +283,9 @@ const SocialMediaDisplay = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <a 
-                        href={link.url} 
-                        target="_blank" 
+                      <a
+                        href={link.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800 flex items-center"
                       >
