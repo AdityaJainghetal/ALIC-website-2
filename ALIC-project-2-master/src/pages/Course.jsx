@@ -539,7 +539,6 @@
 // };
 
 // export default Course;
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Upload, X } from "lucide-react";
@@ -581,7 +580,6 @@ const Course = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [subsubCategories, setSubsubCategories] = useState([]);
   const [filteredSubCategories, setFilteredSubCategories] = useState([]);
-  const [filteredSubsubCategories, setFilteredSubsubCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -606,7 +604,8 @@ const Course = () => {
 
   // Fetch all subcategories
   useEffect(() => {
-    const fetchAllSubcategories = async () => {
+    const fetchsubCategories = async () => {
+      setLoading(true);
       try {
         const response = await fetchSubcategory();
         if (response.data) {
@@ -615,12 +614,14 @@ const Course = () => {
       } catch (error) {
         console.error("Error fetching subcategories:", error);
         toast.error("Failed to load subcategories. Please try again.");
+      } finally {
+        setLoading(false);
       }
     };
-    fetchAllSubcategories();
+    fetchsubCategories();
   }, []);
 
-  // Fetch all subsubcategories
+  // Fetch all subsubcategories (independent fetch)
   useEffect(() => {
     const fetchAllSubsubcategories = async () => {
       try {
@@ -643,34 +644,11 @@ const Course = () => {
         (subCat) => subCat.category === formData.category
       );
       setFilteredSubCategories(filtered);
-      setFormData((prev) => ({ ...prev, subCategory: "", subsubCategory: "" }));
+      setFormData((prev) => ({ ...prev, subCategory: "" }));
     } else {
       setFilteredSubCategories([]);
-      setFilteredSubsubCategories([]);
     }
   }, [formData.category, subCategories]);
-
-  // Filter subsubcategories based on selected subcategory
-  useEffect(() => {
-    if (formData.subCategory && subsubCategories.length > 0) {
-      const selectedSubCategory = subCategories.find(
-        (sub) => sub._id === formData.subCategory
-      );
-      const selectedName = selectedSubCategory?.name;
-
-      const filtered = subsubCategories.filter(
-        (subsubCat) => subsubCat.subCategory === selectedName
-      );
-      setFilteredSubsubCategories(filtered);
-
-      if (!filtered.some((item) => item._id === formData.subsubCategory)) {
-        setFormData((prev) => ({ ...prev, subsubCategory: "" }));
-      }
-    } else {
-      setFilteredSubsubCategories([]);
-      setFormData((prev) => ({ ...prev, subsubCategory: "" }));
-    }
-  }, [formData.subCategory, subsubCategories, subCategories]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -737,12 +715,10 @@ const Course = () => {
     setLoading(true);
     const formDataToSend = new FormData();
 
-    // Append all form data
     Object.entries(formData).forEach(([key, value]) => {
       if (value) formDataToSend.append(key, value);
     });
 
-    // Append images
     imageFiles.forEach((file) => {
       formDataToSend.append("images", file);
     });
@@ -840,7 +816,7 @@ const Course = () => {
     </div>
   );
 
-  // Render subsubcategory select dropdown
+  // Render subsubcategory select dropdown (independent dropdown)
   const renderSubsubCategorySelect = () => (
     <div className="space-y-1">
       <label className="block text-sm font-medium text-gray-700">
@@ -851,10 +827,9 @@ const Course = () => {
         value={formData.subsubCategory}
         onChange={handleInputChange}
         className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        disabled={!formData.subCategory}
       >
-        <option value="">Select a sub-subcategory</option>
-        {filteredSubsubCategories.map((subsubCategory) => (
+        <option value="">Select a sub-subcategory (optional)</option>
+        {subsubCategories.map((subsubCategory) => (
           <option key={subsubCategory._id} value={subsubCategory._id}>
             {subsubCategory.name}
           </option>

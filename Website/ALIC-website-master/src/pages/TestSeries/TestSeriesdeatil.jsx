@@ -33,7 +33,7 @@ const TestSeriesDetail = () => {
         const response = await axios.get(
           `http://localhost:8000/test/preseries/${id}`
         );
-        console.log(response, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // console.log(response, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         if (!response.data) {
           throw new Error("Test series not found");
         }

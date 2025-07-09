@@ -28,34 +28,86 @@ const getSubcategoryById = async (req, res) => {
 };
 
 // Create a new Subcategory with images
+// const createSubcategory = async (req, res) => {
+//   try {
+//     const { name, subCategory, size } = req.body;
+//     // console.log(name, subCategory, size, "JKHSDKJSHDKSAHKJDh");
+//     // Validate required fields
+//     if (!name || !subCategory) {
+//       return res
+//         .status(400)
+//         .json({ message: "Name and subCategory are required" });
+//     }
+
+//     // Check if subCategory exists
+//     const subCatDoc = await FirstSubcategory.findById(subCategory);
+//     if (!subCatDoc) {
+//       return res.status(404).json({ message: "SubCategory not found" });
+//     }
+
+//     // Parse size if it exists
+//     let parsedSize = [];
+//     if (size) {
+//       try {
+//         parsedSize = typeof size === "string" ? JSON.parse(size) : size;
+//       } catch (err) {
+//         return res.status(400).json({ error: "Invalid size format" });
+//       }
+//     }
+
+//     // Upload images to ImageKit
+//     const uploadedImages = [];
+//     const filesRaw = req.files?.images;
+
+//     if (filesRaw) {
+//       const files = Array.isArray(filesRaw) ? filesRaw : [filesRaw];
+
+//       for (let file of files) {
+//         const buffer = file.data;
+//         const uploadResponse = await imagekit.upload({
+//           file: buffer,
+//           fileName: file.name,
+//         });
+//         uploadedImages.push(uploadResponse.url);
+//       }
+//     }
+
+//     // Create new subcategory
+//     const newSubcategory = new SubSubcategory({
+//       name,
+//       subCategory: subCatDoc.name,
+//       size: parsedSize,
+//       images: uploadedImages,
+//     });
+
+//     await newSubcategory.save();
+//     res.status(201).json(newSubcategory);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 const createSubcategory = async (req, res) => {
   try {
-    const { name, subCategory, size } = req.body;
-    // console.log(name, subCategory, size, "JKHSDKJSHDKSAHKJDh");
-    // Validate required fields
-    if (!name || !subCategory) {
+    const { name } = req.body;
+
+    // ✅ Validate required field
+    if (!name) {
+      return res.status(400).json({ message: "Name is required" });
+    }
+
+    // ✅ Check for duplicate name (case-insensitive)
+    const existing = await SubSubcategory.findOne({
+      name: { $regex: `^${name.trim()}$`, $options: "i" },
+    });
+
+    if (existing) {
       return res
-        .status(400)
-        .json({ message: "Name and subCategory are required" });
+        .status(409)
+        .json({ message: "Sub-subcategory with this name already exists" });
     }
 
-    // Check if subCategory exists
-    const subCatDoc = await FirstSubcategory.findById(subCategory);
-    if (!subCatDoc) {
-      return res.status(404).json({ message: "SubCategory not found" });
-    }
-
-    // Parse size if it exists
-    let parsedSize = [];
-    if (size) {
-      try {
-        parsedSize = typeof size === "string" ? JSON.parse(size) : size;
-      } catch (err) {
-        return res.status(400).json({ error: "Invalid size format" });
-      }
-    }
-
-    // Upload images to ImageKit
+    // ✅ Upload images (if any)
     const uploadedImages = [];
     const filesRaw = req.files?.images;
 
@@ -72,11 +124,9 @@ const createSubcategory = async (req, res) => {
       }
     }
 
-    // Create new subcategory
+    // ✅ Create new SubSubcategory with only name and images
     const newSubcategory = new SubSubcategory({
-      name,
-      subCategory: subCatDoc.name,
-      size: parsedSize,
+      name: name.trim(),
       images: uploadedImages,
     });
 
@@ -86,6 +136,7 @@ const createSubcategory = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Update a Subcategory with images
 // const updateSubcategory = async (req, res) => {

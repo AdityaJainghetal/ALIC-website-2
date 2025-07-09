@@ -43,17 +43,63 @@ const editDisplay = async (req, res) => {
 
 const editDataSave = async (req, res) => {
   try {
+    const { id } = req.params;
+    const updateData = { ...req.body };
+    
+    // Handle image uploads if files are present
+    if (req.files && req.files.images) {
+      const uploadedImages = [];
+      const files = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
+
+      for (let file of files) {
+        const buffer = file.data;
+        const uploadResponse = await imagekit.upload({
+          file: buffer,
+          fileName: file.name,
+        });
+        uploadedImages.push(uploadResponse.url);
+      }
+
+      // Combine existing images (if any) with new ones
+      updateData.images = [...(req.body.existingImages || []), ...uploadedImages];
+    }
+
+    // Handle images to delete
+    if (req.body.imagesToDelete) {
+      const imagesToDelete = Array.isArray(req.body.imagesToDelete) 
+        ? req.body.imagesToDelete 
+        : [req.body.imagesToDelete];
+      
+      updateData.images = (updateData.images || req.body.existingImages || []).filter(
+        img => !imagesToDelete.includes(img)
+      );
+    }
+
+    // Handle other special fields
+    if (updateData.LastDate) {
+      updateData.LastDate = new Date(updateData.LastDate);
+      if (isNaN(updateData.LastDate)) {
+        return res.status(400).json({ error: "Invalid LastDate format" });
+      }
+    }
+
     const updatedCourse = await Course.findByIdAndUpdate(
-      req.params.id,
-      req.body,
+      id,
+      updateData,
       { new: true }
-    );
+    ).populate("category").populate("subCategory").populate("subsubCategory");
+
     if (!updatedCourse) {
       return res.status(404).json({ message: "Course not found" });
     }
+
     res.status(200).json(updatedCourse);
   } catch (err) {
-    res.status(500).json({ message: "Failed to update course", error: err });
+    console.error("Error updating course:", err);
+    res.status(500).json({ 
+      message: "Failed to update course", 
+      error: err.message 
+    });
   }
 };
 const getAllQuery = async (req, res) => {
@@ -209,6 +255,7 @@ const getAllCoursedisplay = async (req, res) => {
       .populate("subsubCategory"); // Add this line to populate subcategory
 
     res.status(200).json(productsall);
+
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ message: error.message });
@@ -240,6 +287,36 @@ const getsubcategory = async (req, res) => {
     console.log("Fetching courses for subsubCategory ID:", id);
 
     const courses = await Course.find({ subsubCategory: id });
+
+    if (!courses.length) {
+      return res
+        .status(404)
+        .json({ message: "No courses found for this subsubCategory." });
+    }
+
+    res.status(200).json(courses);
+  } catch (error) {
+    console.error("Error fetching courses by subsubCategory ID:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+const getrecorededcourse = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Validate MongoDB ObjectId
+    // if (!mongoose.Types.ObjectId.isValid(id)) {
+    //   return res.status(400).json({ message: "Invalid ID format" });
+    // }
+
+    console.log("Fetching courses for subsubCategory ID:", id);
+
+    const courses = await Course.find({ subsubCategory: id }).populate("category")
+      .populate("subCategory")
+      .populate("subsubCategory"); // Add this line to populate subcategory
+;
 
     if (!courses.length) {
       return res
@@ -375,4 +452,5 @@ module.exports = {
   getproducthome,
   getAllCoursedisplay,
   getsubcategory,
+  getrecorededcourse
 };

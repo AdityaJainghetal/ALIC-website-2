@@ -116,7 +116,7 @@ export const Slider = () => {
       try {
         const response = await axios.get("http://localhost:8000/url/display");
         setStories(response.data.data);
-        console.log(stories, "aaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // console.log(stories, "aaaaaaaaaaaaaaaaaaaaaaaaaa");
       } catch (err) {
         setError("Failed to fetch video URLs");
       } finally {

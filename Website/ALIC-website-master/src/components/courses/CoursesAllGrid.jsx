@@ -200,6 +200,110 @@
 //   );
 // };
 
+// import React, { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import { fetchSubsubcategory } from "../../components/api";
+// import { toast } from "react-toastify";
+
+// export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
+//   const [subsubCategories, setSubsubCategories] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchAllSubsubcategories = async () => {
+//       try {
+//         const response = await fetchSubsubcategory();
+//         if (response.data) {
+//           const uniqueByName = [];
+//           const namesSeen = new Set();
+
+//           for (const item of response.data) {
+//             if (!namesSeen.has(item.name)) {
+//               namesSeen.add(item.name);
+//               uniqueByName.push(item);
+//             }
+//           }
+
+//           setSubsubCategories(uniqueByName);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching subsubcategories:", error);
+//         toast.error("Failed to load subsubcategories. Please try again.");
+//         setError("Failed to load subsubcategories");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchAllSubsubcategories();
+//   }, []);
+
+//   const sliderSettings = {
+//     dots: true,
+//     infinite: false,
+//     autoplay: true,
+//     speed: 500,
+//     slidesToShow: 6,
+//     slidesToScroll: 1,
+//     responsive: [
+//       { breakpoint: 1024, settings: { slidesToShow: 3 } },
+//       { breakpoint: 768, settings: { slidesToShow: 2 } },
+//       { breakpoint: 480, settings: { slidesToShow: 2 } },
+//     ],
+//   };
+
+//   if (loading) return <div>Loading categories...</div>;
+//   if (error) return <div>Error: {error}</div>;
+
+//   return (
+//     <>
+//       <div className="td_height_120 td_height_lg_90" />
+//       <div className="course-slider-wrapper mb-5">
+//         <Slider {...sliderSettings}>
+//           {subsubCategories.map((subsub) => (
+//             <div
+//               key={subsub.uniqueId}
+//               className={`p-2 ${
+//                 subsub._id === selectedSubCategoryId ? "selected-slide" : ""
+//               }`}
+//             >
+//               <div className="td_card td_style_3 d-block td_radius_10">
+//                 <Link
+//                   to={`/courses-layout/${subsub._id}`}
+//                   className="td_card_thumb"
+//                 >
+//                   <img
+//                     src={subsub.images?.[0] || "/default-image.jpg"}
+//                     alt={subsub.name || "Course"}
+//                     className="img-fluid"
+//                     style={{
+//                       height: "120px",
+//                       width: "100%",
+//                       objectFit: "cover",
+//                     }}
+//                   />
+//                 </Link>
+//                 <div className="p-2 td_white_bg">
+//                   <div className="td_card_info_in">
+//                     <h5 className="td_card_title text-center td_fs_14 td_mb_16">
+//                       <Link to={`/courses-layout/${subsub._id}`}>
+//                         {subsub.name || "Judiciary Course"}
+//                       </Link>
+//                     </h5>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </Slider>
+//       </div>
+//     </>
+//   );
+// };
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
@@ -210,41 +314,42 @@ import { toast } from "react-toastify";
 
 export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
   const [subsubCategories, setSubsubCategories] = useState([]);
+  const [duplicateNameIds, setDuplicateNameIds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchAllSubsubcategories = async () => {
-  //     try {
-  //       const response = await fetchSubsubcategory();
-  //       if (response.data) {
-  //         // Ensure each subsubcategory has a unique identifier
-  //         const processedData = response.data.map(item => ({
-  //           ...item,
-  //           uniqueId: `${item._id}-${item.name}` // Combine ID and name for uniqueness
-  //         }));
-  //         setSubsubCategories(processedData);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching subsubcategories:", error);
-  //       toast.error("Failed to load subsubcategories. Please try again.");
-  //       setError("Failed to load subsubcategories");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchAllSubsubcategories();
-  // }, []);
 
   useEffect(() => {
     const fetchAllSubsubcategories = async () => {
       try {
         const response = await fetchSubsubcategory();
         if (response.data) {
+          const allItems = response.data;
+          console.log(allItems, "dataaa");
+
+          // Step 1: Map name to list of IDs
+          const nameToIdsMap = {};
+          for (const item of allItems) {
+            const name = item.name;
+            if (!nameToIdsMap[name]) {
+              nameToIdsMap[name] = [];
+            }
+            nameToIdsMap[name].push(item._id);
+          }
+
+          console.log(nameToIdsMap, "12345");
+
+          // Step 2: Extract only duplicate name IDs
+          const duplicateIds = [];
+          for (const name in nameToIdsMap) {
+            if (nameToIdsMap[name].length > 1) {
+              duplicateIds.push(...nameToIdsMap[name]);
+            }
+          }
+
+          // Optional: Filter unique by name for display (as you did before)
           const uniqueByName = [];
           const namesSeen = new Set();
-
-          for (const item of response.data) {
+          for (const item of allItems) {
             if (!namesSeen.has(item.name)) {
               namesSeen.add(item.name);
               uniqueByName.push(item);
@@ -252,6 +357,7 @@ export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
           }
 
           setSubsubCategories(uniqueByName);
+          setDuplicateNameIds(duplicateIds);
         }
       } catch (error) {
         console.error("Error fetching subsubcategories:", error);
@@ -261,6 +367,7 @@ export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
         setLoading(false);
       }
     };
+
     fetchAllSubsubcategories();
   }, []);
 
@@ -288,7 +395,7 @@ export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
         <Slider {...sliderSettings}>
           {subsubCategories.map((subsub) => (
             <div
-              key={subsub.uniqueId}
+              key={subsub._id}
               className={`p-2 ${
                 subsub._id === selectedSubCategoryId ? "selected-slide" : ""
               }`}
@@ -313,6 +420,8 @@ export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
                   <div className="td_card_info_in">
                     <h5 className="td_card_title text-center td_fs_14 td_mb_16">
                       <Link to={`/courses-layout/${subsub._id}`}>
+                        {/* {JSON.stringify(subsub)}
+                        {console.log(subsub,"Sarik")} */}
                         {subsub.name || "Judiciary Course"}
                       </Link>
                     </h5>
@@ -323,6 +432,9 @@ export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
           ))}
         </Slider>
       </div>
+
+      {/* Debug: Print duplicate IDs */}
+      {/* <pre>{JSON.stringify(duplicateNameIds, null, 2)}</pre> */}
     </>
   );
 };

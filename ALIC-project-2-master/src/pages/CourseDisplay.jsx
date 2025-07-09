@@ -24,6 +24,8 @@ const CourseDisplay = () => {
   const [courses, setCourses] = useState([]);
   const [filterText, setFilterText] = useState("");
   const [editId, setEditId] = useState(null);
+  const [newImages, setNewImages] = useState([]);
+const [imagesToDelete, setImagesToDelete] = useState([]);
   const [editForm, setEditForm] = useState({
     Price: "",
     Durations: "",
@@ -155,47 +157,7 @@ const CourseDisplay = () => {
     }
   };
 
-  // const startEdit = async (id) => {
-  //   try {
-  //     const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
-  //     const course = res.data;
-  //     setEditId(id);
-  //     setEditForm({
-  //       Price: course.Price || '',
-  //       Durations: course.Durations || '',
-  //       TrainerName: course.TrainerName || '',
-  //       LastDate: course.LastDate ? course.LastDate.substring(0, 10) : '',
-  //       category: course.category?._id || course.category || '',
-  //       subCategory: course.subCategory?._id || course.subCategory || '',
-  //       subsubCategory: course.subsubCategory?._id || course.subsubCategory || '',
-  //       CourseDescription: course.CourseDescription || '',
-  //       InstructorCourse: course.InstructorCourse || '',
-  //       URL: course.URL || '',
-  //       images: course.images || []
-  //     });
-
-  //     // Immediately filter subcategories if category is present
-  //     if (course.category?._id || course.category) {
-  //       const filteredSubs = subCategories.filter(
-  //         (subCat) => subCat.category === (course.category?._id || course.category)
-  //       );
-  //       setFilteredSubCategories(filteredSubs);
-
-  //       // If subcategory is present, filter subsubcategories
-  //       if (course.subCategory?._id || course.subCategory) {
-
-  //         const filteredSubsubs = subsubCategories.filter(
-  //           (subsubCat) => subsubCat.subCategory === (course.subCategory?._id || course.subCategory)
-  //         );
-  //         setFilteredSubsubCategories(filteredSubsubs);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     toast.error('Error loading course for edit');
-  //     console.error('Error loading course for edit:', error);
-  //   }
-  // };
-
+  
   const startEdit = async (id) => {
     try {
       const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
@@ -296,31 +258,100 @@ const CourseDisplay = () => {
     }
   };
 
-  const saveEdit = async () => {
-    try {
-      await axios.put(`http://localhost:8000/api/editsave/${editId}`, editForm);
-      toast.success("Course updated successfully");
-      setEditId(null);
-      setEditForm({
-        Price: "",
-        Durations: "",
-        TrainerName: "",
-        LastDate: "",
-        category: "",
-        subCategory: "",
-        subsubCategory: "",
-        CourseDescription: "",
-        InstructorCourse: "",
-        URL: "",
-        images: [],
-      });
-      fetchCourses();
-    } catch (error) {
-      toast.error("Error saving course");
-      console.error("Error saving course:", error);
-    }
-  };
+  // const saveEdit = async () => {
+  //   try {
+  //     await axios.put(`http://localhost:8000/api/editsave/${editId}`, editForm);
+  //     toast.success("Course updated successfully");
+  //     setEditId(null);
+  //     setEditForm({
+  //       Price: "",
+  //       Durations: "",
+  //       TrainerName: "",
+  //       LastDate: "",
+  //       category: "",
+  //       subCategory: "",
+  //       subsubCategory: "",
+  //       CourseDescription: "",
+  //       InstructorCourse: "",
+  //       URL: "",
+  //       images: [],
+  //     });
+  //     fetchCourses();
+  //   } catch (error) {
+  //     toast.error("Error saving course");
+  //     console.error("Error saving course:", error);
+  //   }
+  // };
 
+
+ const saveEdit = async () => {
+  try {
+    const formData = new FormData();
+    
+    // Append all form fields
+    Object.keys(editForm).forEach(key => {
+      if (key !== 'images') {
+        formData.append(key, editForm[key]);
+      }
+    });
+    
+    // Append existing images (to know which ones to keep)
+    editForm.images.forEach(image => {
+      formData.append('existingImages', image);
+    });
+    
+    // Append new images
+    newImages.forEach(image => {
+      formData.append('images', image);
+    });
+    
+    // Append images to delete
+    imagesToDelete.forEach(image => {
+      formData.append('imagesToDelete', image);
+    });
+    
+    const response = await axios.put(
+      `http://localhost:8000/api/editsave/${editId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    );
+    
+    toast.success("Course updated successfully");
+    setEditId(null);
+    setNewImages([]);
+    setImagesToDelete([]);
+    fetchCourses();
+  } catch (error) {
+    toast.error("Error saving course");
+    console.error("Error saving course:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+    }
+  }
+};
+const handleImageUpload = (e) => {
+  const files = Array.from(e.target.files);
+  setNewImages([...newImages, ...files]);
+};
+
+const handleRemoveImage = (index, isNewImage) => {
+  if (isNewImage) {
+    // Remove from new images
+    setNewImages(newImages.filter((_, i) => i !== index));
+  } else {
+    // Mark existing image for deletion and remove from display
+    setImagesToDelete([...imagesToDelete, editForm.images[index]]);
+    setEditForm(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  }
+};
   const columns = [
     {
       name: "Sr. No",
@@ -755,21 +786,62 @@ const CourseDisplay = () => {
                       }}
                     />
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Images
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {editForm.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image}
-                          alt={`Course ${index}`}
-                          className="h-16 w-16 object-cover rounded"
-                        />
-                      ))}
-                    </div>
-                  </div>
+     <div className="md:col-span-2">
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Images
+  </label>
+  <div className="flex flex-wrap gap-2 mb-4">
+    {/* Existing images */}
+    {editForm.images.map((image, index) => (
+      <div key={`existing-${index}`} className="relative">
+        <img
+          src={image}
+          alt={`Course ${index}`}
+          className="h-16 w-16 object-cover rounded"
+        />
+        <button
+          onClick={() => handleRemoveImage(index, false)}
+          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+          title="Remove image"
+        >
+          <FiX size={12} />
+        </button>
+      </div>
+    ))}
+    
+    {/* Newly uploaded images (previews) */}
+    {newImages.map((image, index) => (
+      <div key={`new-${index}`} className="relative">
+        <img
+          src={URL.createObjectURL(image)}
+          alt={`New image ${index}`}
+          className="h-16 w-16 object-cover rounded"
+        />
+        <button
+          onClick={() => handleRemoveImage(index, true)}
+          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+          title="Remove image"
+        >
+          <FiX size={12} />
+        </button>
+      </div>
+    ))}
+  </div>
+  
+  {/* File input for new images */}
+  <input
+    type="file"
+    multiple
+    onChange={handleImageUpload}
+    className="block w-full text-sm text-gray-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-md file:border-0
+      file:text-sm file:font-semibold
+      file:bg-blue-50 file:text-blue-700
+      hover:file:bg-blue-100"
+    accept="image/*"
+  />
+</div>
                 </div>
 
                 <div className="flex justify-end gap-3">

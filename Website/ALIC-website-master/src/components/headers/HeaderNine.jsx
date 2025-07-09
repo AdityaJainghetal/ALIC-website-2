@@ -225,23 +225,23 @@ import Logo from "../../assets/alec-img/courses/alec-for-judiciary-removebg-prev
 import { toast } from "react-toastify";
 import { fetchcategory } from "../../api";
 import axios from "axios";
-import { 
-  FaFacebook, 
-  FaTwitter, 
-  FaInstagram, 
-  FaLinkedin, 
-  FaYoutube, 
-  FaPinterest, 
-  FaTiktok, 
-  FaWhatsapp, 
-  FaTelegram, 
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaPinterest,
+  FaTiktok,
+  FaWhatsapp,
+  FaTelegram,
   FaGithub,
   FaReddit,
   FaDiscord,
   FaTwitch,
   FaSnapchat,
-  FaLink
-} from 'react-icons/fa';
+  FaLink,
+} from "react-icons/fa";
 
 export const HeaderNine = () => {
   const [categories, setCategories] = useState([]);
@@ -249,10 +249,10 @@ export const HeaderNine = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [syllabusCategories, setSyllabusCategories] = useState([]);
   const navigate = useNavigate();
- 
+
   const api = "http://localhost:8000/social";
   const [socialLinks, setSocialLinks] = useState([]);
-  
+
   const fetchSocialLinks = async () => {
     setLoading(true);
     try {
@@ -270,26 +270,28 @@ export const HeaderNine = () => {
   }, []);
 
   const getIconComponent = (iconName) => {
-    if (!iconName) return <FaLink style={{ color: '#000000' }} />;
-    
+    if (!iconName) return <FaLink style={{ color: "#000000" }} />;
+
     const iconMap = {
-      facebook: <FaFacebook style={{ color: '#1877F2' }} />,
-      twitter: <FaTwitter style={{ color: '#1DA1F2' }} />,
-      instagram: <FaInstagram style={{ color: '#E1306C' }} />,
-      linkedin: <FaLinkedin style={{ color: '#0077B5' }} />,
-      youtube: <FaYoutube style={{ color: '#FF0000' }} />,
-      pinterest: <FaPinterest style={{ color: '#E60023' }} />,
-      tiktok: <FaTiktok style={{ color: '#000000' }} />,
-      whatsapp: <FaWhatsapp style={{ color: '#25D366' }} />,
-      telegram: <FaTelegram style={{ color: '#0088CC' }} />,
-      github: <FaGithub style={{ color: '#000000' }} />,
-      reddit: <FaReddit style={{ color: '#FF5700' }} />,
-      discord: <FaDiscord style={{ color: '#7289DA' }} />,
-      twitch: <FaTwitch style={{ color: '#9146FF' }} />,
-      snapchat: <FaSnapchat style={{ color: '#FFFC00' }} />
+      facebook: <FaFacebook style={{ color: "#1877F2" }} />,
+      twitter: <FaTwitter style={{ color: "#1DA1F2" }} />,
+      instagram: <FaInstagram style={{ color: "#E1306C" }} />,
+      linkedin: <FaLinkedin style={{ color: "#0077B5" }} />,
+      youtube: <FaYoutube style={{ color: "#FF0000" }} />,
+      pinterest: <FaPinterest style={{ color: "#E60023" }} />,
+      tiktok: <FaTiktok style={{ color: "#000000" }} />,
+      whatsapp: <FaWhatsapp style={{ color: "#25D366" }} />,
+      telegram: <FaTelegram style={{ color: "#0088CC" }} />,
+      github: <FaGithub style={{ color: "#000000" }} />,
+      reddit: <FaReddit style={{ color: "#FF5700" }} />,
+      discord: <FaDiscord style={{ color: "#7289DA" }} />,
+      twitch: <FaTwitch style={{ color: "#9146FF" }} />,
+      snapchat: <FaSnapchat style={{ color: "#FFFC00" }} />,
     };
 
-    return iconMap[iconName.toLowerCase()] || <FaLink style={{ color: '#000000' }} />;
+    return (
+      iconMap[iconName.toLowerCase()] || <FaLink style={{ color: "#000000" }} />
+    );
   };
 
   const handleCategoryChange = (e) => {
@@ -454,7 +456,10 @@ export const HeaderNine = () => {
               </nav>
 
               <div id="social" className="td_hero_icon_btns position-relative">
-                <div className="td_footer_social_btns" style={{ display: 'flex', gap: '4px' }}>
+                <div
+                  className="td_footer_social_btns"
+                  style={{ display: "flex", gap: "4px" }}
+                >
                   {socialLinks.map((link, index) => (
                     <a
                       key={index}
@@ -462,15 +467,15 @@ export const HeaderNine = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="td_center"
-                      style={{ 
+                      style={{
                         fontSize: "20px",
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '32px',
-                        height: '32px',
-                        transition: 'transform 0.2s',
-                        borderRadius: '50%'
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "32px",
+                        height: "32px",
+                        transition: "transform 0.2s",
+                        borderRadius: "50%",
                       }}
                       title={link.altText}
                     >

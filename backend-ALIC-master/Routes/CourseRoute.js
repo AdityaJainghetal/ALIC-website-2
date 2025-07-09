@@ -17,5 +17,6 @@ route.get("/editdisplay", CourseController.editDisplay);
 route.put("/editsave/:id", CourseController.editDataSave);
 route.post("/:id", CourseController.getAllCourseHome);
 route.put("/:id/home-visibility", CourseController.getproducthome);
+route.get("/getrecordedcourse/:id", CourseController.getrecorededcourse)
 
 module.exports = route;

@@ -80,9 +80,9 @@ app.use(bodyparser.json())
  app.use("/success", AllSuccessRoute)
  app.use('/category', categoryRouter)
  app.use('/judementcategory',judementRouter)
- app.use('/blogcategory',blogRouter)
+ app.use('/blogcategory',blogRouter);
 
-
+ 
  app.use('/subcategory', subacategoryRouter);
  app.use('/enquiry', EnquiryRoute)
  app.use("/contact", ContactRoute)

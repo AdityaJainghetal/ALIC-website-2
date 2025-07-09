@@ -40,9 +40,9 @@ export const HomeOne = () => {
           {/* <HomeTwo /> */}
 
       {/* popular */}
-      {/* <CoursesOne /> */}
+      <CoursesOne />
 
-      <CoursesAllGrid/>
+      {/* <CoursesAllGrid/> */}
 
 
       {/* popular */}

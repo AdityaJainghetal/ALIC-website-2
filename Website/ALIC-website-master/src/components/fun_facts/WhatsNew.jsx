@@ -222,36 +222,37 @@ const Card = ({ date, content, images, PDFbrochure, id }) => {
 
   const handleDownload = async (e) => {
     e.stopPropagation(); // Prevent triggering the card click
-    try {
-      // Download image
-      if (images) {
-        const response = await fetch(images);
-        if (!response.ok) throw new Error("Failed to fetch image");
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = images.split("/").pop() || "whatsnew-image.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }
+   try {
+  // Download image
+  if (images && typeof images === "string") {
+    const response = await fetch(images);
+    if (!response.ok) throw new Error("Failed to fetch image");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = images.split("/").pop() || "whatsnew-image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
 
-      // Download PDF
-      if (PDFbrochure) {
-        const response = await fetch(PDFbrochure);
-        if (!response.ok) throw new Error("Failed to fetch PDF");
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = PDFbrochure.split("/").pop() || "whatsnew-brochure.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }
+  // Download PDF
+  if (PDFbrochure && typeof PDFbrochure === "string") {
+    const response = await fetch(PDFbrochure);
+    if (!response.ok) throw new Error("Failed to fetch PDF");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = PDFbrochure.split("/").pop() || "whatsnew-brochure.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
+
 
       if (!images && !PDFbrochure) {
         toast.error("No files available to download");
@@ -406,7 +407,7 @@ export default function RecentUpdates() {
               whatsNew.map((item, idx) => (
                 <Card
                   key={idx}
-                  id={item._id} // Pass the ID to the Card component
+                  id={item._id} // Pass the ID to the 
                   date={
                     item.createdAt
                       ? new Date(item.createdAt).toLocaleDateString()

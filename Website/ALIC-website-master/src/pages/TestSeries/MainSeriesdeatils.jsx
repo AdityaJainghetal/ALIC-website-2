@@ -646,7 +646,7 @@ const MainSeriesdeatils = () => {
         const response = await axios.get(
           `http://localhost:8000/main/maintestseries/${id}`
         );
-        console.log(response.data.data, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // console.log(response.data.data, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         if (!response.data) {
           throw new Error("Test series not found");
         }

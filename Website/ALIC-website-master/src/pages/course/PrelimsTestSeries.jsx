@@ -250,8 +250,6 @@
 
 // export default PrelimsTestSeries;
 
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -403,6 +401,7 @@ const PrelimsTestSeries = ({ selectedCategoryId }) => {
   return (
     <div className="container my-5">
       <div className="row">
+       
         {filteredCourses.length > 0 ? (
           filteredCourses.map((test) => (
             <div className="col-md-6 mb-4" key={test._id}>

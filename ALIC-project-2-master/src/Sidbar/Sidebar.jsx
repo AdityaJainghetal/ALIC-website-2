@@ -172,7 +172,7 @@ const Sidebar = () => {
     },
 
       {
-      name: 'socialmedia', icon: <FiBook />, subItems: [
+      name: 'Socialmedia', icon: <FiBook />, subItems: [
         // { name: 'Add Socialmedia Icon', to: '/socialmedia' },
         { name: 'Add Socialmedia Icon', to: '/socialmediadisplay' },
 
@@ -186,7 +186,7 @@ const Sidebar = () => {
 
     
       {
-      name: 'playstore', icon: <FiBook />, subItems: [
+      name: 'Play Store', icon: <FiBook />, subItems: [
         // { name: 'Add Socialmedia Icon', to: '/socialmedia' },
         { name: 'Add playstore Icon', to: '/playstore' },
 

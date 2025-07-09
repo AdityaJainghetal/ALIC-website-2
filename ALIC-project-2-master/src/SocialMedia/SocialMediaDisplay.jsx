@@ -168,20 +168,20 @@ const SocialMediaDisplay = () => {
               list="icon-suggestions"
             />
             <datalist id="icon-suggestions">
-              <option value="facebook" />
-              <option value="twitter" />
-              <option value="instagram" />
-              <option value="linkedin" />
-              <option value="youtube" />
-              <option value="pinterest" />
-              <option value="tiktok" />
-              <option value="whatsapp" />
-              <option value="telegram" />
-              <option value="github" />
-              <option value="reddit" />
-              <option value="discord" />
-              <option value="twitch" />
-              <option value="snapchat" />
+              <option value="Facebook" />
+              <option value="Twitter" />
+              <option value="Instagram" />
+              <option value="Linkedin" />
+              <option value="Youtube" />
+              <option value="Pinterest" />
+              <option value="Tiktok" />
+              <option value="Whatsapp" />
+              <option value="Telegram" />
+              <option value="Github" />
+              <option value="Reddit" />
+              <option value="Discord" />
+              <option value="Twitch" />
+              <option value="Snapchat" />
             </datalist>
             <p className="text-sm text-gray-500 mt-1">
               Enter the name of the icon (e.g., "facebook" for Facebook icon)

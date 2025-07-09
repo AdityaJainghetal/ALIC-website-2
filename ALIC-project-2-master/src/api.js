@@ -23,12 +23,20 @@ export const updateSubCategory = (id, data) =>
   API.put(`/subcategory/${id}`, data);
 export const deleteSubCategory = (id) => API.delete(`/subcategory/${id}`);
 
-export const fetchSubsubcategory = (subcategoryId) =>
-  subcategoryId
-    ? API.get(`/subsubcategory?subcategoryId=${subcategoryId}`)
-    : API.get("/subsubcategory");
+// export const fetchSubsubcategory = (subcategoryId) =>
+//   subcategoryId
+//     ? API.get(`/subsubcategory?subcategoryId=${subcategoryId}`)
+//     : API.get("/subsubcategory");
 
-export const addSubsubCategory = (data) => API.post("/subsubcategory", data);
-export const updateSubsubCategory = (id, data) =>
-  API.put(`/subsubcategory/${id}`, data);
-export const deleteSubsubCategory = (id) => API.delete(`/subsubcategory/${id}`);
+// export const addSubsubCategory = (data) => API.post("/subsubcategory", data);
+// export const updateSubsubCategory = (id, data) =>
+//   API.put(`/subsubcategory/${id}`, data);
+// export const deleteSubsubCategory = (id) => API.delete(`/subsubcategory/${id}`);
+
+
+
+
+export const fetchSubsubcategory = () => API.get(`/subsubcategory`);
+export const addSubsubCategory = (data) => API.post("/subsubcategory", data)
+export const updateSubsubCategory = (id, data) => API.put(`/subsubcategory/${id}`, data)
+export const deleteSubsubCategory = (id) => API.delete(`/subsubcategory/${id}`)
