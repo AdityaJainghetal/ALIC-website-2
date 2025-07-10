@@ -25,7 +25,7 @@ export const SyllabusDownload = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/syllabus/category/${id}`
+          `https://alic-website-2-1.onrender.com/syllabus/category/${id}`
         );
         setSyllabusData(res.data);
       } catch (err) {
@@ -69,7 +69,10 @@ export const SyllabusDownload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/register/add", formData);
+      await axios.post(
+        "https://alic-website-2-1.onrender.com/register/add",
+        formData
+      );
       if (selectedSyllabus?.pdfUrl) {
         handleDownloadPdf(selectedSyllabus.pdfUrl, selectedSyllabus.Coursename);
       }

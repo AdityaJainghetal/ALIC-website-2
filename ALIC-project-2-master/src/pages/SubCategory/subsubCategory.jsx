@@ -72,7 +72,7 @@
 //       imageFiles.forEach((file) => formData.append("images", file));
 
 //       const response = await axios.post(
-//         "https://alic-website-2-1.onrender.com/subsubcategory",
+//         "http://localhost:8000/subsubcategory",
 //         formData,
 //         {
 //           headers: {
@@ -113,7 +113,7 @@
 //       editImageFiles.forEach((file) => formData.append("images", file));
 
 //       const response = await axios.put(
-//         `https://alic-website-2-1.onrender.com/subsubcategory/${id}`,
+//         `http://localhost:8000/subsubcategory/${id}`,
 //         formData,
 //         {
 //           headers: {
@@ -569,7 +569,7 @@ const SubsubCategoryManagement = () => {
       imageFiles.forEach((file) => formData.append("images", file));
 
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/subsubcategory",
+        "http://localhost:8000/subsubcategory",
         formData,
         {
           headers: {
@@ -610,7 +610,7 @@ const SubsubCategoryManagement = () => {
       editImageFiles.forEach((file) => formData.append("images", file));
 
       const response = await axios.put(
-        `https://alic-website-2-1.onrender.com/subsubcategory/${id}`,
+        `http://localhost:8000/subsubcategory/${id}`,
         formData,
         {
           headers: {
@@ -639,9 +639,7 @@ const SubsubCategoryManagement = () => {
 
   const handledeleteSubsubCategory = async (id) => {
     try {
-      await axios.delete(
-        `https://alic-website-2-1.onrender.com/subsubcategory/${id}`
-      );
+      await axios.delete(`http://localhost:8000/subsubcategory/${id}`);
       setSubCategories(subCategories.filter((subCat) => subCat._id !== id));
       toast.success("Sub-sub-category deleted successfully!");
     } catch (error) {

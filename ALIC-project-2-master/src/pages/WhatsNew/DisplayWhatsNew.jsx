@@ -33,7 +33,7 @@
 
 //   const fetchWhatsNew = async () => {
 //     try {
-//       const response = await fetch('https://alic-website-2-1.onrender.com/whatsnew/alldisplay');
+//       const response = await fetch('http://localhost:8000/whatsnew/alldisplay');
 //       if (!response.ok) throw new Error('Failed to fetch entries');
 
 //       const data = await response.json();
@@ -68,7 +68,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`, {
+//       const response = await fetch(`http://localhost:8000/whatsnew/delete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -107,7 +107,7 @@
 //         formData.append('PDFbrochure', editingItem.newPDF);
 //       }
 
-//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`, {
+//       const response = await fetch(`http://localhost:8000/whatsnew/editsave/${editingItem._id}`, {
 //         method: 'PUT',
 //         body: formData,
 //       });
@@ -500,7 +500,7 @@
 
 //   const fetchWhatsNew = async () => {
 //     try {
-//       const response = await fetch('https://alic-website-2-1.onrender.com/whatsnew/alldisplay');
+//       const response = await fetch('http://localhost:8000/whatsnew/alldisplay');
 //       if (!response.ok) throw new Error('Failed to fetch entries');
 
 //       const data = await response.json();
@@ -535,7 +535,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`, {
+//       const response = await fetch(`http://localhost:8000/whatsnew/delete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -578,7 +578,7 @@
 //         formData.append('PDFbrochure', editingItem.newPDF);
 //       }
 
-//       const response = await fetch(`https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`, {
+//       const response = await fetch(`http://localhost:8000/whatsnew/editsave/${editingItem._id}`, {
 //         method: 'PUT',
 //         body: formData,
 //       });
@@ -977,9 +977,7 @@ const WhatsNewDisplay = () => {
 
   const fetchWhatsNew = async () => {
     try {
-      const response = await fetch(
-        "https://alic-website-2-1.onrender.com/whatsnew/alldisplay"
-      );
+      const response = await fetch("http://localhost:8000/whatsnew/alldisplay");
       if (!response.ok) throw new Error("Failed to fetch entries");
 
       const data = await response.json();
@@ -1017,7 +1015,7 @@ const WhatsNewDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/whatsnew/delete/${id}`,
+        `http://localhost:8000/whatsnew/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -1071,7 +1069,7 @@ const WhatsNewDisplay = () => {
       }
 
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/whatsnew/editsave/${editingItem._id}`,
+        `http://localhost:8000/whatsnew/editsave/${editingItem._id}`,
         {
           method: "PUT",
           body: formData,

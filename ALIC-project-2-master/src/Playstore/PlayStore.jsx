@@ -17,7 +17,7 @@ const PlayStore = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://alic-website-2-1.onrender.com/playstore/alldisplay"
+        "http://localhost:8000/playstore/alldisplay"
       );
       setBanners(response.data);
       setLoading(false);
@@ -92,7 +92,7 @@ const PlayStore = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://alic-website-2-1.onrender.com/playstore/editdisplay?id=${id}`
+        `http://localhost:8000/playstore/editdisplay?id=${id}`
       );
       setCurrentBanner(response.data.data);
       setIsEditing(true);
@@ -114,7 +114,7 @@ const PlayStore = () => {
           onClick: async () => {
             try {
               await axios.delete(
-                `https://alic-website-2-1.onrender.com/playstore/deleted/${id}`
+                `http://localhost:8000/playstore/deleted/${id}`
               );
               toast.success("Banner deleted successfully");
               fetchBanners();
@@ -219,7 +219,7 @@ const PlayStore = () => {
           });
         } else {
           response = await axios.post(
-            "https://alic-website-2-1.onrender.com/playstore/create",
+            "http://localhost:8000/playstore/create",
             formDataToSend,
             {
               headers: {

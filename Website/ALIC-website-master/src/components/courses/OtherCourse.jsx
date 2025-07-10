@@ -32,7 +32,7 @@ const OtherCourse = () => {
 
         // Fetch the main course data
         const courseResponse = await axios.get(
-          `http://localhost:8000/othercourse/deatail/${id}`
+          `https://alic-website-2-1.onrender.com/othercourse/deatail/${id}`
         );
         if (!courseResponse.data) {
           throw new Error("Course not found");

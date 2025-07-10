@@ -19,7 +19,7 @@ const ResetPassword = () => {
     try {
       const resetToken = localStorage.getItem("resetToken");
       const res = await axios.post(
-        "https://alic-website-2-1.onrender.com/admin/reset-password",
+        "http://localhost:8000/admin/reset-password",
         {
           resetToken,
           newPassword: password,

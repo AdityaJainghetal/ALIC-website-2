@@ -19,7 +19,9 @@ export const EventDetailsContent = () => {
     const fetchEvent = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:8000/event/${id}`);
+        const res = await axios.get(
+          `https://alic-website-2-1.onrender.com/event/${id}`
+        );
         setEvent(res.data);
       } catch (err) {
         console.error("Failed to fetch event", err);

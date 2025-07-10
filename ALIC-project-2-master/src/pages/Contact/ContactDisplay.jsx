@@ -20,9 +20,7 @@ const ContactDisplay = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await fetch(
-        "https://alic-website-2-1.onrender.com/contact/allcontact"
-      );
+      const response = await fetch("http://localhost:8000/contact/allcontact");
       if (!response.ok) throw new Error("Failed to fetch contacts");
 
       const data = await response.json();
@@ -45,7 +43,7 @@ const ContactDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/contact/alldelete/${id}`,
+        `http://localhost:8000/contact/alldelete/${id}`,
         {
           method: "DELETE",
         }
@@ -72,7 +70,7 @@ const ContactDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/contact/editsave/${editingContact._id}`,
+        `http://localhost:8000/contact/editsave/${editingContact._id}`,
         {
           method: "PUT",
           headers: {

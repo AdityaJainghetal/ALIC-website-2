@@ -36,9 +36,7 @@ const Eventdisplay = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await fetch(
-        "https://alic-website-2-1.onrender.com/event"
-      );
+      const response = await fetch("http://localhost:8000/event");
       if (!response.ok) {
         throw new Error("Failed to fetch contacts");
       }
@@ -60,12 +58,9 @@ const Eventdisplay = () => {
     if (!confirm) return;
 
     try {
-      const response = await fetch(
-        `https://alic-website-2-1.onrender.com/event/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`http://localhost:8000/event/${id}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         throw new Error("Failed to delete event");
@@ -110,13 +105,10 @@ const Eventdisplay = () => {
         const formData = new FormData();
         formData.append("image", imageFile);
 
-        const uploadResponse = await fetch(
-          "https://alic-website-2-1.onrender.com/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
+        const uploadResponse = await fetch("http://localhost:8000/upload", {
+          method: "POST",
+          body: formData,
+        });
 
         if (!uploadResponse.ok) {
           throw new Error("Failed to upload image");
@@ -127,7 +119,7 @@ const Eventdisplay = () => {
       }
 
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/event/editsave/${editingContact._id}`,
+        `http://localhost:8000/event/editsave/${editingContact._id}`,
         {
           method: "PUT",
           headers: {

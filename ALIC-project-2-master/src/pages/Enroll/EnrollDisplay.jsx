@@ -16,7 +16,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch('https://alic-website-2-1.onrender.com/enroll/alldisplay');
+//       const response = await fetch('http://localhost:8000/enroll/alldisplay');
 //       if (!response.ok) {
 //         throw new Error('Failed to fetch enquiries');
 //       }
@@ -41,7 +41,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       const response = await fetch(`https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`, {
+//       const response = await fetch(`http://localhost:8000/enroll/alldelete/${id}`, {
 //         method: 'DELETE',
 //       });
 
@@ -206,7 +206,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch("https://alic-website-2-1.onrender.com/enroll/alldisplay");
+//       const response = await fetch("http://localhost:8000/enroll/alldisplay");
 //       if (!response.ok) {
 //         throw new Error("Failed to fetch enquiries");
 //       }
@@ -233,7 +233,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`,
+//         `http://localhost:8000/enroll/alldelete/${id}`,
 //         {
 //           method: "DELETE",
 //         }
@@ -276,7 +276,7 @@
 //     e.preventDefault();
 //     try {
 //       const response = await fetch(
-//         `https://alic-website-2-1.onrender.com/enroll/editsave/${editingEnquiry}`,
+//         `http://localhost:8000/enroll/editsave/${editingEnquiry}`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -575,9 +575,7 @@ const EnrollDisplay = () => {
 
   const fetchEnquiries = async () => {
     try {
-      const response = await fetch(
-        "https://alic-website-2-1.onrender.com/enroll/alldisplay"
-      );
+      const response = await fetch("http://localhost:8000/enroll/alldisplay");
       if (!response.ok) {
         throw new Error("Failed to fetch enquiries");
       }
@@ -604,7 +602,7 @@ const EnrollDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/enroll/alldelete/${id}`,
+        `http://localhost:8000/enroll/alldelete/${id}`,
         {
           method: "DELETE",
         }
@@ -647,7 +645,7 @@ const EnrollDisplay = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/enroll/editsave/${editingEnquiry}`,
+        `http://localhost:8000/enroll/editsave/${editingEnquiry}`,
         {
           method: "POST",
           headers: {

@@ -22,7 +22,7 @@ import {
 } from "react-icons/fa";
 
 const SocialMediaDisplay = () => {
-  const api = "https://alic-website-2-1.onrender.com/social";
+  const api = "http://localhost:8000/social";
   const [socialLinks, setSocialLinks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);

@@ -12,7 +12,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post("https://alic-website-2-1.onrender.com/admin/register", {
+//       const response = await axios.post("http://localhost:8000/admin/register", {
 //         name,
 //         email,
 //         password,
@@ -122,7 +122,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/admin/register",
+        "http://localhost:8000/admin/register",
         {
           name: formData.name,
           email: formData.email,

@@ -31,7 +31,7 @@
 //     setSubmitStatus(null);
 
 //     try {
-//       const response = await axios.post("http://localhost:8000/enquiry/add", formData);
+//       const response = await axios.post("https://alic-website-2-1.onrender.com/enquiry/add", formData);
 //       console.log("API Response:", response.data);
 //       setSubmitStatus({
 //         success: true,
@@ -207,7 +207,7 @@ export const Enquiry = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/enquiry/add",
+        "https://alic-website-2-1.onrender.com/enquiry/add",
         formData
       );
       console.log("API Response:", response.data);

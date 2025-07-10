@@ -46,7 +46,7 @@
 
 //   const fetchCourses = async () => {
 //     try {
-//       const response = await axios.get("https://alic-website-2-1.onrender.com/main/display");
+//       const response = await axios.get("http://localhost:8000/main/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -68,7 +68,7 @@
 
 //   const fetchCategories = async () => {
 //     try {
-//       const response = await axios.get("https://alic-website-2-1.onrender.com/category");
+//       const response = await axios.get("http://localhost:8000/category");
 //       setCategories(Array.isArray(response.data) ? response.data : []);
 //     } catch (error) {
 //       console.error("Error fetching categories:", error);
@@ -83,7 +83,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
+//       await axios.delete(`http://localhost:8000/main/${id}`);
 //       toast.success("Course deleted successfully");
 //       setCourses((prev) =>
 //         Array.isArray(prev) ? prev.filter((course) => course._id !== id) : []
@@ -148,7 +148,7 @@
 //       }
 
 //       const response = await axios.put(
-//         `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
+//         `http://localhost:8000/main/editsave/${editId}`,
 //         formData,
 //         {
 //           headers: {
@@ -651,7 +651,7 @@
 
 //   const fetchCourses = async () => {
 //     try {
-//       const response = await axios.get("https://alic-website-2-1.onrender.com/main/display");
+//       const response = await axios.get("http://localhost:8000/main/display");
 //       if (response.data && Array.isArray(response.data.data)) {
 //         setCourses(response.data.data);
 //       } else {
@@ -675,9 +675,9 @@
 //     try {
 //       const [categoriesRes, subCategoriesRes, subSubCategoriesRes] =
 //         await Promise.all([
-//           axios.get("https://alic-website-2-1.onrender.com/category"),
-//           axios.get("https://alic-website-2-1.onrender.com/subcategory"),
-//           axios.get("https://alic-website-2-1.onrender.com/subsubcategory"),
+//           axios.get("http://localhost:8000/category"),
+//           axios.get("http://localhost:8000/subcategory"),
+//           axios.get("http://localhost:8000/subsubcategory"),
 //         ]);
 
 //       setCategories(categoriesRes.data || []);
@@ -722,7 +722,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
+//       await axios.delete(`http://localhost:8000/main/${id}`);
 //       toast.success("Course deleted successfully");
 //       setCourses((prev) =>
 //         Array.isArray(prev) ? prev.filter((course) => course._id !== id) : []
@@ -794,7 +794,7 @@
 //       }
 
 //       const response = await axios.put(
-//         `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
+//         `http://localhost:8000/main/editsave/${editId}`,
 //         formData,
 //         {
 //           headers: {
@@ -1356,9 +1356,7 @@ const MainDisplay = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "https://alic-website-2-1.onrender.com/main/display"
-      );
+      const response = await axios.get("http://localhost:8000/main/display");
       if (response.data && Array.isArray(response.data.data)) {
         setCourses(response.data.data);
       } else {
@@ -1440,7 +1438,7 @@ const MainDisplay = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`https://alic-website-2-1.onrender.com/main/${id}`);
+      await axios.delete(`http://localhost:8000/main/${id}`);
       toast.success("Course deleted successfully");
       fetchCourses();
     } catch (error) {
@@ -1524,7 +1522,7 @@ const MainDisplay = () => {
       }
 
       const response = await axios.put(
-        `https://alic-website-2-1.onrender.com/main/editsave/${editId}`,
+        `http://localhost:8000/main/editsave/${editId}`,
         formData,
         {
           headers: {

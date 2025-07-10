@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Dynamic = () => {
-  const api = "https://alic-website-2-1.onrender.com/dynamics/";
+  const api = "http://localhost:8000/dynamics/";
   const [dynamics, setDynamics] = useState([]);
   const [formData, setFormData] = useState({
     path: "",

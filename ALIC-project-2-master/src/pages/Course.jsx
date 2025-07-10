@@ -244,7 +244,7 @@
 //     });
 
 //     try {
-//       const response = await axios.post('https://alic-website-2-1.onrender.com/api/course', formDataToSend, {
+//       const response = await axios.post('http://localhost:8000/api/course', formDataToSend, {
 //         headers: { 'Content-Type': 'multipart/form-data' },
 //       });
 
@@ -725,7 +725,7 @@ const Course = () => {
 
     try {
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/api/course",
+        "http://localhost:8000/api/course",
         formDataToSend,
         {
           headers: { "Content-Type": "multipart/form-data" },

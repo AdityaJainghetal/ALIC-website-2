@@ -30,7 +30,7 @@
 //    const loadProducts=async()=>{
 
 //     try {
-//       const response = await axios.get(`http://localhost:8000/enroll/getproducts/${id}`);
+//       const response = await axios.get(`https://alic-website-2-1.onrender.com/enroll/getproducts/${id}`);
 //       const prodductData= response.data;
 //       setProductData(prodductData);
 //     } catch (error) {
@@ -154,7 +154,7 @@ export const Enroll = () => {
     const loadProducts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/enroll/getproducts/${id}`
+          `https://alic-website-2-1.onrender.com/enroll/getproducts/${id}`
         );
         setProductData(response.data);
       } catch (error) {
@@ -200,7 +200,7 @@ export const Enroll = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/enroll/${id}`,
+        `https://alic-website-2-1.onrender.com/enroll/${id}`,
         formData
       );
       console.log("Form submitted successfully:", response.data);

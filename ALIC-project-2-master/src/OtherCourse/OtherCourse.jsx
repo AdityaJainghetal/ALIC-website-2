@@ -81,7 +81,7 @@
 //     setError(null);
 
 //     try {
-//       await axios.post('https://alic-website-2-1.onrender.com/othercourse', courseData);
+//       await axios.post('http://localhost:8000/othercourse', courseData);
 //       setSuccess(true);
 //       // Reset form after successful submission
 //       setCourseData(initialState);
@@ -335,15 +335,11 @@ const CreateCourse = () => {
         formData.append("images", file);
       });
 
-      await axios.post(
-        "https://alic-website-2-1.onrender.com/othercourse",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post("http://localhost:8000/othercourse", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setSuccess(true);
       // Reset form after successful submission

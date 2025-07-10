@@ -6,7 +6,7 @@
 
 // const QueryDisplay = () => {
 //   const [courses, setCourses] = useState([]);
-//   const api = 'https://alic-website-2-1.onrender.com/query/display';
+//   const api = 'http://localhost:8000/query/display';
 
 //   useEffect(() => {
 //     const fetchCourses = async () => {
@@ -26,7 +26,7 @@
 //     const confirmDelete = window.confirm('Are you sure you want to delete this course?');
 //     if (!confirmDelete) return;
 
-//     const deleteApi = `https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`;
+//     const deleteApi = `http://localhost:8000/query/allquerydelete/${id}`;
 
 //     try {
 //       await axios.delete(deleteApi);
@@ -90,7 +90,7 @@
 //   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 //   const [isLoading, setIsLoading] = useState(true);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const api = "https://alic-website-2-1.onrender.com/query/display";
+//   const api = "http://localhost:8000/query/display";
 
 //   // Load queries
 //   const loadData = async () => {
@@ -116,7 +116,7 @@
 //     if (!confirmDelete) return;
 
 //     try {
-//       await axios.delete(`https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`);
+//       await axios.delete(`http://localhost:8000/query/allquerydelete/${id}`);
 //       toast.success("Query deleted successfully");
 //       loadData();
 //     } catch (error) {
@@ -127,7 +127,7 @@
 //   const handleEditClick = async (query) => {
 //     try {
 //       const response = await axios.get(
-//         `https://alic-website-2-1.onrender.com/query/editdisplay?id=${query._id}`
+//         `http://localhost:8000/query/editdisplay?id=${query._id}`
 //       );
 //       setEditingQuery(response.data);
 //       setIsEditFormOpen(true);
@@ -141,7 +141,7 @@
 //     setIsSubmitting(true);
 
 //     try {
-//       const endpoint = `https://alic-website-2-1.onrender.com/query/editsave/${editingQuery._id}`;
+//       const endpoint = `http://localhost:8000/query/editsave/${editingQuery._id}`;
 //       await axios.put(endpoint, editingQuery);
 
 //       toast.success("Query updated successfully");
@@ -450,7 +450,7 @@ const QueryDisplay = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const api = "https://alic-website-2-1.onrender.com/query/display";
+  const api = "http://localhost:8000/query/display";
 
   // Load queries
   const loadData = async () => {
@@ -476,9 +476,7 @@ const QueryDisplay = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(
-        `https://alic-website-2-1.onrender.com/query/allquerydelete/${id}`
-      );
+      await axios.delete(`http://localhost:8000/query/allquerydelete/${id}`);
       toast.success("Query deleted successfully");
       loadData();
     } catch (error) {
@@ -489,7 +487,7 @@ const QueryDisplay = () => {
   const handleEditClick = async (query) => {
     try {
       const response = await axios.get(
-        `https://alic-website-2-1.onrender.com/query/editdisplay?id=${query._id}`
+        `http://localhost:8000/query/editdisplay?id=${query._id}`
       );
       setEditingQuery(response.data);
       setIsEditFormOpen(true);
@@ -503,7 +501,7 @@ const QueryDisplay = () => {
     setIsSubmitting(true);
 
     try {
-      const endpoint = `https://alic-website-2-1.onrender.com/query/editsave/${editingQuery._id}`;
+      const endpoint = `http://localhost:8000/query/editsave/${editingQuery._id}`;
       await axios.put(endpoint, editingQuery);
 
       toast.success("Query updated successfully");

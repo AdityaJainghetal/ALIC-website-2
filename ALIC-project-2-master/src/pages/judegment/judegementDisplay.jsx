@@ -51,18 +51,16 @@ const JudgementDisplay = () => {
   const fetchJudgements = async () => {
     try {
       const response = await axios.get(
-        "https://alic-website-2-1.onrender.com/judement/display"
+        "http://localhost:8000/judement/display"
       );
       const formattedJudgements = response.data.map((judgement) => ({
         ...judgement,
         images: judgement.images
           ? Array.isArray(judgement.images)
             ? judgement.images.map((img) =>
-                img.startsWith("http")
-                  ? img
-                  : `https://alic-website-2-1.onrender.com/${img}`
+                img.startsWith("http") ? img : `http://localhost:8000/${img}`
               )
-            : [`https://alic-website-2-1.onrender.com/${judgement.images}`]
+            : [`http://localhost:8000/${judgement.images}`]
           : [],
       }));
       setJudgements(formattedJudgements);
@@ -77,7 +75,7 @@ const JudgementDisplay = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "https://alic-website-2-1.onrender.com/judementcategory"
+        "http://localhost:8000/judementcategory"
       );
       if (response.data && Array.isArray(response.data)) {
         setCategories(response.data);
@@ -95,9 +93,7 @@ const JudgementDisplay = () => {
     if (!window.confirm("Are you sure you want to delete this judgement?"))
       return;
     try {
-      await axios.delete(
-        `https://alic-website-2-1.onrender.com/judement/${id}`
-      );
+      await axios.delete(`http://localhost:8000/judement/${id}`);
       setJudgements((prev) => prev.filter((j) => j._id !== id));
       toast.success("Judgement deleted successfully");
     } catch (err) {
@@ -162,7 +158,7 @@ const JudgementDisplay = () => {
       if (editingJudgement) {
         formData.append("id", editingJudgement);
         response = await axios.put(
-          `https://alic-website-2-1.onrender.com/judement/editsave/${editingJudgement}`,
+          `http://localhost:8000/judement/editsave/${editingJudgement}`,
           formData,
           {
             headers: {
@@ -172,7 +168,7 @@ const JudgementDisplay = () => {
         );
       } else {
         response = await axios.post(
-          "https://alic-website-2-1.onrender.com/judement/create",
+          "http://localhost:8000/judement/create",
           formData,
           {
             headers: {
@@ -187,11 +183,9 @@ const JudgementDisplay = () => {
         images: response.data.images
           ? Array.isArray(response.data.images)
             ? response.data.images.map((img) =>
-                img.startsWith("http")
-                  ? img
-                  : `https://alic-website-2-1.onrender.com/${img}`
+                img.startsWith("http") ? img : `http://localhost:8000/${img}`
               )
-            : [`https://alic-website-2-1.onrender.com/${response.data.images}`]
+            : [`http://localhost:8000/${response.data.images}`]
           : [],
       };
 

@@ -12,7 +12,7 @@
 //   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   const api = "https://alic-website-2-1.onrender.com/Callback/allcallback";
+//   const api = "http://localhost:8000/Callback/allcallback";
 
 //   useEffect(() => {
 //     fetchCallbackData();
@@ -40,7 +40,7 @@
 //       window.confirm("Are you sure you want to delete this callback entry?")
 //     ) {
 //       axios
-//         .delete(`https://alic-website-2-1.onrender.com/Callback/allcallback/${id}`)
+//         .delete(`http://localhost:8000/Callback/allcallback/${id}`)
 //         .then(() => {
 //           setCallbackData(callbackData.filter((item) => item._id !== id));
 //           toast.success("Deleted successfully!");
@@ -63,7 +63,7 @@
 
 //     try {
 //       await axios.put(
-//         `https://alic-website-2-1.onrender.com/Callback/editsave/${editingCallback._id}`,
+//         `http://localhost:8000/Callback/editsave/${editingCallback._id}`,
 //         editingCallback
 //       );
 //       toast.success("Callback updated successfully");
@@ -272,7 +272,7 @@ const CallbackpopShow = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const api = "https://alic-website-2-1.onrender.com/Callback/allcallback";
+  const api = "http://localhost:8000/Callback/allcallback";
 
   useEffect(() => {
     fetchCallbackData();
@@ -300,9 +300,7 @@ const CallbackpopShow = () => {
       window.confirm("Are you sure you want to delete this callback entry?")
     ) {
       axios
-        .delete(
-          `https://alic-website-2-1.onrender.com/Callback/allcallback/${id}`
-        )
+        .delete(`http://localhost:8000/Callback/allcallback/${id}`)
         .then(() => {
           setCallbackData(callbackData.filter((item) => item._id !== id));
           toast.success("Deleted successfully!");
@@ -325,7 +323,7 @@ const CallbackpopShow = () => {
 
     try {
       await axios.put(
-        `https://alic-website-2-1.onrender.com/Callback/editsave/${editingCallback._id}`,
+        `http://localhost:8000/Callback/editsave/${editingCallback._id}`,
         editingCallback
       );
       toast.success("Callback updated successfully");

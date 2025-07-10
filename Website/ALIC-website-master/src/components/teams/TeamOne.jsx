@@ -20,7 +20,7 @@
 //     const [loading, setLoading] = useState(true);
 //     const [error, setError] = useState(null);
 
-//     const apiUrl = 'http://localhost:8000/member/display';
+//     const apiUrl = 'https://alic-website-2-1.onrender.com/member/display';
 
 //     useEffect(() => {
 //       const fetchMembers = async () => {
@@ -164,7 +164,7 @@ export const TeamOne = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const apiUrl = "http://localhost:8000/member/display";
+  const apiUrl = "https://alic-website-2-1.onrender.com/member/display";
 
   useHobble();
 

@@ -193,7 +193,7 @@
 //     try {
 //       setLoading(true);
 //       const response = await axios.post(
-//         "https://alic-website-2-1.onrender.com/main/create",
+//         "http://localhost:8000/main/create",
 //         data,
 //         {
 //           headers: {
@@ -733,7 +733,7 @@ const MainForm = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/main/create",
+        "http://localhost:8000/main/create",
         data,
         {
           headers: {

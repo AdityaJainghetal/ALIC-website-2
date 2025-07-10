@@ -27,7 +27,7 @@
 //     setError(null);
 
 //     try {
-//       const response = await axios.post('https://alic-website-2-1.onrender.com/faq/', formData);
+//       const response = await axios.post('http://localhost:8000/faq/', formData);
 //       console.log('FAQ created:', response.data);
 //       toast.success('FAQ created successfully!');
 //       setTimeout(() => {
@@ -142,10 +142,7 @@ const FAQCreate = () => {
     setError(null);
 
     try {
-      const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/faq/",
-        formData
-      );
+      const response = await axios.post("http://localhost:8000/faq/", formData);
       console.log("FAQ created:", response.data);
       toast.success("FAQ created successfully!");
       setTimeout(() => {

@@ -20,7 +20,7 @@
 
 //   const fetchEnquiries = async () => {
 //     try {
-//       const response = await fetch("https://alic-website-2-1.onrender.com/enquiry/allcourse");
+//       const response = await fetch("http://localhost:8000/enquiry/allcourse");
 //       if (!response.ok) {
 //         throw new Error("Failed to fetch enquiries");
 //       }
@@ -44,7 +44,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `https://alic-website-2-1.onrender.com/enquiry/coursedelte/${id}`,
+//         `http://localhost:8000/enquiry/coursedelte/${id}`,
 //         {
 //           method: "DELETE",
 //         }
@@ -74,7 +74,7 @@
 
 //     try {
 //       const response = await fetch(
-//         `https://alic-website-2-1.onrender.com/enquiry/editsave/${editingEnquiry._id}`,
+//         `http://localhost:8000/enquiry/editsave/${editingEnquiry._id}`,
 //         {
 //           method: "PUT",
 //           headers: {
@@ -410,9 +410,7 @@ const EnquiryDisplay = () => {
 
   const fetchEnquiries = async () => {
     try {
-      const response = await fetch(
-        "https://alic-website-2-1.onrender.com/enquiry/allcourse"
-      );
+      const response = await fetch("http://localhost:8000/enquiry/allcourse");
       if (!response.ok) {
         throw new Error("Failed to fetch enquiries");
       }
@@ -569,7 +567,7 @@ const EnquiryDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/enquiry/coursedelte/${id}`,
+        `http://localhost:8000/enquiry/coursedelte/${id}`,
         {
           method: "DELETE",
         }
@@ -599,7 +597,7 @@ const EnquiryDisplay = () => {
 
     try {
       const response = await fetch(
-        `https://alic-website-2-1.onrender.com/enquiry/editsave/${editingEnquiry._id}`,
+        `http://localhost:8000/enquiry/editsave/${editingEnquiry._id}`,
         {
           method: "PUT",
           headers: {

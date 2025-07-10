@@ -22,7 +22,7 @@
 
 //   // Handle form submission
 //   // const submitCallback = () => {
-//   //   const api = "http://localhost:8000/Callback/add"
+//   //   const api = "https://alic-website-2-1.onrender.com/Callback/add"
 //   //     axios.post(api)
 //   //   if (!name || !phone) {
 //   //     alert("Please fill out both fields.");
@@ -38,7 +38,7 @@
 //     return;
 //   }
 
-//   const api = "http://localhost:8000/Callback/add";
+//   const api = "https://alic-website-2-1.onrender.com/Callback/add";
 //   const data = { name, phone };
 
 //   axios.post(api, data)
@@ -148,7 +148,7 @@ export const CallbackPopup = () => {
 
     setIsSubmitting(true);
 
-    const api = "http://localhost:8000/Callback/add";
+    const api = "https://alic-website-2-1.onrender.com/Callback/add";
     const data = { name, phone };
 
     axios

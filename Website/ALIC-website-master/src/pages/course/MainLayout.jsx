@@ -49,13 +49,14 @@ const CourseLayout = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "target":
-        return (
-          <TargetJudiciaryCourse
-            selectedCategoryId={subCategoryShow}
-            selectedSubCategoryId={selectedSubCategoryId}
-          />
-        );
+   case "Recorded":
+  return (
+    <TargetJudiciaryCourse
+      selectedCategoryId={subCategoryShow}  // For subsubCategory filtering
+      selectedSubCategoryId={selectedSubCategoryId}  // For subcategory filtering
+    />
+  );
+      
       case "prelims":
         return (
           <PrelimsTestSeries
@@ -76,6 +77,7 @@ const CourseLayout = () => {
           <FoundationCourses
             selectedCategoryId={subCategoryShow}
             selectedSubCategoryId={id}
+            
           />
         );
     }

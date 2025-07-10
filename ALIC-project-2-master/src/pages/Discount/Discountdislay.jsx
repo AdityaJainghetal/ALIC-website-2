@@ -19,7 +19,7 @@
 //   useEffect(() => {
 //     const fetchDiscounts = async () => {
 //       try {
-//         const response = await axios.get('https://alic-website-2-1.onrender.com/discount/display');
+//         const response = await axios.get('http://localhost:8000/discount/display');
 //         setDiscounts(response.data.data || []);
 //         setLoading(false);
 //       } catch (err) {
@@ -35,7 +35,7 @@
 //   const handleDelete = async (id) => {
 //     if (window.confirm('Are you sure you want to delete this discount?')) {
 //       try {
-//         await axios.delete(`https://alic-website-2-1.onrender.com/discount/deleted/${id}`);
+//         await axios.delete(`http://localhost:8000/discount/deleted/${id}`);
 //         setDiscounts(discounts.filter(discount => discount._id !== id));
 //         alert('Discount deleted successfully!');
 //       } catch (err) {
@@ -66,7 +66,7 @@
 //   const handleEditSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.put(`https://alic-website-2-1.onrender.com/discount/display/${editId}`, editData);
+//       const response = await axios.put(`http://localhost:8000/discount/display/${editId}`, editData);
 //       setDiscounts(discounts.map(discount =>
 //         discount._id === editId ? response.data.data : discount
 //       ));
@@ -227,7 +227,7 @@ const Discountdisplay = () => {
     const fetchDiscounts = async () => {
       try {
         const response = await axios.get(
-          "https://alic-website-2-1.onrender.com/discount/display"
+          "http://localhost:8000/discount/display"
         );
         setDiscounts(response.data.data || []);
         setLoading(false);
@@ -243,9 +243,7 @@ const Discountdisplay = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this discount?")) {
       try {
-        await axios.delete(
-          `https://alic-website-2-1.onrender.com/discount/deleted/${id}`
-        );
+        await axios.delete(`http://localhost:8000/discount/deleted/${id}`);
         setDiscounts(discounts.filter((discount) => discount._id !== id));
         alert("Discount deleted successfully!");
       } catch (err) {
@@ -276,7 +274,7 @@ const Discountdisplay = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://alic-website-2-1.onrender.com/discount/display/${editId}`,
+        `http://localhost:8000/discount/display/${editId}`,
         editData
       );
       setDiscounts(

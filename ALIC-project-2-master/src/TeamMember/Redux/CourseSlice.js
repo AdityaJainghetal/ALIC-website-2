@@ -5,7 +5,7 @@ export const createCourse = createAsyncThunk(
   "course/createCourse",
   async (formData) => {
     const response = await axios.post(
-      "https://alic-website-2-1.onrender.com/api/course",
+      "http://localhost:8000/api/course",
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },

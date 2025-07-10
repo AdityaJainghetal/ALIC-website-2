@@ -14,7 +14,7 @@
 // //   useEffect(() => {
 // //     const fetchCourses = async () => {
 // //       try {
-// //         const response = await fetch('http://localhost:8000/judement/display');
+// //         const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 // //         if (!response.ok) {
 // //           throw new Error('Failed to fetch courses');
 // //         }
@@ -111,7 +111,7 @@
 // //   useEffect(() => {
 // //     const fetchCourses = async () => {
 // //       try {
-// //         const response = await fetch('http://localhost:8000/judement/display');
+// //         const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 // //         if (!response.ok) {
 // //           throw new Error('Failed to fetch courses');
 // //         }
@@ -209,8 +209,8 @@
 // //     const fetchCourses = async () => {
 // //       try {
 // //         // If your API supports filtering by category, adjust the URL
-// //         // Example: `http://localhost:8000/judement/display?categoryId=${categoryId}`
-// //         const response = await fetch('http://localhost:8000/judement/display');
+// //         // Example: `https://alic-website-2-1.onrender.com/judement/display?categoryId=${categoryId}`
+// //         const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 // //         if (!response.ok) {
 // //           throw new Error('Failed to fetch courses');
 // //         }
@@ -317,7 +317,7 @@
 // //     const fetchCourses = async () => {
 // //       try {
 // //         setLoading(true);
-// //         const response = await fetch('http://localhost:8000/judement/display');
+// //         const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 // //         if (!response.ok) {
 // //           throw new Error('Failed to fetch courses');
 // //         }
@@ -468,7 +468,7 @@
 // //       setLoading(true);
 // //       setError(null);
 
-// //       const response = await fetch('http://localhost:8000/judement/display');
+// //       const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 // //       if (!response.ok) throw new Error('Failed to fetch courses');
 
 // //       const data = await response.json();
@@ -633,7 +633,7 @@
 //       setLoading(true);
 //       setError(null);
 
-//       const response = await fetch('http://localhost:8000/judement/display');
+//       const response = await fetch('https://alic-website-2-1.onrender.com/judement/display');
 //       if (!response.ok) throw new Error('Failed to fetch courses');
 //       console.log(allCourses,'data')
 
@@ -818,7 +818,9 @@ export const CoursesAllList = ({ selectedCategoryId }) => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("http://localhost:8000/judement/display");
+      const response = await fetch(
+        "https://alic-website-2-1.onrender.com/judement/display"
+      );
       if (!response.ok) throw new Error("Failed to fetch judgments");
 
       const data = await response.json();

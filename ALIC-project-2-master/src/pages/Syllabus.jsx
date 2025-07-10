@@ -65,7 +65,7 @@
 
 //     try {
 //       setLoading(true);
-//       const response = await axios.post('https://alic-website-2-1.onrender.com/syllabus/create', formData, {
+//       const response = await axios.post('http://localhost:8000/syllabus/create', formData, {
 //         headers: {
 //           Accept: 'application/json',
 //         },
@@ -257,7 +257,7 @@ const Syllabus = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/syllabus/create",
+        "http://localhost:8000/syllabus/create",
         formData,
         {
           headers: {

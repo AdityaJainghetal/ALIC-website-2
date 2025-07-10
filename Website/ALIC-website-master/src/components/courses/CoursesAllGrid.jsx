@@ -14,7 +14,7 @@
 //   useEffect(() => {
 //     const fetchCourses = async () => {
 //       try {
-//         const response = await fetch('http://localhost:8000/api/allcourse');
+//         const response = await fetch('https://alic-website-2-1.onrender.com/api/allcourse');
 //         if (!response.ok) {
 //           throw new Error('Failed to fetch courses');
 //         }
@@ -312,7 +312,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchSubsubcategory } from "../../components/api";
 import { toast } from "react-toastify";
 
-export const CoursesAllGrid = ({ selectedSubCategoryId }) => {
+export const CoursesAllGrid = ({ selectedSubCategoryId, onCategorySelect }) => {
   const [subsubCategories, setSubsubCategories] = useState([]);
   const [duplicateNameIds, setDuplicateNameIds] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -47,7 +47,7 @@ const CourseDisplay = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const api = "https://alic-website-2-1.onrender.com/api/alldisplay";
+  const api = "http://localhost:8000/api/alldisplay";
 
   // Fetch all courses
   const fetchCourses = async () => {
@@ -148,9 +148,7 @@ const CourseDisplay = () => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 
     try {
-      await axios.delete(
-        `https://alic-website-2-1.onrender.com/api/coursedelte/${id}`
-      );
+      await axios.delete(`http://localhost:8000/api/coursedelte/${id}`);
       toast.success("Course deleted successfully");
       setCourses((prev) => prev.filter((course) => course._id !== id));
     } catch (error) {
@@ -161,9 +159,7 @@ const CourseDisplay = () => {
 
   const startEdit = async (id) => {
     try {
-      const res = await axios.get(
-        `https://alic-website-2-1.onrender.com/api/courses/${id}`
-      );
+      const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
       console.log(res, "DATA");
 
       const course = res.data;
@@ -236,12 +232,9 @@ const CourseDisplay = () => {
   const handleToggle = async (id, checked) => {
     const newStatus = !checked;
     try {
-      await axios.put(
-        `https://alic-website-2-1.onrender.com/api/${id}/home-visibility`,
-        {
-          homeVisibility: newStatus,
-        }
-      );
+      await axios.put(`http://localhost:8000/api/${id}/home-visibility`, {
+        homeVisibility: newStatus,
+      });
       fetchCourses();
       toast.success("Visibility updated successfully");
     } catch (error) {
@@ -266,7 +259,7 @@ const CourseDisplay = () => {
 
   // const saveEdit = async () => {
   //   try {
-  //     await axios.put(`https://alic-website-2-1.onrender.com/api/editsave/${editId}`, editForm);
+  //     await axios.put(`http://localhost:8000/api/editsave/${editId}`, editForm);
   //     toast.success("Course updated successfully");
   //     setEditId(null);
   //     setEditForm({
@@ -316,7 +309,7 @@ const CourseDisplay = () => {
       });
 
       const response = await axios.put(
-        `https://alic-website-2-1.onrender.com/api/editsave/${editId}`,
+        `http://localhost:8000/api/editsave/${editId}`,
         formData,
         {
           headers: {

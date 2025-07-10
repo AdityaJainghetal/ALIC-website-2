@@ -25,7 +25,7 @@
 //   };
 
 //   const fetchSyllabusCategories = async () => {
-//     const api = "http://localhost:8000/syllabuscategory"; // syllabuscategory API
+//     const api = "https://alic-website-2-1.onrender.com/syllabuscategory"; // syllabuscategory API
 
 //     try {
 //       const response = await axios.get(api);
@@ -250,7 +250,7 @@ export const HeaderNine = () => {
   const [syllabusCategories, setSyllabusCategories] = useState([]);
   const navigate = useNavigate();
 
-  const api = "http://localhost:8000/social";
+  const api = "https://alic-website-2-1.onrender.com/social";
   const [socialLinks, setSocialLinks] = useState([]);
 
   const fetchSocialLinks = async () => {
@@ -304,7 +304,7 @@ export const HeaderNine = () => {
   };
 
   const fetchSyllabusCategories = async () => {
-    const api = "http://localhost:8000/syllabuscategory";
+    const api = "https://alic-website-2-1.onrender.com/syllabuscategory";
 
     try {
       const response = await axios.get(api);

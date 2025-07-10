@@ -67,7 +67,7 @@ const BlogDisplay = () => {
     fetchCategories();
   }, []);
 
-  const API_BASE_URL = "https://alic-website-2-1.onrender.com/blog";
+  const API_BASE_URL = "http://localhost:8000/blog";
 
   const fetchBlogs = useCallback(async () => {
     setLoading(true);

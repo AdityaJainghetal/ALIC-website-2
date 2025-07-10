@@ -52,8 +52,8 @@ export const HeroThree = () => {
   // useEffect(() => {
   //   const fetchBanners = async () => {
   //     try {
-  //       const response = await axios.get("http://localhost:8000/banner/alldisplay");
-  //       // http://localhost:8000/
+  //       const response = await axios.get("https://alic-website-2-1.onrender.com/banner/alldisplay");
+  //       // https://alic-website-2-1.onrender.com/
   //       setBanners(response.data);
   //     } catch (error) {
   //       console.error("Error fetching banners:", error);

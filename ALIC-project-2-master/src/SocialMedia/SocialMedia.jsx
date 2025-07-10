@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SocialMedia = () => {
-  const api = "https://alic-website-2-1.onrender.com/social";
+  const api = "http://localhost:8000/social";
   const [formData, setFormData] = useState({
     icon: "",
     url: "",

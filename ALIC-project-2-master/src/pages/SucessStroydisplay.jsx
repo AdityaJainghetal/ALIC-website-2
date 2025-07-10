@@ -24,14 +24,14 @@
 
 // //   const fetchStories = async () => {
 // //     try {
-// //       const response = await axios.get('https://alic-website-2-1.onrender.com/success/display');
+// //       const response = await axios.get('http://localhost:8000/success/display');
 // //       const storiesArray = Array.isArray(response.data) ? response.data : [];
 // //       const formattedStories = storiesArray.map(story => ({
 // //         ...story,
 // //         images: story.images
 // //           ? Array.isArray(story.images)
-// //             ? story.images.map(img => img.startsWith('http') ? img : `https://alic-website-2-1.onrender.com/${img}`)
-// //             : [`https://alic-website-2-1.onrender.com/${story.images}`]
+// //             ? story.images.map(img => img.startsWith('http') ? img : `http://localhost:8000/${img}`)
+// //             : [`http://localhost:8000/${story.images}`]
 // //           : []
 // //       }));
 // //       setStories(formattedStories);
@@ -62,7 +62,7 @@
 // //     if (!confirm) return;
 
 // //     try {
-// //       await axios.delete(`https://alic-website-2-1.onrender.com/success/${id}`);
+// //       await axios.delete(`http://localhost:8000/success/${id}`);
 // //       setStories(prev => prev.filter(story => story._id !== id));
 // //       toast.success('Success story deleted successfully');
 // //     } catch (err) {
@@ -119,8 +119,8 @@
 // //       }
 
 // //       const endpoint = editingStory
-// //         ? `https://alic-website-2-1.onrender.com/success/editsave/${editingStory}`
-// //         : 'https://alic-website-2-1.onrender.com/success/create';
+// //         ? `http://localhost:8000/success/editsave/${editingStory}`
+// //         : 'http://localhost:8000/success/create';
 
 // //       const response = await axios.put(endpoint, formData, {
 // //         headers: {
@@ -134,8 +134,8 @@
 // //         _id: editingStory || response.data._id,
 // //         images: response.data.images
 // //           ? Array.isArray(response.data.images)
-// //             ? response.data.images.map(img => img.startsWith('http') ? img : `https://alic-website-2-1.onrender.com/${img}`)
-// //             : [`https://alic-website-2-1.onrender.com/${response.data.images}`]
+// //             ? response.data.images.map(img => img.startsWith('http') ? img : `http://localhost:8000/${img}`)
+// //             : [`http://localhost:8000/${response.data.images}`]
 // //           : []
 // //       };
 
@@ -452,14 +452,14 @@
 
 //   const fetchStories = async () => {
 //     try {
-//       const response = await axios.get('https://alic-website-2-1.onrender.com/success/display');
+//       const response = await axios.get('http://localhost:8000/success/display');
 //       const storiesArray = Array.isArray(response.data) ? response.data : [];
 //       const formattedStories = storiesArray.map(story => ({
 //         ...story,
 //         images: story.images
 //           ? Array.isArray(story.images)
-//             ? story.images.map(img => img.startsWith('http') ? img : `https://alic-website-2-1.onrender.com/${img}`)
-//             : [`https://alic-website-2-1.onrender.com/${story.images}`]
+//             ? story.images.map(img => img.startsWith('http') ? img : `http://localhost:8000/${img}`)
+//             : [`http://localhost:8000/${story.images}`]
 //           : []
 //       }));
 //       setStories(formattedStories);
@@ -490,7 +490,7 @@
 //     if (!confirm) return;
 
 //     try {
-//       await axios.delete(`https://alic-website-2-1.onrender.com/success/${id}`);
+//       await axios.delete(`http://localhost:8000/success/${id}`);
 //       setStories(prev => prev.filter(story => story._id !== id));
 //       toast.success('Success story deleted successfully');
 //     } catch (err) {
@@ -549,8 +549,8 @@
 //       }
 
 //       const endpoint = editingStory
-//         ? `https://alic-website-2-1.onrender.com/success/editsave/${editingStory}`
-//         : 'https://alic-website-2-1.onrender.com/success/create';
+//         ? `http://localhost:8000/success/editsave/${editingStory}`
+//         : 'http://localhost:8000/success/create';
 
 //       const response = await axios.put(endpoint, formData, {
 //         headers: {
@@ -565,8 +565,8 @@
 //         altText: editFormData.altText,
 //         images: response.data.images
 //           ? Array.isArray(response.data.images)
-//             ? response.data.images.map(img => img.startsWith('http') ? img : `https://alic-website-2-1.onrender.com/${img}`)
-//             : [`https://alic-website-2-1.onrender.com/${response.data.images}`]
+//             ? response.data.images.map(img => img.startsWith('http') ? img : `http://localhost:8000/${img}`)
+//             : [`http://localhost:8000/${response.data.images}`]
 //           : []
 //       };
 
@@ -890,20 +890,16 @@ const SuccessStoryDisplay = () => {
   const fetchStories = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "https://alic-website-2-1.onrender.com/success/display"
-      );
+      const response = await axios.get("http://localhost:8000/success/display");
       const storiesArray = Array.isArray(response.data) ? response.data : [];
       const formattedStories = storiesArray.map((story) => ({
         ...story,
         images: story.images
           ? Array.isArray(story.images)
             ? story.images.map((img) =>
-                img.startsWith("http")
-                  ? img
-                  : `https://alic-website-2-1.onrender.com/${img}`
+                img.startsWith("http") ? img : `http://localhost:8000/${img}`
               )
-            : [`https://alic-website-2-1.onrender.com/${story.images}`]
+            : [`http://localhost:8000/${story.images}`]
           : [],
       }));
       setStories(formattedStories);
@@ -938,7 +934,7 @@ const SuccessStoryDisplay = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`https://alic-website-2-1.onrender.com/success/${id}`);
+      await axios.delete(`http://localhost:8000/success/${id}`);
       await fetchStories();
       toast.success("Success story deleted successfully");
     } catch (err) {
@@ -988,8 +984,8 @@ const SuccessStoryDisplay = () => {
       }
 
       const endpoint = editingStory
-        ? `https://alic-website-2-1.onrender.com/success/editsave/${editingStory}`
-        : "https://alic-website-2-1.onrender.com/success/create";
+        ? `http://localhost:8000/success/editsave/${editingStory}`
+        : "http://localhost:8000/success/create";
 
       await axios.put(endpoint, formData, {
         headers: {

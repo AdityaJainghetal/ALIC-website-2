@@ -194,7 +194,7 @@
 //     try {
 //       setLoading(true);
 //       const response = await axios.post(
-//         "https://alic-website-2-1.onrender.com/test/create",
+//         "http://localhost:8000/test/create",
 //         data,
 //         {
 //           headers: {
@@ -735,7 +735,7 @@ const CourseForm = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://alic-website-2-1.onrender.com/test/create",
+        "http://localhost:8000/test/create",
         data,
         {
           headers: {
