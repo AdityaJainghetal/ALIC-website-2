@@ -16,7 +16,7 @@
     "@tailwindcss/vite": "^4.1.6",
     "axios": "^1.9.0",
     "ckeditor4-react": "^5.2.1",
-    "ckeditor5": "^45.1.0",
+    "ckeditor5": "^45.2.2",
     "dompurify": "^3.2.6",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
