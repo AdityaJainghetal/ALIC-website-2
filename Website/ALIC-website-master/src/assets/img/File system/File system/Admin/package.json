@@ -31,7 +31,7 @@
     "i18next": "^23.16.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "lodash.clonedeep": "^4.5.0",
     "mdbreact": "^4.6.1",
     "metismenujs": "^1.4.0",
